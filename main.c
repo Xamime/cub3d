@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/08/17 17:52:08 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:45:57 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,10 +19,10 @@
 void    rotate_right(t_vars *vars)
 {
 	vars->player.angle += 0.1;
-	if (vars->player.angle > (2 *3.14))
+	if (vars->player.angle > (2 * 3.14))
 		vars->player.angle -= 2 * 3.14;
-	vars->player.ray.deltadistX = cos(vars->player.angle) *5;
-	vars->player.ray.deltadistY = sin(vars->player.angle) *5;
+	vars->player.ray.deltadistX = cos(vars->player.angle) * 5;
+	vars->player.ray.deltadistY = sin(vars->player.angle) * 5;
 }
 
 void    rotate_left(t_vars *vars)
@@ -30,8 +30,8 @@ void    rotate_left(t_vars *vars)
 	vars->player.angle -= 0.1;
 	if (vars->player.angle < 0)
 		vars->player.angle += 2 * 3.14;
-	vars->player.ray.deltadistX = cos(vars->player.angle) *5;
-	vars->player.ray.deltadistY = sin(vars->player.angle) *5;
+	vars->player.ray.deltadistX = cos(vars->player.angle) * 5;
+	vars->player.ray.deltadistY = sin(vars->player.angle) * 5;
 }
 
 void	ft_up(t_vars *vars)
@@ -49,23 +49,32 @@ void	ft_down(t_vars *vars)
 void ft_hook(void* param)
 {
 	t_vars *vars  = param;
+	int		has_moved;
 
+	has_moved = 1;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
 		ft_up(vars);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
 		ft_down(vars);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 		rotate_left(vars);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(vars);
-	vars->player.x = (double)vars->player.image->instances[0].x / 500;
-	vars->player.y = (double)vars->player.image->instances[0].y / 500;
-	printf("%f %f %f\n", vars->player.x, vars->player.y,vars->player.angle );
+	else
+		has_moved = 0;
+	if (has_moved)
+	{
+		vars->player.x = (double)(vars->player.image->instances[0].x / 500.00f);
+		vars->player.y = (double)(vars->player.image->instances[0].y / 500.00f);
+		ft_draw_pixels_grid(vars);
+		ft_draw_pixels_player(vars);
+		printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	}
 }
 
-int    initialization(t_vars *vars)
+int    start_loop(t_vars *vars)
 {
 	int	i = 0;
 	while (vars->map[i])
@@ -76,8 +85,10 @@ int    initialization(t_vars *vars)
 	mlx_image_to_window(vars->mlx, vars->minimap, 0, 0);
 	mlx_image_to_window(vars->mlx, vars->player.image, vars->player.x * 50, vars->player.y * 50);
 
-	mlx_loop_hook(vars->mlx, ft_draw_pixels_grid, vars);
-	mlx_loop_hook(vars->mlx, ft_draw_pixels_player, vars);
+	ft_draw_pixels_grid(vars);
+	ft_draw_pixels_player(vars);
+	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
@@ -104,7 +115,6 @@ int    initialization(t_vars *vars)
 //         + vars->player.ray.plane_x * cosf(-rotation);
 // }
 
-
 void  init(t_vars *vars)
 {
 	vars->player.ray.y = 0;
@@ -117,8 +127,8 @@ void  init(t_vars *vars)
 	vars->player.ray.raydirY = 0;
 	vars->player.ray.sidedistY = 0;
 	vars->player.ray.sidedistX = 0;
-	vars->player.ray.deltadistX= cos(vars->player.angle) * 5;
-	vars->player.ray.deltadistY = sin(vars->player.angle) * 5;
+	vars->player.ray.deltadistX = 0;
+	vars->player.ray.deltadistY = 0;
 	vars->player.ray.hit = 0;
 	vars->player.ray.side = 0;
 	vars->player.ray.orientation = 0;
@@ -183,5 +193,5 @@ int32_t main(int32_t argc, const char* argv[])
     vars->map = ft_split("11111111:10100011:10110001:10000W01:10100011:10100101:10100011:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
-	initialization(vars);
+	start_loop(vars);
 }

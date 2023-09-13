@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/13 17:36:16 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/13 19:41:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,16 +61,14 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		step = fabs(len_x);
 	else
 		step = fabs(len_y);
-	//len_x = len_x / step;
-	//len_y = len_y / step;
-	printf("step%f lenx: %f\n",step, len_x);
+	// printf("step%f lenx: %f\n",step, len_x);
 	while (i < step)
 	{
 		if (x < 1024 && x > 0 && y < 1024 && y > 0 )
 			mlx_put_pixel(vars->minimap, x, y, 0xFF0000FF);
 		x += len_x;
 		y += len_y;
-		i++;
+		i += 1.0f;
 	}
 }
 
@@ -129,6 +127,18 @@ void ft_draw_pixels_player(void* param)
 	start.y = vars->player.image->instances[0].y + 5;
 	end.x = vars->player.image->instances[0].x + 5 * vars->player.ray.deltadistX;
 	end.y = vars->player.image->instances[0].y + 5 * vars->player.ray.deltadistY;
+
+	double   	len_x;
+	double      len_y;
+	double 	 	step;
+	
+	len_x = (end.x - start.x);
+	len_y = (end.y - start.y);
+	if (fabs(len_x) >= fabs(len_y))
+		step = fabs(len_x);
+	else
+		step = fabs(len_y);
+	printf("step : %f / len_x : %f / len_y : %f\n",step, len_x, len_y);
 	dda(vars, start, end);
 	while (x < 10)
 	{

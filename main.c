@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/08/15 19:42:41 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:52:08 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,36 @@
 #define WIDTH 1024
 #define HEIGHT 512
 #define ROTATE 2.50
-#define PI 3,14159265358979
+
+void    rotate_right(t_vars *vars)
+{
+	vars->player.angle += 0.1;
+	if (vars->player.angle > (2 *3.14))
+		vars->player.angle -= 2 * 3.14;
+	vars->player.ray.deltadistX = cos(vars->player.angle) *5;
+	vars->player.ray.deltadistY = sin(vars->player.angle) *5;
+}
+
+void    rotate_left(t_vars *vars)
+{
+	vars->player.angle -= 0.1;
+	if (vars->player.angle < 0)
+		vars->player.angle += 2 * 3.14;
+	vars->player.ray.deltadistX = cos(vars->player.angle) *5;
+	vars->player.ray.deltadistY = sin(vars->player.angle) *5;
+}
+
+void	ft_up(t_vars *vars)
+{
+	vars->player.image->instances[0].x += vars->player.ray.deltadistX;
+	vars->player.image->instances[0].y += vars->player.ray.deltadistY;
+}
+
+void	ft_down(t_vars *vars)
+{
+	vars->player.image->instances[0].x -= vars->player.ray.deltadistX;
+	vars->player.image->instances[0].y -= vars->player.ray.deltadistY;
+}
 
 void ft_hook(void* param)
 {
@@ -24,19 +53,16 @@ void ft_hook(void* param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_UP))
-		vars->player.image->instances[0].y -= 5;
+		ft_up(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_DOWN))
-		vars->player.image->instances[0].y += 5;
+		ft_down(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-		vars->player.image->instances[0].x -= 5;
+		rotate_left(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-	{
-		vars->player.image->instances[0].x += 5;
-		//rotate_right(vars);
-	}
+		rotate_right(vars);
 	vars->player.x = (double)vars->player.image->instances[0].x / 500;
 	vars->player.y = (double)vars->player.image->instances[0].y / 500;
-	//printf("%f %f\n", vars->player.x, vars->player.y );
+	printf("%f %f %f\n", vars->player.x, vars->player.y,vars->player.angle );
 }
 
 int    initialization(t_vars *vars)
@@ -78,31 +104,25 @@ int    initialization(t_vars *vars)
 //         + vars->player.ray.plane_x * cosf(-rotation);
 // }
 
-void    rotate_right(t_vars *vars)
+
+void  init(t_vars *vars)
 {
-	vars->player.angle += 0.1;
-	if (vars->player.angle > 2 * PI){
-		vars->player.angle -= 2 * PI;
-	}
-	vars->player.ray.deltadistX = cos(vars->player.angle) * 5;
+	vars->player.ray.y = 0;
+	vars->player.ray.angle = 0;
+	vars->player.ray.x = 0;
+	vars->player.angle = 0;
+	vars->player.ray.plane_x = 0;
+	vars->player.ray.plane_y = 0;
+	vars->player.ray.raydirX = 0;
+	vars->player.ray.raydirY = 0;
+	vars->player.ray.sidedistY = 0;
+	vars->player.ray.sidedistX = 0;
+	vars->player.ray.deltadistX= cos(vars->player.angle) * 5;
 	vars->player.ray.deltadistY = sin(vars->player.angle) * 5;
-}
-t_ray  *init(t_ray *ray)
-{
-	ray->y = 0;
-	ray->x = 0;
-	ray->plane_x = 0;
-	ray->plane_y = 0;
-	ray->raydirX = 0;
-	ray->raydirY = 0;
-	ray->sidedistY = 0;
-	ray->sidedistX = 0;
-	ray->deltadistY = 0;
-	ray->deltadistX = 0;
-	ray->hit = 0;
-	ray->side = 0;
-	ray->orientation = 0;
-    return (ray);
+	vars->player.ray.hit = 0;
+	vars->player.ray.side = 0;
+	vars->player.ray.orientation = 0;
+	printf("init %f\n",vars->player.angle);
 }
 
 void    find_pos(t_vars *vars, char **map)
@@ -157,9 +177,9 @@ int32_t main(int32_t argc, const char* argv[])
 	t_vars *vars;
 
 	vars = malloc(sizeof(t_vars));
-	vars->player.angle = 0;
     (void)argc;(void)argv;
-    init(&vars->player.ray);
+    init(vars);
+	printf("main %f\n",vars->player.angle);
     vars->map = ft_split("11111111:10100011:10110001:10000W01:10100011:10100101:10100011:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);

@@ -6,7 +6,7 @@
 #    By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/08/14 17:06:16 by mdesrose         ###   ########.fr        #
+#    Updated: 2023/09/13 17:29:14 by mdesrose         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -lglfw 
 INCLUDES = -I ./
 CC = clang
-CFLAGS = -g -Wall -Wextra -Werror -Iincludes
+CFLAGS = -g -Iincludes
 OBJ = $(SRC:c=o)
 
 YELLOW=\033[0;33m

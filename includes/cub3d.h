@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/08/15 19:36:02 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/08/17 17:52:16 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+#define PI 3,14159265358979
 
 typedef struct	s_data
 {
@@ -41,6 +42,7 @@ typedef struct	s_ray
 	double	sidedistX;
 	double	deltadistY;
 	double	deltadistX;
+	double	angle;
 	double	orientation;
 	int		hit;
 	int		side;

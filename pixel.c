@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/13 17:36:16 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/24 18:17:58 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,10 @@ void    dda(t_vars *vars, t_point start, t_point end)
 	double      len_y;
 	double 	 	step;
 	double i = 0;
-	int			x = start.x;
-	int			y = start.y;
+	double			x = start.x;
+	double			y = start.y;
+	double dx;
+	double dy;
 	
 	len_x = (end.x - start.x);
 	len_y = (end.y - start.y);
@@ -61,15 +63,15 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		step = fabs(len_x);
 	else
 		step = fabs(len_y);
-	//len_x = len_x / step;
-	//len_y = len_y / step;
-	printf("step%f lenx: %f\n",step, len_x);
+	dx = len_x / step;
+	dy = len_y / step;
+	printf("dy %f dx: %f\n",dy, dx);
 	while (i < step)
 	{
 		if (x < 1024 && x > 0 && y < 1024 && y > 0 )
 			mlx_put_pixel(vars->minimap, x, y, 0xFF0000FF);
-		x += len_x;
-		y += len_y;
+		x += dx;
+		y += dy;
 		i++;
 	}
 }
@@ -127,8 +129,9 @@ void ft_draw_pixels_player(void* param)
 	//ft_draw_rays(vars);
 	start.x = vars->player.image->instances[0].x + 5;
 	start.y = vars->player.image->instances[0].y + 5;
-	end.x = vars->player.image->instances[0].x + 5 * vars->player.ray.deltadistX;
-	end.y = vars->player.image->instances[0].y + 5 * vars->player.ray.deltadistY;
+	end.x = vars->player.image->instances[0].x + 5 + (4 * vars->player.ray.deltadistX);
+	end.y = vars->player.image->instances[0].y + 5 + (4 * vars->player.ray.deltadistY);
+	printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
 	dda(vars, start, end);
 	while (x < 10)
 	{

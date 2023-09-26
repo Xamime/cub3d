@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/25 17:59:28 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:15:29 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,9 @@ void	right_step(t_vars *vars)
 void ft_hook(void* param)
 {
 	t_vars *vars  = param;
+	int		has_moved;
 
+	has_moved = 1;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
@@ -83,9 +85,19 @@ void ft_hook(void* param)
 		rotate_left(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(vars);
+	// else
+	// 	has_moved = 0;
+	// if (has_moved)
+	// {
+	// 	vars->player.x = (double)(vars->player.image->instances[0].x / 500.00f);
+	// 	vars->player.y = (double)(vars->player.image->instances[0].y / 500.00f);
+	// 	ft_draw_pixels_grid(vars);
+	// 	ft_draw_pixels_player(vars);
+	// 	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	// }
 }
 
-int    initialization(t_vars *vars)
+int    start_loop(t_vars *vars)
 {
 	int	i = 0;
 	while (vars->map[i])
@@ -96,8 +108,10 @@ int    initialization(t_vars *vars)
 	mlx_image_to_window(vars->mlx, vars->minimap, 0, 0);
 	mlx_image_to_window(vars->mlx, vars->player.image, vars->player.x, vars->player.y);
 
-	mlx_loop_hook(vars->mlx, ft_draw_pixels_grid, vars);
-	mlx_loop_hook(vars->mlx, ft_draw_pixels_player, vars);
+	ft_draw_pixels_grid(vars);
+	ft_draw_pixels_player(vars);
+	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
@@ -117,7 +131,7 @@ void  init(t_vars *vars)
 	vars->player.ray.sidedistY = 0;
 	vars->player.ray.sidedistX = 0;
 	vars->player.ray.deltadistX = 0;
-	vars->player.ray.deltadistY = sin(vars->player.angle) * SPEED;
+	vars->player.ray.deltadistY = 0;//sin(vars->player.angle) * SPEED;
 	vars->player.ray.hit = 0;
 	vars->player.ray.side = 0;
 	vars->player.ray.orientation = 0;
@@ -181,5 +195,5 @@ int32_t main(int32_t argc, const char* argv[])
     vars->map = ft_split("11111111:10100011:10110001:10000W01:10100011:10100101:10100011:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
-	initialization(vars);
+	start_loop(vars);
 }

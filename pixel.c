@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/24 18:17:58 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:00:32 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,6 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		step = fabs(len_y);
 	dx = len_x / step;
 	dy = len_y / step;
-	printf("dy %f dx: %f\n",dy, dx);
 	while (i < step)
 	{
 		if (x < 1024 && x > 0 && y < 1024 && y > 0 )
@@ -73,47 +72,6 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		x += dx;
 		y += dy;
 		i++;
-	}
-}
-
-void	ft_draw_rays(t_vars *vars)
-{
-	int fov,r,mx,my,mp,dof; double rx,ry,xo,px,yo,py;
-	py = vars->player.image->instances[0].y;
-	px = vars->player.image->instances[0].x;
-	vars->player.ray.angle = vars->player.angle;
-	
-	for (r = 0; r < 1;r++)
-	{
-		dof = 0;
-		double aTan = -1/tan(vars->player.ray.angle);
-		if (vars->player.ray.angle > PI)
-		{
-			ry =(((int)py>>6)<<6)-0.0001;
-			rx = (py - ry) * aTan + px;
-			yo = -64;
-			xo = -yo * aTan;
-		}
-		if (vars->player.ray.angle < PI)
-		{
-			ry =(((int)py>>6)<<6) + 64;
-			rx = (py - ry) * aTan + px;
-			yo = 64;
-			xo = -yo * aTan;
-		}
-		if (vars->player.ray.angle == 0 || vars->player.ray.angle == PI)
-		{
-			rx = px;
-			ry = py;
-			dof = 8;
-		}
-		while (dof < 8)
-		{
-			mx = (int) (rx)>>6;
-			my = (int) (ry)>>6;
-			mp = my * 8 + mx;
-			//if (mp < 8 * 8 && vars->map[])
-		}
 	}
 }
 
@@ -126,17 +84,16 @@ void ft_draw_pixels_player(void* param)
 	t_point end;
 
 	vars = param;
-	//ft_draw_rays(vars);
-	start.x = vars->player.image->instances[0].x + 5;
-	start.y = vars->player.image->instances[0].y + 5;
-	end.x = vars->player.image->instances[0].x + 5 + (4 * vars->player.ray.deltadistX);
-	end.y = vars->player.image->instances[0].y + 5 + (4 * vars->player.ray.deltadistY);
-	printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
+	start.x = vars->player.image->instances[0].x + 3;
+	start.y = vars->player.image->instances[0].y + 3;
+	end.x = vars->player.image->instances[0].x + 3 + (SPEED * vars->player.ray.deltadistX);
+	end.y = vars->player.image->instances[0].y + 3 + (SPEED * vars->player.ray.deltadistY);
+	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
 	dda(vars, start, end);
-	while (x < 10)
+	while (x < 6)
 	{
 		y = 0;
-		while (y < 10)
+		while (y < 6)
 		{
 			mlx_put_pixel(vars->player.image, x, y, 0xFF0000FF);
 			y++;

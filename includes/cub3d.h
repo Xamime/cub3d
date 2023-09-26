@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/08/17 17:52:16 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:02:52 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define WIDTH 1024
+#define HEIGHT 512
+#define ROTATE 2.50
+#define SPEED 4
 #define PI 3,14159265358979
 
 typedef struct	s_data

@@ -85,6 +85,8 @@ void ft_hook(void* param)
 		rotate_left(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(vars);
+	ft_draw_pixels_grid(vars);
+	ft_draw_pixels_player(vars);
 	// else
 	// 	has_moved = 0;
 	// if (has_moved)
@@ -104,7 +106,7 @@ int    start_loop(t_vars *vars)
 		i++;    
 	vars->mlx = mlx_init(400, 400, "cub3d", true);
 	vars->minimap = mlx_new_image(vars->mlx, 400, 400);
-	vars->player.image = mlx_new_image(vars->mlx, 10, 10);
+	vars->player.image = mlx_new_image(vars->mlx, 6, 6);
 	mlx_image_to_window(vars->mlx, vars->minimap, 0, 0);
 	mlx_image_to_window(vars->mlx, vars->player.image, vars->player.x, vars->player.y);
 
@@ -191,7 +193,6 @@ int32_t main(int32_t argc, const char* argv[])
 	vars = malloc(sizeof(t_vars));
     (void)argc;(void)argv;
     init(vars);
-	printf("main %f\n",vars->player.angle);
     vars->map = ft_split("11111111:10100011:10110001:10000W01:10100011:10100101:10100011:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);

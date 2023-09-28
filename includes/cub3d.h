@@ -83,6 +83,8 @@ typedef struct s_point
 	int y;
 }		t_point;
 
+int	check_wall(t_vars *vars, double x, double y);
+
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
 void 	ft_draw_pixels_grid(void* param);
 void    dda(t_vars *vars, t_point start, t_point end);

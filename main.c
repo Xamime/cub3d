@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/26 19:07:54 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/28 13:48:14 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,150 +14,189 @@
 
 void    rotate_right(t_vars *vars)
 {
-	// vars->player.angle += 0.1;
-	// if (vars->player.angle > 6.28318530718)
-	// 	vars->player.angle -= 2 * PI;
-	// vars->player.ray.deltadistX = cos(vars->player.angle) * SPEED;
-	// vars->player.ray.deltadistY = sin(vars->player.angle) * SPEED;
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	vars->player.angle += 0.1;
+	if (vars->player.angle > 6.28318530718)
+		vars->player.angle -= 2 * PI;
+	/*vars->player.ray.deltadistX = cos(vars->player.angle) * SPEED;
+	vars->player.ray.deltadistY = sin(vars->player.angle) * SPEED;
+	printf("x = %f y = %f angle = %f\n", vars->player.x, vars->player.y,vars->player.angle );*/
 }
 
 void    rotate_left(t_vars *vars)
 {
-	// vars->player.angle -= 0.1;
-	// if (vars->player.angle < 0)
-	// 	vars->player.angle += 2 * PI;
-	// vars->player.ray.deltadistX = cos(vars->player.angle) * SPEED;
-	// vars->player.ray.deltadistY = sin(vars->player.angle) * SPEED;
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	vars->player.angle -= 0.1;
+	if (vars->player.angle < 0)
+		vars->player.angle += 2 * PI;
+	/*vars->player.ray.deltadistX = cos(vars->player.angle) * SPEED;
+	vars->player.ray.deltadistY = sin(vars->player.angle) * SPEED;*/
+	printf("x = %d y = %f angle = %f\n", vars->player.image->instances[0].x , vars->player.y,vars->player.angle );
 }
 
 void	ft_up(t_vars *vars)
 {
-	if (vars->map[(int)(vars->player.x + vars->player.ray.dirX * SPEED) / 50][(int)vars->player.y / 50] == '0')
-	{
-		vars->player.x += vars->player.ray.dirX * SPEED;
-		printf("test= %f\n",vars->player.ray.dirX * SPEED);
-	}
-	if (vars->map[(int)vars->player.x][(int)(vars->player.y + vars->player.ray.dirY * SPEED)] == '0')
-	{
-		printf("yooo\n\n\n\n");
+	double tmpx = vars->player.x;
+	double tmpy = vars->player.y;
 
-		vars->player.y += vars->player.ray.dirY * SPEED;
-	}
-	//printf("yoyoo %d et %d\n",(int)(vars->player.x + vars->player.ray.dirX * SPEED), (int)(vars->player.y + vars->player.ray.dirY * SPEED));
-	// vars->player.x += vars->player.ray.deltadistX;
-	// vars->player.y += vars->player.ray.deltadistY;
-	vars->player.image->instances[0].x = vars->player.x + 0.5;
-	vars->player.image->instances[0].y = vars->player.y + 0.5;
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	vars->player.x += (SPEED * cos(vars->player.angle));
+	vars->player.y += (SPEED * sin(vars->player.angle));
+	if (vars->map[(int)(vars->player.y / 50)][(int)(vars->player.x / 50)] != '1')
+		vars->player.image->instances[0].x = vars->player.x;
+	else
+		vars->player.x = tmpx;
+	
+	if (vars->map[(int)(vars->player.y / 50)][(int)(vars->player.x / 50)] != '1')
+		vars->player.image->instances[0].y = vars->player.y;
+	else
+		vars->player.y = tmpy;
+	printf("x = %f, y = %f\n", vars->player.x,vars->player.y);
+	/*if (check_wall(vars, vars->player.x + 3 + vars->player.ray.deltadistX, vars->player.y + 3 + vars->player.ray.deltadistY))
+	{
+		vars->player.y += vars->player.ray.deltadistY;
+		vars->player.x += vars->player.ray.deltadistX;
+		vars->player.image->instances[0].x = vars->player.x + 0.5;
+		vars->player.image->instances[0].y = vars->player.y + 0.5;
+	}*/
+	//printf("x = %f y = %f angle = %f\n", vars->player.x, vars->player.y,vars->player.angle );
 }
 
 void	ft_down(t_vars *vars)
 {
-	// vars->player.x -= vars->player.ray.deltadistX;
-	// vars->player.y -= vars->player.ray.deltadistY;
-	// vars->player.image->instances[0].x = vars->player.x + 0.5;
-	// vars->player.image->instances[0].y = vars->player.y + 0.5;
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	/*
+	if (check_wall(vars, vars->player.x + 3 - vars->player.ray.deltadistX, vars->player.y + 3 - vars->player.ray.deltadistY))
+	{
+		vars->player.x -= vars->player.ray.deltadistX;
+		vars->player.y -= vars->player.ray.deltadistY;
+		vars->player.image->instances[0].x = vars->player.x + 0.5;
+		vars->player.image->instances[0].y = vars->player.y + 0.5;
+	}
+	printf("x = %f y = %f angle = %f\n", vars->player.x, vars->player.y,vars->player.angle );*/
+	double tmpx = vars->player.x;
+	double tmpy = vars->player.y;
+
+	vars->player.x -= (SPEED * cos(vars->player.angle));
+	vars->player.y -= (SPEED * sin(vars->player.angle));
+	if (vars->map[(int)(vars->player.y / 50)][(int)(vars->player.x / 50)] != '1')
+		vars->player.image->instances[0].x = vars->player.x;
+	else 
+		vars->player.x = tmpx;
+	if (vars->map[(int)(vars->player.y / 50)][(int)(vars->player.x / 50)] != '1')
+		vars->player.image->instances[0].y = vars->player.y;
+	else
+		vars->player.y = tmpy;
+	printf("x = %f, y = %f\n", vars->player.x,vars->player.y);
+
 }
 
 void	left_step(t_vars *vars)
 {
-	// vars->player.x += vars->player.ray.deltadistX;
-	// vars->player.y += vars->player.ray.deltadistY;
-	// vars->player.image->instances[0].x = vars->player.x + 0.5;
-	// vars->player.image->instances[0].y = vars->player.y + 0.5;
-	// printf("x = %f y = %f angle = %f\n", vars->player.x, vars->player.y,vars->player.angle );
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	/*vars->player.x += vars->player.ray.deltadistX;
+	vars->player.y += vars->player.ray.deltadistY;
+	vars->player.image->instances[0].x = vars->player.x + 0.5;
+	vars->player.image->instances[0].y = vars->player.y + 0.5;
+	printf("x = %f y = %f angle = %f\n", vars->player.x, vars->player.y,vars->player.angle );*/
 }
 
 void	right_step(t_vars *vars)
 {
-	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+	//printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
+}
+
+
+void	ft_draw_walls(t_vars *vars) 
+{
+	double dirx;
+	double diry;
+	int mapx;
+	int mapy;
+	double	deltadistx;
+	double	deltadisty;
+	double sidedistx;
+	double sidedisty;
+	int	stepx;
+	int	stepy;
+	int	hit;
+	int	ratio;
+	int	side;
+	double	perpwalldist;
+	t_point start;
+	t_point end;
+	double px;
+	double py;
+
+
+	for (int i = 0;i < 400;i++)
+	{
+		px = vars->player.x / 50;
+		py = vars->player.y / 50;
+		ratio = (i - 200) / 200;
+		dirx = cos(vars->player.angle) / 2 + (cos(vars->player.angle - 0.25) * ratio);
+		diry = sin(vars->player.angle) / 2 + (sin(vars->player.angle - 0.25) * ratio);
+		mapx = (int)px;
+		mapy = (int)py;
+		deltadistx = sqrt(1 + ((diry * diry) / (dirx * dirx)));
+		deltadisty = sqrt(1 + ((dirx * dirx) / (diry * diry)));
+		printf("dirx diry et angle %f %f %f\n",dirx,diry, vars->player.angle);
+		if (dirx < 0)
+		{
+			stepx = -1;
+			sidedistx = (px - mapx) * deltadistx;
+		}
+		else
+		{
+			stepx = 1;
+			sidedistx = (mapx + 1 - px) * deltadistx;
+		}
+		if (diry < 0)
+		{
+			stepy = -1;
+			sidedisty = (py - mapy) * deltadisty;
+		}
+		else
+		{
+			stepy = 1;
+			sidedisty = (mapy + 1 - py) * deltadisty;
+		}
+		hit = 0;
+		while (hit == 0)
+		{
+			if (sidedistx < sidedisty)
+			{
+				sidedistx += deltadistx;
+				mapx += stepx;
+				side = 0;
+			}
+			else
+			{
+				sidedisty += deltadisty;
+				mapy += stepy;
+				side = 1;
+			}
+
+			if (vars->map[mapy][mapx] == '1')
+				hit = 1;
+		}
+		if (side == 0)
+			perpwalldist = (mapx - px + (1 - stepx) / 2) / dirx;
+		else
+			perpwalldist = (mapy - py + (1 - stepy) / 2) / diry;
+		
+		start.x = i;
+		start.y = px  * 50 + 200 - 100 / perpwalldist;
+		end.x = i;
+		end.y = py * 50 +  200 + 100 / perpwalldist;
+		vars->player.x = px * 50;
+		vars->player.y = py * 50;
+		dda(vars, start, end);
+	}
 }
 
 void ft_hook(void* param)
 {
 	t_vars *vars  = param;
 
-	
-		// vars->player.x = (double)(vars->player.image->instances[0].x / 500.00f);
-		// vars->player.y = (double)(vars->player.image->instances[0].y / 500.00f);
-	
-	int mapX = (int)vars->player.x;
-	int mapY = (int)vars->player.y;
-	int	stepx = 0;
-	int	stepy = 0;
-	for (int i = 0; i < HEIGHT;i++)
-	{
-		vars->player.ray.camerax = 2 * i / (double)HEIGHT - 1.00f;
-		vars->player.ray.raydirx = vars->player.ray.dirX + (vars->player.ray.plane_x * vars->player.ray.camerax);
-		vars->player.ray.raydiry = vars->player.ray.dirY + (vars->player.ray.plane_y * vars->player.ray.camerax);
-		vars->player.ray.deltadistX = (vars->player.ray.raydirx == 0) ? 1e30 : fabs(1 / vars->player.ray.raydirx);
-		vars->player.ray.deltadistY = (vars->player.ray.raydiry == 0) ? 1e30 : fabs(1 / vars->player.ray.raydiry);
-		//printf("delta= %f\n",vars->player.ray.deltadistX);
-		if (vars->player.ray.raydirx < 0)
-		{
-			stepx = -1;
-			vars->player.ray.sidedistX = (vars->player.x - mapX) * vars->player.ray.deltadistX;
-		}
-		else
-		{
-			stepx = 1;
-			vars->player.ray.sidedistX = (mapX + 1.0 - vars->player.x) * vars->player.ray.deltadistX;
-		}
-		if (vars->player.ray.raydiry < 0)
-		{
-			stepy = -1;
-			vars->player.ray.sidedistY = (vars->player.y - mapY) * vars->player.ray.deltadistY;
-		}
-		else
-		{
-			stepy = 1;
-			vars->player.ray.sidedistY = (mapY + 1.0 - vars->player.y) * vars->player.ray.deltadistY;
-		}
-		while (vars->player.ray.hit == 0)
-		{
-			if (vars->player.ray.sidedistX < vars->player.ray.sidedistY)
-			{
-				vars->player.ray.sidedistX += vars->player.ray.deltadistX;
-				mapX += stepx;
-				vars->player.ray.side = 0;
-			}
-			else
-			{
-				vars->player.ray.sidedistY += vars->player.ray.deltadistY;
-				mapY += stepy;
-				vars->player.ray.side = 1;
-			}
-			printf("mapx = %d mapy = %d\n",mapX, mapY);
-			if (mapY > 0)
-				mlx_put_pixel(vars->minimap, mapX, mapY, 0xFF0000FF);
-			if (vars->map[mapX][mapY] == 1)
-				vars->player.ray.hit = 1;
-		}
-	}
-	if (vars->player.ray.side == 0)
-		vars->player.ray.perpwalldist = (vars->player.ray.sidedistX - vars->player.ray.deltadistX);
-	else
-		vars->player.ray.perpwalldist = (vars->player.ray.sidedistY - vars->player.ray.deltadistY);
-
-    //Calculate height of line to draw on screen
-	int	lineheight = HEIGHT / vars->player.ray.perpwalldist;
-
-	 //calculate lowest and highest pixel to fill in current stripe
-    int drawStart = -lineheight / 2 + HEIGHT / 2;
-    if (drawStart < 0)
-		drawStart = 0;
-    int drawEnd = lineheight / 2 + HEIGHT / 2;
-    if (drawEnd >= HEIGHT)
-		drawEnd = HEIGHT - 1;
-	double oldtime = vars->mlx->delta_time;
-	
-
-	ft_draw_pixels_grid(vars);
-	ft_draw_pixels_player(vars);
+	//ft_draw_pixels_grid(vars);
+	//ft_draw_pixels_player(vars);
+	ft_draw_walls(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
@@ -175,18 +214,15 @@ void ft_hook(void* param)
 }
 
 int    start_loop(t_vars *vars)
-{
-	int	i = 0;
-	while (vars->map[i])
-		i++;    
-	vars->mlx = mlx_init(HEIGHT, HEIGHT, "cub3d", true);
-	vars->minimap = mlx_new_image(vars->mlx, HEIGHT, HEIGHT);
-	vars->player.image = mlx_new_image(vars->mlx, 10, 10);
+{   
+	vars->mlx = mlx_init(400, 400, "cub3d", true);
+	vars->minimap = mlx_new_image(vars->mlx, 400, 400);
+	vars->player.image = mlx_new_image(vars->mlx, 6, 6);
 	mlx_image_to_window(vars->mlx, vars->minimap, 0, 0);
 	mlx_image_to_window(vars->mlx, vars->player.image, vars->player.x, vars->player.y);
-
-	ft_draw_pixels_grid(vars);
-	ft_draw_pixels_player(vars);
+	
+	/*ft_draw_pixels_grid(vars);
+	ft_draw_pixels_player(vars);*/
 	printf("player x : %f, player y : %f, player angle : %f\n", vars->player.x, vars->player.y,vars->player.angle);
 
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
@@ -202,8 +238,6 @@ void  init(t_vars *vars)
 	vars->player.angle = 0;
 	vars->player.ray.plane_x = 0;
 	vars->player.ray.plane_y = 0.66;
-	vars->player.ray.dirX = -1;
-	vars->player.ray.dirY = 0;
 	vars->player.ray.sidedistY = 0;
 	vars->player.ray.sidedistX = 0;
 	vars->player.ray.deltadistX = 0;
@@ -240,27 +274,27 @@ void	init_orientation(t_vars *vars)
 {
 	if (vars->player.orientation == 'N')
 	{
-		vars->player.ray.dirX = 0;
-		vars->player.ray.dirY = -1;
-		vars->player.angle = 1.57 + PI;
+		vars->player.ray.x = 0;
+		vars->player.ray.y = -1;
+		vars->player.angle = PI / 2;
 	}
 	else if (vars->player.orientation == 'E')
 	{
-		vars->player.ray.dirX = 1;
-		vars->player.ray.dirY = 0;
-		vars->player.angle = 0;
+		vars->player.ray.x = 1;
+		vars->player.ray.y = 0;
+		vars->player.angle = PI * 2;
 	}
 	else if (vars->player.orientation == 'W')
 	{
-		vars->player.ray.dirX = -1;
-		vars->player.ray.dirY = 0;
+		vars->player.ray.x = -1;
+		vars->player.ray.y = 0;
 		vars->player.angle = PI;
 	}
 	else if (vars->player.orientation == 'S')
 	{
-		vars->player.ray.dirX = 0;
-		vars->player.ray.dirY = 1;
-		vars->player.angle = 1.57;
+		vars->player.ray.x = 0;
+		vars->player.ray.y = 1;
+		vars->player.angle = PI * 3 / 2;
 	}
 }
 
@@ -271,7 +305,7 @@ int32_t main(int32_t argc, const char* argv[])
 	vars = malloc(sizeof(t_vars));
     (void)argc;(void)argv;
     init(vars);
-    vars->map = ft_split("11111111:10100011:10110001:10000N01:10100011:10100101:10100011:11111111",':');
+    vars->map = ft_split("11111111:10100011:10110001:10000W01:10100011:10100101:10100011:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	start_loop(vars);

@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/25 15:02:52 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:27:59 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define WIDTH 1024
-#define HEIGHT 512
+#define WIDTH 400
+#define HEIGHT 400
 #define ROTATE 2.50
 #define SPEED 4
 #define PI 3,14159265358979
@@ -39,15 +39,19 @@ typedef struct	s_ray
 {
 	double	y;
 	double	x;
+	double	camerax;
 	double	plane_x;
 	double	plane_y;
-	double	raydirX;
-	double	raydirY;
+	double	facedistY;
+	double	perpwalldist;
+	double	raydirx;
+	double	raydiry;
+	double	dirX;
+	double	dirY;
 	double	sidedistY;
 	double	sidedistX;
 	double	deltadistY;
 	double	deltadistX;
-	double	angle;
 	double	orientation;
 	int		hit;
 	int		side;
@@ -82,6 +86,7 @@ typedef struct s_point
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
 void 	ft_draw_pixels_grid(void* param);
 void    dda(t_vars *vars, t_point start, t_point end);
-void	 ft_draw_pixels_player(void* param);
+void 	ft_draw_first_player(void* param);
+void	ft_draw_pixels_player(void* param);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/26 14:16:06 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:29:25 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,12 +84,12 @@ void ft_draw_pixels_player(void* param)
 	t_point end;
 
 	vars = param;
-	start.x = vars->player.image->instances[0].x + 3;
-	start.y = vars->player.image->instances[0].y + 3;
-	end.x = vars->player.image->instances[0].x + 3 + (SPEED * vars->player.ray.deltadistX);
-	end.y = vars->player.image->instances[0].y + 3 + (SPEED * vars->player.ray.deltadistY);
+	start.x = vars->player.x + 3.5;
+	start.y = vars->player.y + 2.5;
+	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX);
+	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY);
 	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
-	dda(vars, start, end);
+	//dda(vars, start, end);
 	while (x < 6)
 	{
 		y = 0;

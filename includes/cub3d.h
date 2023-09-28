@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/26 17:27:59 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:53:23 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,17 +42,20 @@ typedef struct	s_ray
 	double	camerax;
 	double	plane_x;
 	double	plane_y;
-	double	facedistY;
+	double	facedisty;
 	double	perpwalldist;
 	double	raydirx;
 	double	raydiry;
-	double	dirX;
-	double	dirY;
-	double	sidedistY;
-	double	sidedistX;
-	double	deltadistY;
-	double	deltadistX;
+	double	dirx;
+	double	diry;
+	double	sidedisty;
+	double	sidedistx;
+	double	deltadisty;
+	double	deltadistx;
 	double	orientation;
+	int		lineheight;
+	int		drawstart;
+	int		drawend;
 	int		hit;
 	int		side;
 	
@@ -65,13 +68,13 @@ typedef struct	t_player
 	double	y;
 	double	angle;
 	char	orientation;
-	t_ray	ray;
 }			t_player;
 
 
 typedef struct t_vars
 {
 	char		**map;
+	t_ray		ray;
 	mlx_image_t *minimap;
 	mlx_t		*mlx;
 	t_player	player;

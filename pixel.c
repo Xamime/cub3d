@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/28 13:48:37 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/09/28 14:52:55 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,9 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		step = fabs(len_y);
 	dx = len_x / step;
 	dy = len_y / step;
-	while (i < 400)
+	while (i < HEIGHT)
 	{
-		if (x < 400 && x > 0 && y < 400 && y > 0)// && check_wall(vars, x, y))
+		if (x < HEIGHT && x > 0 && y < HEIGHT && y > 0)// && check_wall(vars, x, y))
 			mlx_put_pixel(vars->minimap, x, y, 0x232D8F);
 		else
 			break;
@@ -112,8 +112,8 @@ void ft_draw_pixels_player(void* param)
 	vars = param;
 	start.x = vars->player.x + 3;
 	start.y = vars->player.y + 3;
-	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX);
-	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY);
+	end.x = vars->player.x + 3 + (SPEED * vars->ray.deltadistx);
+	end.y = vars->player.y + 3 + (SPEED * vars->ray.deltadisty);
 	//dda(vars, start, end);
 	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane_x;
 	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane_y;

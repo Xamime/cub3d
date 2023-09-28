@@ -91,10 +91,8 @@ void    dda(t_vars *vars, t_point start, t_point end)
 	dy = len_y / step;
 	while (i < 400)
 	{
-		if (x < 400 && x > 0 && y < 400 && y > 0 && check_wall(vars, x, y))
-		{
-			mlx_put_pixel(vars->minimap, x, y, 0xFF0000FF);
-		}
+		if (x < 400 && x > 0 && y < 400 && y > 0)// && check_wall(vars, x, y))
+			mlx_put_pixel(vars->minimap, x, y, 0x232D8F);
 		else
 			break;
 		x += dx;
@@ -116,8 +114,14 @@ void ft_draw_pixels_player(void* param)
 	start.y = vars->player.y + 3;
 	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX);
 	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY);
-	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
+	//dda(vars, start, end);
+	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane_x;
+	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane_y;
 	dda(vars, start, end);
+	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) + vars->player.ray.plane_x;
+	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) + vars->player.ray.plane_y;
+	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
+	dda(vars, start, end);*/
 	while (x < 6)
 	{
 		y = 0;

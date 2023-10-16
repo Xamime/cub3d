@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/28 14:53:23 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:30:15 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,29 +20,27 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define WIDTH 400
-#define HEIGHT 400
+#define WIDTH 1280
+#define HEIGHT 800
 #define ROTATE 2.50
 #define SPEED 4
 #define PI 3,14159265358979
 
-typedef struct	s_data
+typedef struct	s_img
 {
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
-}				t_data;
+}				t_img;
 
 typedef struct	s_ray
 {
-	double	y;
-	double	x;
 	double	camerax;
+	double	angle;
 	double	plane_x;
 	double	plane_y;
-	double	facedisty;
 	double	perpwalldist;
 	double	raydirx;
 	double	raydiry;
@@ -52,7 +50,10 @@ typedef struct	s_ray
 	double	sidedistx;
 	double	deltadisty;
 	double	deltadistx;
-	double	orientation;
+	int		mapx;
+	int		mapy;
+	int		stepx;
+	int		stepy;
 	int		lineheight;
 	int		drawstart;
 	int		drawend;
@@ -67,17 +68,42 @@ typedef struct	t_player
 	double	x;
 	double	y;
 	double	angle;
+	double	movespeed;
+	double	rotspeed;
 	char	orientation;
 }			t_player;
 
+
+typedef struct	s_texture
+{
+	char			*north;
+	char			*south;
+	char			*west;
+	char			*east;
+	int				*floor;
+	int				*ceiling;
+	unsigned long	hex_floor;
+	unsigned long	hex_ceiling;
+	int				size;
+	int				index;
+	double			step;
+	double			pos;
+	int				x;
+	int				y;
+}				t_texture;
 
 typedef struct t_vars
 {
 	char		**map;
 	t_ray		ray;
 	mlx_image_t *minimap;
+	mlx_image_t *game;
 	mlx_t		*mlx;
 	t_player	player;
+	t_texture	texture;
+	char		*title;
+	int			**texture_pixels;
+	int			**textures;
 }				t_vars;
 
 typedef struct s_point
@@ -90,8 +116,27 @@ int	check_wall(t_vars *vars, double x, double y);
 
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
 void 	ft_draw_pixels_grid(void* param);
-void    dda(t_vars *vars, t_point start, t_point end);
+void    dda(char **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
 void	ft_draw_pixels_player(void* param);
+
+/*					Initialisation					*/
+void	init_img(t_img *img);
+void	init(t_vars *vars);
+void	init_orientation(t_vars *vars);
+void	init_textures(t_texture *textures);
+
+/*					Moving							*/
+void    rotate_left(t_vars *vars, t_ray *ray);
+void    rotate_right(t_vars *vars, t_ray *ray);
+void	ft_up(t_vars *vars, t_ray *ray);
+void	ft_down(t_vars *vars, t_ray *ray);
+void	left_step(t_vars *vars, t_ray *ray);
+void	right_step(t_vars *vars, t_ray *ray);
+
+/*					Textures						*/
+void	get_texture_index(t_vars *vars);
+void	update_texture_pixels(t_vars *vars, t_texture *tex, t_ray *ray, int x);
+
 
 #endif

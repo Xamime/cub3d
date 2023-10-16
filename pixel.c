@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/09/28 14:52:55 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/10/05 19:26:21 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	check_wall(t_vars *vars, double x, double y)
 	return (1);
 }
 
-void    dda(t_vars *vars, t_point start, t_point end)
+/*void    dda(t_vars *vars, t_point start, t_point end)
 {
 	double   	len_x;
 	double      len_y;
@@ -91,7 +91,7 @@ void    dda(t_vars *vars, t_point start, t_point end)
 	dy = len_y / step;
 	while (i < HEIGHT)
 	{
-		if (x < HEIGHT && x > 0 && y < HEIGHT && y > 0)// && check_wall(vars, x, y))
+		if (x < HEIGHT && x > 0 && y < HEIGHT && y > 0 && check_wall(vars, x, y))
 			mlx_put_pixel(vars->minimap, x, y, 0x232D8F);
 		else
 			break;
@@ -99,7 +99,7 @@ void    dda(t_vars *vars, t_point start, t_point end)
 		y += dy;
 		i++;
 	}
-}
+}*/
 
 void ft_draw_pixels_player(void* param)
 {
@@ -110,10 +110,10 @@ void ft_draw_pixels_player(void* param)
 	t_point end;
 
 	vars = param;
-	start.x = vars->player.x + 3;
-	start.y = vars->player.y + 3;
-	end.x = vars->player.x + 3 + (SPEED * vars->ray.deltadistx);
-	end.y = vars->player.y + 3 + (SPEED * vars->ray.deltadisty);
+	start.x = vars->player.x * 50 + 3;
+	start.y = vars->player.y * 50 + 3;
+	end.x = (vars->player.x * 50) + 3 + (vars->ray.raydirx);
+	end.y = (vars->player.y * 50) + 3 + (vars->ray.raydiry);
 	//dda(vars, start, end);
 	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane_x;
 	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane_y;

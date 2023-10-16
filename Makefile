@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+         #
+#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/09/13 17:29:14 by mdesrose         ###   ########.fr        #
+#    Updated: 2023/10/16 14:09:42 by max              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,10 @@ LIBFT_SRC = libft
 MLX_DIR = MLX42
 LIBFT = ${LIBFT_SRC}/libft.a
 LIBMLX = ${MLX_DIR}/build/libmlx42.a 
-LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -lglfw 
+LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm -lglfw
 INCLUDES = -I ./
 CC = clang
-CFLAGS = -g -Iincludes
+CFLAGS = -Iincludes
 OBJ = $(SRC:c=o)
 
 YELLOW=\033[0;33m

@@ -6,55 +6,32 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 15:18:28 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 16:56:43 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-static void	draw_ceiling(t_vars *vars, int x)
+static void	draw_ceiling(t_vars *vars, int x, int y)
 {
-	int	color;
-	int	y;
+	int	y1;
 
-	y = 0;
-	// color = rgba_to_int(colors->i_ceiling[0], colors->i_ceiling[1], \
-	// 	colors->i_ceiling[2], 255);
-	while (y < vars->ray.drawstart)
+	y1 = 0;
+	while (y1 < y)
 	{
-		mlx_put_pixel(vars->minimap, x, y,	0xFFFFFF);
-		y++;
+		mlx_put_pixel(vars->game, x, y1, 0xFF0000);
+		y1++;
 	}
 }
 
-// static void	draw_textures(t_vars *vars)
-// {
-// 	float		step;
-// 	float		tex_pos;
-
-// 	step = 1.0 * data->images.n_wall->height / data->images.line_height;
-// 	tex_pos = (data->images.draw_start - (1080 / 2) \
-// 		+ data->images.line_height / 2) * step;
-// 	ray->y = data->images.draw_start;
-// 	while (ray->y < data->images.draw_end)
-// 	{
-// 		ray->tex_y = (int)tex_pos & (data->images.n_wall->height - 1);
-// 		tex_pos += step;
-// 		if (ray->hit_side == 1 && ray->step_y < 0)
-// 			mlx_put_pixel(vars->minimap, data->images.x, ray->y, \
-// 			get_color(data->images.s_wall, ray->tex_y, ray->tex_x));
-// 		else if (ray->hit_side == 1 && ray->step_y > 0)
-// 			mlx_put_pixel(vars->minimap, data->images.x, ray->y, \
-// 			get_color(data->images.n_wall, ray->tex_y, ray->tex_x));
-// 		else if (ray->hit_side == 0 && ray->step_x < 0)
-// 			mlx_put_pixel(vars->minimap, data->images.x, ray->y, \
-// 			get_color(data->images.e_wall, ray->tex_y, ray->tex_x));
-// 		else if (ray->hit_side == 0 && ray->step_x > 0)
-// 			mlx_put_pixel(vars->minimap, data->images.x, ray->y, \
-// 			get_color(data->images.w_wall, ray->tex_y, ray->tex_x));
-// 		ray->y++;
-// 	}
-// }
+static void	draw_floor(t_vars *vars, int x, int y)
+{
+	while (y < HEIGHT)
+	{
+		mlx_put_pixel(vars->game, x, y, 0x000FFF);
+		y++;
+	}
+}
 
 static void	reset_window(t_vars *vars)
 {
@@ -75,6 +52,7 @@ static void	reset_window(t_vars *vars)
 
 void	verline(t_vars *vars, int x, int y1, int y2, uint32_t color)
 {
+	(void)color;
 	if (y2 < 0)
 		y2 = 0;
 	if (y1 > HEIGHT)
@@ -86,10 +64,11 @@ void	verline(t_vars *vars, int x, int y1, int y2, uint32_t color)
 		y1 = y2;
 		y2 = tmp;
 	}
+	draw_ceiling(vars, x, y1);
+	draw_floor(vars, x, y2);
     for (int y = y1; y <= y2; y++) {
         mlx_put_pixel(vars->game, x, y, 0xFFFFFF);
     }
-
 }
 /*
 void	dda(t_ray *ray)
@@ -108,7 +87,7 @@ void	dda(t_ray *ray)
 			ray->mapy += ray->stepy;
 			ray->side = 1;
 		}
-		/*if (ray->mapy < 0.25	|| ray->mapx < 0.25 || ray->mapy > 7 - 0.25
+		if (ray->mapy < 0.25	|| ray->mapx < 0.25 || ray->mapy > 7 - 0.25
 			|| ray->mapx > 7 - 1.25)
 				break ;
 		if (vars->map[ray->mapy][ray->mapx] == '1')
@@ -191,7 +170,7 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
       	if (ray->side == 1)
 			color = color / 2;
 		//draw_ceiling(vars, i);
-		printf("x = %d, lin = %d, start  %d, end %d  perp = %f\n",x,ray->lineheight,ray->drawstart,ray->drawend, ray->perpwalldist);
+		//printf("x = %d, lin = %d, start  %d, end %d  perp = %f\n",x,ray->lineheight,ray->drawstart,ray->drawend, ray->perpwalldist);
 		verline(vars, x, ray->drawstart, ray->drawend, color);
 	}
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
@@ -243,6 +222,7 @@ int    start_loop(t_vars *vars)
 	//ft_draw_pixels_player(vars);
 	vars->ray.plane_x = 0;
 	vars->ray.plane_y = 0.66;
+	ft_draw_walls(vars, &vars->ray);
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
@@ -279,16 +259,8 @@ int main(int32_t argc, const char* argv[])
 	vars = malloc(sizeof(t_vars));
     (void)argc;(void)argv;
     init(vars);
-	/*
-	11111111
-	10000001
-	10000001
-	100W0001
-	10000001
-	10000001
-	10000001
-	11111111*/
-    vars->map = ft_split("11111111:10000001:10000001:101W0001:10000001:10000001:10000001:11111111",':');
+    vars->map = ft_split("11111111111:10000000001:10000000001:10100W00001:10000000001:"
+		"10000000001:10000000001:10000000001:10000000001:10000000001:11111111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	start_loop(vars);

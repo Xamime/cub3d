@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 15:07:57 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 19:32:44 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@
 #define HEIGHT 600
 #define ROTATE 2.50
 #define SPEED 4
-#define PI 3,14159265358979
 
 typedef struct	s_img
 {

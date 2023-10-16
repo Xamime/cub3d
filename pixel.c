@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/05 19:26:21 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 19:34:15 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,10 @@ void	ft_draw_pixels_grid(void* param)
 
 int	check_wall(t_vars *vars, double x, double y)
 {
-	int	i;
+	/*int	i;
 	int	j;
 
-	/*i = 0;
+	i = 0;
 	while (vars->map[i])
 	{
 		j = 0;
@@ -106,14 +106,8 @@ void ft_draw_pixels_player(void* param)
 	int x = 0;
 	int y;
 	t_vars *vars;
-	t_point	start;
-	t_point end;
-
+	
 	vars = param;
-	start.x = vars->player.x * 50 + 3;
-	start.y = vars->player.y * 50 + 3;
-	end.x = (vars->player.x * 50) + 3 + (vars->ray.raydirx);
-	end.y = (vars->player.y * 50) + 3 + (vars->ray.raydiry);
 	//dda(vars, start, end);
 	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane_x;
 	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane_y;

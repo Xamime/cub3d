@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/10/16 14:35:46 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 15:55:11 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,6 @@
 
 void    rotate_left(t_vars *vars, t_ray *ray)
 {
-	/*vars->player.angle += 0.1;
-	if (vars->player.angle > 6.28318530718)	
-		vars->player.angle -= 2 * PI;*/
 	double oldDirX = ray->dirx;
     ray->dirx = ray->dirx * cos(vars->player.rotspeed) - ray->diry * sin(vars->player.rotspeed);
     ray->diry = oldDirX * sin(vars->player.rotspeed) + ray->diry * cos(vars->player.rotspeed);
@@ -31,9 +28,6 @@ void    rotate_left(t_vars *vars, t_ray *ray)
 
 void    rotate_right(t_vars *vars, t_ray *ray)
 {
-	/*vars->player.angle -= 0.1;
-	if (vars->player.angle < 0)
-		vars->player.angle += 2 * PI;*/
 		double oldDirX = ray->dirx;
       ray->dirx = ray->dirx * cos(-(vars->player.rotspeed)) - ray->diry * sin(-(vars->player.rotspeed));
       ray->diry = oldDirX * sin(-(vars->player.rotspeed)) + ray->diry * cos(-(vars->player.rotspeed));
@@ -48,16 +42,6 @@ void    rotate_right(t_vars *vars, t_ray *ray)
 
 void	ft_up(t_vars *vars, t_ray *ray)
 {
-	/*double tmpx = vars->player.x;
-	double tmpy = vars->player.y;
-
-	tmpx = vars->player.x + (SPEED * cos(vars->player.angle));
-	tmpy = vars->player.y + (SPEED * sin(vars->player.angle));
-	if (vars->map[(int)(tmpy )][(int)(tmpx )] != '1')
-		vars->player.x = tmpx;
-	
-	if (vars->map[(int)(tmpy )][(int)(tmpx )] != '1')
-		vars->player.y = tmpy;*/
 	if(vars->map[(int)((vars->player.y ) + ray->diry * vars->player.movespeed)][(int)(vars->player.x)] != '1')
 		(vars->player.y ) += ray->diry * vars->player.movespeed;
     if(vars->map[(int)((vars->player.y ))][(int)(vars->player.x + ray->dirx * vars->player.movespeed)] != '1')
@@ -70,16 +54,6 @@ void	ft_up(t_vars *vars, t_ray *ray)
 
 void	ft_down(t_vars *vars, t_ray *ray)
 {
-	/*double tmpx = vars->player.x;
-	double tmpy = vars->player.y;
-
-	tmpx = vars->player.x - (SPEED * cos(vars->player.angle));
-	tmpy = vars->player.y - (SPEED * sin(vars->player.angle));
-	if (vars->map[(int)(tmpy )][(int)(tmpx )] != '1')
-		vars->player.x = tmpx;
-	
-	if (vars->map[(int)(tmpy )][(int)(tmpx )] != '1')
-		vars->player.y = tmpy;*/
 	printf("x = %f, y = %f, sidedistx = %f, sidedisty = %f\n", vars->player.x , vars->player.y, ray->sidedistx, ray->sidedisty);
 	if (vars->map[(int)((vars->player.y ) - ray->diry * vars->player.movespeed)][(int)(vars->player.x)] != '1')
 		(vars->player.y ) -= ray->diry * vars->player.movespeed;
@@ -92,12 +66,18 @@ void	ft_down(t_vars *vars, t_ray *ray)
 
 }
 
-void	left_step(t_vars *vars, t_ray *ray)
-{
-	
-}
-
 void	right_step(t_vars *vars, t_ray *ray)
 {
+	if(vars->map[(int)((vars->player.y ) + ray->plane_y * vars->player.movespeed)][(int)(vars->player.x)] != '1')
+		(vars->player.y ) += ray->plane_y * vars->player.movespeed;
+    if(vars->map[(int)((vars->player.y ))][(int)(vars->player.x + ray->plane_x * vars->player.movespeed)] != '1')
+		vars->player.x += ray->plane_x * vars->player.movespeed;
+}
 
+void	left_step(t_vars *vars, t_ray *ray)
+{
+	if (vars->map[(int)((vars->player.y ) - ray->plane_y * vars->player.movespeed)][(int)(vars->player.x)] != '1')
+		(vars->player.y ) -= ray->plane_y * vars->player.movespeed;
+    if (vars->map[(int)((vars->player.y ))][(int)(vars->player.x - ray->plane_x * vars->player.movespeed)] != '1')
+		vars->player.x -= ray->plane_x * vars->player.movespeed;
 }

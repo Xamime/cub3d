@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/16 14:32:02 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 19:33:08 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void  init(t_vars *vars)
 	vars->ray.lineheight = 0;
 	vars->ray.drawend = 0;
 	vars->ray.drawstart = 0;
-	vars->ray.camerax = 0.0;
+	//vars->ray.camerax = 0;
 	vars->ray.hit = 0;
 	vars->ray.side = 0;
 }
@@ -54,24 +54,20 @@ void	init_orientation(t_vars *vars)
 	{
 		vars->ray.dirx = 0;
 		vars->ray.diry = -1;
-		vars->ray.angle = PI / 2;
 	}
 	else if (vars->player.orientation == 'E')
 	{
 		vars->ray.dirx = 1;
 		vars->ray.diry = 0;
-		vars->ray.angle = PI * 2;
 	}
 	else if (vars->player.orientation == 'W')
 	{
 		vars->ray.dirx = -1;
 		vars->ray.diry = 0;
-		vars->ray.angle = PI;
 	}
 	else if (vars->player.orientation == 'S')
 	{
 		vars->ray.dirx = 0;
 		vars->ray.diry = 1;
-		vars->ray.angle = PI * 3 / 2;
 	}
 }

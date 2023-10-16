@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 14:36:54 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 15:01:08 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,23 +75,20 @@ static void	reset_window(t_vars *vars)
 
 void	verline(t_vars *vars, int x, int y1, int y2, uint32_t color)
 {
-	int	tmp;
 	if (y2 < 0)
 		y2 = 0;
 	if (y1 > HEIGHT)
 		y1 = HEIGHT;
+	int	tmp;
 	if (y1 > y2)
 	{
 		tmp = y1;
 		y1 = y2;
 		y2 = tmp;
 	}
-	printf("before; x = %d, y = %d\n",x,y1);
     for (int y = y1; y <= y2; y++) {
         mlx_put_pixel(vars->game, x, y, 0xFFFFFF);
-		tmp = y;
     }
-	printf("after; x = %d, y = %d\n",x,tmp);
 
 }
 /*
@@ -193,15 +190,12 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
 			color = 0xFFFFFFFF;
       	if (ray->side == 1)
 			color = color / 2;
-		//update_texture_pixels(vars, &vars->texture, ray, i);
-		//mlx_put_pixel(vars->minimap, i, ray->lineheight,	0xFFFFFFFF); //test
-		
 		//draw_ceiling(vars, i);
 		printf("x = %d, lin = %d, start  %d, end %d  perp = %f\n",x,ray->lineheight,ray->drawstart,ray->drawend, ray->perpwalldist);
 		verline(vars, x, ray->drawstart, ray->drawend, color);
 	}
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
-	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
+	vars->player.rotspeed = vars->mlx->delta_time * 4.0;
 	//printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
 }
 
@@ -285,7 +279,16 @@ int main(int32_t argc, const char* argv[])
 	vars = malloc(sizeof(t_vars));
     (void)argc;(void)argv;
     init(vars);
-    vars->map = ft_split("11111111:10100011:10000001:100W0001:10000011:10100101:10100011:11111111",':');
+	/*
+	11111111
+	10000001
+	10000001
+	100W0001
+	10000001
+	10000001
+	10000001
+	11111111*/
+    vars->map = ft_split("11111111:10000001:10000001:100W0001:10000001:10000001:10000001:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	start_loop(vars);

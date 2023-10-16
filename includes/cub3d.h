@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/05 19:30:15 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 14:41:02 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define WIDTH 1280
-#define HEIGHT 800
+#define WIDTH 600
+#define HEIGHT 600
 #define ROTATE 2.50
 #define SPEED 4
 #define PI 3,14159265358979

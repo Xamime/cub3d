@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 14:23:33 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 14:36:54 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,7 +128,7 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
 	{
 		ray->mapx = (int)(vars->player.x);
 		ray->mapy = (int)(vars->player.y);
-		ray->camerax = 2 * x / (double) WIDTH - 1;
+		ray->camerax = 2 * x / (double)(WIDTH - 1);
 		ray->raydirx = ray->dirx + ray->plane_x * ray->camerax;
 		ray->raydiry = ray->diry + ray->plane_y * ray->camerax;
 		ray->deltadistx = fabs(1 / ray->raydirx);

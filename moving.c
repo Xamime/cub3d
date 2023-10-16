@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/10/05 19:43:10 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 14:35:46 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,13 @@ void    rotate_left(t_vars *vars, t_ray *ray)
 	if (vars->player.angle > 6.28318530718)	
 		vars->player.angle -= 2 * PI;*/
 	double oldDirX = ray->dirx;
-    ray->raydirx = ray->dirx * cos(vars->player.rotspeed) - ray->diry * sin(vars->player.rotspeed);
-    ray->raydiry = oldDirX * sin(vars->player.rotspeed) + ray->diry * cos(vars->player.rotspeed);
+    ray->dirx = ray->dirx * cos(vars->player.rotspeed) - ray->diry * sin(vars->player.rotspeed);
+    ray->diry = oldDirX * sin(vars->player.rotspeed) + ray->diry * cos(vars->player.rotspeed);
     double oldPlaneX = ray->plane_x;
     ray->plane_x = ray->plane_x * cos(vars->player.rotspeed) - ray->plane_y * sin(vars->player.rotspeed);
     ray->plane_y = oldPlaneX * sin(vars->player.rotspeed) + ray->plane_y * cos(vars->player.rotspeed);
-	printf("raydirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->raydirx, ray->dirx, ray->plane_x, ray->camerax);
-	printf("raydiry %f, diry  %f,  planey  %f\n", ray->raydiry, ray->diry, ray->plane_y);
+	printf("dirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->dirx, ray->dirx, ray->plane_x, ray->camerax);
+	printf("diry %f, diry  %f,  planey  %f\n", ray->diry, ray->diry, ray->plane_y);
 	printf("x = %f, y = %f, sidedistx = %f, sidedisty = %f\n", vars->player.x , vars->player.y, ray->sidedistx, ray->sidedisty);
 	printf("deltax %f  deltay %f\n\n", ray->deltadistx, ray->deltadisty);
 }
@@ -35,13 +35,13 @@ void    rotate_right(t_vars *vars, t_ray *ray)
 	if (vars->player.angle < 0)
 		vars->player.angle += 2 * PI;*/
 		double oldDirX = ray->dirx;
-      ray->raydirx = ray->dirx * cos(-(vars->player.rotspeed)) - ray->diry * sin(-(vars->player.rotspeed));
-      ray->raydiry = oldDirX * sin(-(vars->player.rotspeed)) + ray->diry * cos(-(vars->player.rotspeed));
+      ray->dirx = ray->dirx * cos(-(vars->player.rotspeed)) - ray->diry * sin(-(vars->player.rotspeed));
+      ray->diry = oldDirX * sin(-(vars->player.rotspeed)) + ray->diry * cos(-(vars->player.rotspeed));
       double oldPlaneX = ray->plane_x;
       ray->plane_x = ray->plane_x * cos(-(vars->player.rotspeed)) - ray->plane_y * sin(-(vars->player.rotspeed));
       ray->plane_y = oldPlaneX * sin(-(vars->player.rotspeed)) + ray->plane_y * cos(-(vars->player.rotspeed));
-	printf("raydirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->raydirx, ray->dirx, ray->plane_x, ray->camerax);
-	printf("raydiry %f, diry  %f,  planey  %f\n", ray->raydiry, ray->diry, ray->plane_y);
+	printf("dirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->dirx, ray->dirx, ray->plane_x, ray->camerax);
+	printf("diry %f, diry  %f,  planey  %f\n", ray->diry, ray->diry, ray->plane_y);
 	printf("x = %f, y = %f, sidedistx = %f, sidedisty = %f\n", vars->player.x , vars->player.y, ray->sidedistx, ray->sidedisty);
 	printf("deltax %f  deltay %f\n\n", ray->deltadistx, ray->deltadisty);
 }
@@ -62,8 +62,8 @@ void	ft_up(t_vars *vars, t_ray *ray)
 		(vars->player.y ) += ray->diry * vars->player.movespeed;
     if(vars->map[(int)((vars->player.y ))][(int)(vars->player.x + ray->dirx * vars->player.movespeed)] != '1')
 		vars->player.x += ray->dirx * vars->player.movespeed;
-	printf("raydirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->raydirx, ray->dirx, ray->plane_x, ray->camerax);
-	printf("raydiry %f, diry  %f,  planey  %f\n", ray->raydiry, ray->diry, ray->plane_y);
+	printf("dirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->dirx, ray->dirx, ray->plane_x, ray->camerax);
+	printf("diry %f, diry  %f,  planey  %f\n", ray->diry, ray->diry, ray->plane_y);
 	printf("x = %f, y = %f, sidedistx = %f, sidedisty = %f\n", vars->player.x , vars->player.y, ray->sidedistx, ray->sidedisty);
 	printf("deltax %f  deltay %f\n\n", ray->deltadistx, ray->deltadisty);
 }
@@ -86,8 +86,8 @@ void	ft_down(t_vars *vars, t_ray *ray)
     if (vars->map[(int)((vars->player.y ))][(int)(vars->player.x - ray->dirx * vars->player.movespeed)] != '1')
 		vars->player.x -= ray->dirx * vars->player.movespeed;
 	printf("x = %f, y = %f, sidedistx = %f, sidedisty = %f\n", vars->player.x , vars->player.y, ray->sidedistx, ray->sidedisty);
-	printf("raydirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->raydirx, ray->dirx, ray->plane_x, ray->camerax);
-	printf("raydiry %f, diry  %f,  planey  %f\n", ray->raydiry, ray->diry, ray->plane_y);
+	printf("dirx %f, dirx  %f,  planex  %f, camerax %f\n", ray->dirx, ray->dirx, ray->plane_x, ray->camerax);
+	printf("diry %f, diry  %f,  planey  %f\n", ray->diry, ray->diry, ray->plane_y);
 	printf("deltax %f  deltay %f\n\n", ray->deltadistx, ray->deltadisty);
 
 }

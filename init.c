@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/05 18:11:37 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 14:32:02 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void  init(t_vars *vars)
 	vars->ray.lineheight = 0;
 	vars->ray.drawend = 0;
 	vars->ray.drawstart = 0;
-	vars->ray.camerax = 0;
+	vars->ray.camerax = 0.0;
 	vars->ray.hit = 0;
 	vars->ray.side = 0;
 }

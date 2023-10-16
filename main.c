@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 15:01:08 by max              ###   ########.fr       */
+/*   Updated: 2023/10/16 15:18:28 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,10 +128,10 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
 		ray->camerax = 2 * x / (double)(WIDTH - 1);
 		ray->raydirx = ray->dirx + ray->plane_x * ray->camerax;
 		ray->raydiry = ray->diry + ray->plane_y * ray->camerax;
-		ray->deltadistx = fabs(1 / ray->raydirx);
- 		ray->deltadisty = fabs(1 / ray->raydiry);
-		//ray->deltadistx = (ray->raydirx == 0) ? 1e30 : fabs(1 / ray->raydirx);
-     	//ray->deltadisty = (ray->raydiry == 0) ? 1e30 : fabs(1 / ray->raydiry);
+		//ray->deltadistx = fabs(1 / ray->raydirx);
+ 		//ray->deltadisty = fabs(1 / ray->raydiry);
+		ray->deltadistx = (ray->raydirx == 0) ? 1e30 : fabs(1 / ray->raydirx);
+     	ray->deltadisty = (ray->raydiry == 0) ? 1e30 : fabs(1 / ray->raydiry);
 		if (ray->raydirx < 0)
 		{
 			ray->stepx = -1;
@@ -152,6 +152,7 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
 			ray->stepy = 1;
 			ray->sidedisty = (ray->mapy + 1.0 - vars->player.y) * ray->deltadisty;
 		}
+		ray->hit = 0;
 		while (ray->hit == 0)
 		{
 			if (ray->sidedistx < ray->sidedisty)
@@ -172,7 +173,6 @@ void	ft_draw_walls(t_vars *vars, t_ray *ray)
 			if (vars->map[ray->mapy][ray->mapx] == '1')
 				ray->hit = 1;
 		}
-		//printf("ray->mapy = %d ray->mapx = %d\n", ray->mapy,ray->mapx);
 		if (ray->side == 0)
 			ray->perpwalldist = (ray->sidedistx - ray->deltadistx);
 		else
@@ -234,7 +234,7 @@ int    start_loop(t_vars *vars)
 {   
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
 	//vars->minimap = mlx_new_image(vars->mlx, 400, 400);
-	vars->game = mlx_new_image(vars->mlx, HEIGHT, HEIGHT);
+	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	//vars->player.image = mlx_new_image(vars->mlx, 6, 6);
 	mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	//mlx_image_to_window(vars->mlx, vars->minimap, 0, 0);
@@ -288,7 +288,7 @@ int main(int32_t argc, const char* argv[])
 	10000001
 	10000001
 	11111111*/
-    vars->map = ft_split("11111111:10000001:10000001:100W0001:10000001:10000001:10000001:11111111",':');
+    vars->map = ft_split("11111111:10000001:10000001:101W0001:10000001:10000001:10000001:11111111",':');
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	start_loop(vars);

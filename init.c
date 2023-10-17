@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/16 20:17:39 by max              ###   ########.fr       */
+/*   Updated: 2023/10/17 15:18:42 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,28 @@ void	init_orientation(t_vars *vars)
 	{
 		vars->ray.dirx = 0;
 		vars->ray.diry = -1;
+		vars->ray.plane_x = -0.66;
+		vars->ray.plane_y = 0;
 	}
 	else if (vars->player.orientation == 'E')
 	{
 		vars->ray.dirx = 1;
 		vars->ray.diry = 0;
+		vars->ray.plane_x = 0;
+		vars->ray.plane_y = -0.66;
 	}
 	else if (vars->player.orientation == 'W')
 	{
 		vars->ray.dirx = -1;
 		vars->ray.diry = 0;
+		vars->ray.plane_x = 0;
+		vars->ray.plane_y = 0.66;
 	}
 	else if (vars->player.orientation == 'S')
 	{
 		vars->ray.dirx = 0;
 		vars->ray.diry = 1;
+		vars->ray.plane_x = 0.66;
+		vars->ray.plane_y = 0;
 	}
 }

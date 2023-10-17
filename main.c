@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 20:24:01 by max              ###   ########.fr       */
+/*   Updated: 2023/10/17 16:02:55 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
+
+// void	my_pixel_put(t_vars *vars, int x, int y, int color)
+// {
+// 	char	*dst;
+
+// 	dst = vars->addr + (y * data->line_length + x * (32 / 8));
+// 	*(unsigned int *)dst = color;
+// }
 
 static void	draw_ceiling(t_vars *vars, int x, int y)
 {
@@ -19,7 +27,7 @@ static void	draw_ceiling(t_vars *vars, int x, int y)
 	y1 = 0;
 	while (y1 < y)
 	{
-		mlx_put_pixel(vars->game, x, y1, 0xFF0000);
+		mlx_put_pixel(vars->game, x, y1, create_rgba(150, 150, 70, 255));
 		y1++;
 	}
 }
@@ -172,14 +180,14 @@ void	 ft_draw_walls(t_vars *vars, t_ray *ray)
 		ray->drawend = HEIGHT / 2 + ray->lineheight / 2;
 		if (ray->drawend >= HEIGHT)
 			ray->drawend = HEIGHT - 1;
-		if (vars->map[ray->mapx][ray->mapy] == '1')
-    		color = create_argb(0, 255, 255, 255);
+		if (vars->map[ray->mapy][ray->mapx] == '1')
+    		color = create_rgba(0, 255, 255, 255);
 		else
-			color = create_argb(0, 0, 0, 255);
+			color = create_rgba(0, 0, 0, 255);
       	if (ray->side == 1)
-			color = create_argb(255, 0, 0, 255);
+			color = create_rgba(255, 0, 0, 255);
 		if (!ray->hit)
-			color = create_argb(255, 0, 255, 255);
+			color = create_rgba(255, 0, 255, 255);
 		//draw_ceiling(vars, i);
 		//printf("x = %d, lin = %d, start  %d, end %d  perp = %f\n",x,ray->lineheight,ray->drawstart,ray->drawend, ray->perpwalldist);
 		verline(vars, x, ray->drawstart, ray->drawend, color);
@@ -259,8 +267,6 @@ int    start_loop(t_vars *vars)
 	//mlx_image_to_window(vars->mlx, vars->player.image, (int)vars->player.x * 50, (int)vars->player.y * 50);
 	//ft_draw_pixels_grid(vars);
 	//ft_draw_pixels_player(vars);
-	vars->ray.plane_x = 0;
-	vars->ray.plane_y = 0.66;
 	ft_draw_walls(vars, &vars->ray);
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
 	mlx_loop(vars->mlx);
@@ -306,7 +312,7 @@ int main(int32_t argc, const char* argv[])
 	10000001
 	10000001
 	11111111*/
-	vars.map = ft_split("11111111:10000001:10000001:101S0001:10000001:10000001:10000001:11111111",':');
+	vars.map = ft_split("11111111:10000001:10000001:1010S001:10000001:10000001:10000001:11111111",':');
 	find_pos(&vars, vars.map);
 	init_orientation(&vars);
 	start_loop(&vars);

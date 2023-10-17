@@ -6,15 +6,15 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:15:04 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/17 08:03:17 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/17 16:02:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-int	create_argb(int a, int r, int g, int b)
+int	create_rgba(int r, int g, int b, int a)
 {
-	return (a << 24 | r << 16 | g << 8 | b);
+	return (r << 24 | g << 16 | b << 8 | a);
 }
 
 void	ft_display_single_pixel(t_vars *vars, double x, double y, int color)
@@ -87,7 +87,7 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 		// double oldDirX = ray_dir_x;
 		// ray_dir_x = ray_dir_x * cos(45) - ray->diry * sin(45);
 		// ray_dir_y = oldDirX * sin(45) + ray->diry * cos(45);
-		ft_display_single_ray(vars, ray_dir_x, ray_dir_y, create_argb(0, 255, 0, 255));
+		ft_display_single_ray(vars, ray_dir_x, ray_dir_y, create_rgba(0, 255, 0, 255));
 
 		delta_dist_x = (ray_dir_x == 0) ? 1e30 : fabs(1 / ray_dir_x);
 		delta_dist_y = (ray_dir_y == 0) ? 1e30 : fabs(1 / ray_dir_y);
@@ -115,11 +115,11 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 				map_y += step_y;
 				side = 1;
 			}
-			// ft_display_single_pixel(vars, side_dist_x * 10, -(side_dist_y * 10), create_argb(255, 0, 255, 255));
+			// ft_display_single_pixel(vars, side_dist_x * 10, -(side_dist_y * 10), create_rgba(255, 0, 255, 255));
 			if (side)
-				ft_display_distance(vars, x, side_dist_x * 40, create_argb(0, 0, 255, 255));
+				ft_display_distance(vars, x, side_dist_x * 40, create_rgba(0, 0, 255, 255));
 			else
-				ft_display_distance(vars, x, side_dist_y * 40, create_argb(0, 0, 255, 255));
+				ft_display_distance(vars, x, side_dist_y * 40, create_rgba(0, 0, 255, 255));
 			if (map_y < 0.25	|| map_x < 0.25 || map_y > 7 - 0.25
 				|| map_x > 7 - 1.25)
 					break ;
@@ -132,10 +132,10 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 			wall_dist = (side_dist_y - delta_dist_y);
 		line_height = (int)(HEIGHT / wall_dist);
 		if (line_height / 2 < HEIGHT / 2)
-			ft_display_distance(vars, x, HEIGHT / 2 - line_height / 2, create_argb(255, 255, 255, 255));
+			ft_display_distance(vars, x, HEIGHT / 2 - line_height / 2, create_rgba(255, 255, 255, 255));
 	}
-	ft_display_single_ray(vars, ray->dirx, ray->diry, create_argb(255, 0, 0, 255));
-	ft_display_single_ray(vars, ray->plane_x, ray->plane_y, create_argb(255, 255, 0, 255));
+	ft_display_single_ray(vars, ray->dirx, ray->diry, create_rgba(255, 0, 0, 255));
+	ft_display_single_ray(vars, ray->plane_x, ray->plane_y, create_rgba(255, 255, 0, 255));
 	printf("player.x : %f, player.y : %f\n", vars->player.x, vars->player.y);
 	printf(RED"ray->dirx : %f, ray->diry : %f\n"DEFAULT_COL, ray->dirx, ray->diry);
 	printf(YELLOW"ray->plane_x : %f, ray->plane_y : %f\n"DEFAULT_COL, ray->plane_x, ray->plane_y);

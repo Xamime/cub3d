@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 20:23:26 by max              ###   ########.fr       */
+/*   Updated: 2023/10/17 15:48:20 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ void	update_texture_pixels(t_vars *vars, t_texture *tex, t_ray *ray, int x);
 
 /* ---------------------------------- utils --------------------------------- */
 
-int		create_argb(int a, int r, int g, int b);
+int		create_rgba(int a, int r, int g, int b);
 
 /* ---------------------------------- debug --------------------------------- */
 

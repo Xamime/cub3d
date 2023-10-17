@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
+#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/16 20:24:29 by max              ###   ########.fr        #
+#    Updated: 2023/10/17 15:42:56 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,11 @@ NAME = cub3d
 LIBFT_SRC = libft
 MLX_DIR = MLX42
 LIBFT = ${LIBFT_SRC}/libft.a
-LIBMLX = ${MLX_DIR}/build/libmlx42.a 
+LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Iincludes
+CFLAGS = #-Wall -Wextra -Werror -Iincludes
 OBJ = $(SRC:c=o)
 
 YELLOW=\033[0;33m
@@ -34,7 +34,7 @@ all: $(NAME)
 %.o: %.c
 	${CC} ${CFLAGS} -c $< -o $@
 
-$(NAME): $(OBJ) $(LIBFT) libmlx 
+$(NAME): $(OBJ) $(LIBFT) libmlx
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 libmlx:

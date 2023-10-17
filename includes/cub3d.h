@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 15:07:57 by max              ###   ########.fr       */
+/*   Updated: 2023/10/17 07:17:53 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,11 +20,19 @@
 #include <stdlib.h>
 #include <stdbool.h>
 
-#define WIDTH 600
-#define HEIGHT 600
+#define WIDTH 1000
+#define HEIGHT 1000
 #define ROTATE 2.50
 #define SPEED 4
 #define PI 3,14159265358979
+
+#define RED "\e[38;2;255;0;0m"
+#define ORANGE "\e[38;2;255;150;0m"
+#define YELLOW "\e[38;2;255;255;0m"
+#define GREEN "\e[38;2;0;255;0m"
+#define BLUE "\e[38;2;150;150;255m"
+#define VIOLET "\e[38;2;200;0;200m"
+#define DEFAULT_COL "\e[m"
 
 typedef struct	s_img
 {
@@ -59,7 +67,7 @@ typedef struct	s_ray
 	int		drawend;
 	int		hit;
 	int		side;
-	
+
 }		t_ray;
 
 typedef struct	t_player
@@ -138,5 +146,12 @@ void	right_step(t_vars *vars, t_ray *ray);
 void	get_texture_index(t_vars *vars);
 void	update_texture_pixels(t_vars *vars, t_texture *tex, t_ray *ray, int x);
 
+/* ---------------------------------- utils --------------------------------- */
+
+int		create_argb(int a, int r, int g, int b);
+
+/* ---------------------------------- debug --------------------------------- */
+
+void	ft_display_rays(t_vars *vars, t_ray *ray);
 
 #endif

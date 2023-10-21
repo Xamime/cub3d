@@ -6,19 +6,11 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/17 16:02:55 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/21 18:38:02 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
-
-// void	my_pixel_put(t_vars *vars, int x, int y, int color)
-// {
-// 	char	*dst;
-
-// 	dst = vars->addr + (y * data->line_length + x * (32 / 8));
-// 	*(unsigned int *)dst = color;
-// }
 
 static void	draw_ceiling(t_vars *vars, int x, int y)
 {
@@ -108,23 +100,19 @@ void	 ft_draw_walls(t_vars *vars, t_ray *ray)
 	uint32_t	color;
 	init(vars);
 	reset_window(vars);
+
+	double	step = 1.6f / (double)(WIDTH - 1);
+	double	start_x = ray->dirx - ray->plane_x;
+	double	start_y = ray->diry - ray->plane_y;
+
 	for (int x = 0; x < WIDTH; x++)
 	{
 		ray->mapx = (int)(vars->player.x);
 		ray->mapy = (int)(vars->player.y);
-		ray->camerax = 2 * x / (double)(WIDTH - 1);
-		double	dir_x = ray->dirx;
-		double	dir_y = ray->diry;
-		double	oldDirX = dir_x;
-		double	angle = 44.7;
-		dir_x = dir_x * cos(angle) - dir_y * sin(angle);
-		dir_y = oldDirX * sin(angle) + dir_y * cos(angle);
-		ray->raydirx = dir_x + ray->plane_x * ray->camerax;
-		ray->raydiry = dir_y + ray->plane_y * ray->camerax;
-		// ray->raydirx = ray->dirx + ray->plane_x * ray->camerax;
-		// ray->raydiry = ray->diry + ray->plane_y * ray->camerax;
-		//ray->deltadistx = fabs(1 / ray->raydirx);
- 		//ray->deltadisty = fabs(1 / ray->raydiry);
+		ray->camerax = step * x;
+		ray->raydirx = start_x + (ray->plane_x * ray->camerax);
+		ray->raydiry = start_y + (ray->plane_y * ray->camerax);
+		// ft_set_ray_dir(&ray->raydirx, &ray->raydiry, x, ray);
 		ray->deltadistx = (ray->raydirx == 0) ? 1e30 : fabs(1 / ray->raydirx);
 		ray->deltadisty = (ray->raydiry == 0) ? 1e30 : fabs(1 / ray->raydiry);
 		if (ray->raydirx < 0)
@@ -173,6 +161,10 @@ void	 ft_draw_walls(t_vars *vars, t_ray *ray)
 		else
 			ray->perpwalldist = (ray->sidedisty - ray->deltadisty);
 		ray->lineheight = (int)(HEIGHT / ray->perpwalldist);
+		// if (x < WIDTH / 2)
+		// 	ray->lineheight = (int)(HEIGHT / ray->perpwalldist) - x;
+		// else
+		// 	ray->lineheight = (int)(HEIGHT / ray->perpwalldist) - WIDTH / 2 - (x - WIDTH / 2);
 		// ray->drawstart = -(ray->lineheight) / 2 + HEIGHT / 2;
 		ray->drawstart = HEIGHT / 2 - ray->lineheight / 2;
 		if (ray->drawstart < 0)
@@ -195,7 +187,7 @@ void	 ft_draw_walls(t_vars *vars, t_ray *ray)
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
 	vars->player.rotspeed = vars->mlx->delta_time * 4.0;
 	//printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
-	// ft_display_rays(vars, ray);
+	ft_display_rays(vars, ray);
 }
 
 void ft_hook(void* param)
@@ -306,13 +298,13 @@ int main(int32_t argc, const char* argv[])
 	/*
 	11111111
 	10000001
-	10000001
+	10110001
 	101W0001
 	10000001
 	10000001
 	10000001
 	11111111*/
-	vars.map = ft_split("11111111:10000001:10000001:1010S001:10000001:10000001:10000001:11111111",':');
+	vars.map = ft_split("11111111:10000001:10110001:1010S001:10000001:10000001:10000001:11111111",':');
 	find_pos(&vars, vars.map);
 	init_orientation(&vars);
 	start_loop(&vars);

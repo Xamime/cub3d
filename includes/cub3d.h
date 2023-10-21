@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/17 15:48:20 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/21 18:33:41 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+#define PI 3.14159
 
 #define WIDTH 1000
 #define HEIGHT 1000
@@ -153,5 +155,6 @@ int		create_rgba(int a, int r, int g, int b);
 /* ---------------------------------- debug --------------------------------- */
 
 void	ft_display_rays(t_vars *vars, t_ray *ray);
+void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray);
 
 #endif

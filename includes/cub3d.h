@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/17 15:48:20 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/21 20:20:34 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,8 @@
 #define HEIGHT 1000
 #define ROTATE 2.50
 #define SPEED 4
+#define texWidth 64
+#define texHeight 64
 
 #define RED "\e[38;2;255;0;0m"
 #define ORANGE "\e[38;2;255;150;0m"
@@ -40,6 +42,8 @@ typedef struct	s_img
 	int		bits_per_pixel;
 	int		line_length;
 	int		endian;
+	int		width;
+	int		height;
 }				t_img;
 
 typedef struct	s_ray
@@ -83,10 +87,10 @@ typedef struct	t_player
 
 typedef struct	s_texture
 {
-	char			*north;
-	char			*south;
-	char			*west;
-	char			*east;
+	mlx_image_t		*north;
+	mlx_image_t		*south;
+	mlx_image_t		*west;
+	mlx_image_t		*east;
 	int				*floor;
 	int				*ceiling;
 	unsigned long	hex_floor;
@@ -97,7 +101,7 @@ typedef struct	s_texture
 	double			pos;
 	int				x;
 	int				y;
-}				t_texture;
+}				t_tex;
 
 typedef struct t_vars
 {
@@ -107,17 +111,13 @@ typedef struct t_vars
 	mlx_image_t *game;
 	mlx_t		*mlx;
 	t_player	player;
-	t_texture	texture;
+	t_tex		tex;
+	uint32_t	*buffer;
 	char		*title;
 	int			**texture_pixels;
 	int			**textures;
 }				t_vars;
 
-typedef struct s_point
-{
-	int x;
-	int y;
-}		t_point;
 
 int	check_wall(t_vars *vars, double x, double y);
 
@@ -132,7 +132,8 @@ void	ft_draw_pixels_player(void* param);
 void	init_img(t_img *img);
 void	init(t_vars *vars);
 void	init_orientation(t_vars *vars);
-void	init_textures(t_texture *textures);
+void	init_textures(t_tex *textures);
+void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/
 void    rotate_left(t_vars *vars, t_ray *ray);
@@ -144,11 +145,11 @@ void	right_step(t_vars *vars, t_ray *ray);
 
 /*					Textures						*/
 void	get_texture_index(t_vars *vars);
-void	update_texture_pixels(t_vars *vars, t_texture *tex, t_ray *ray, int x);
+void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
 
 /* ---------------------------------- utils --------------------------------- */
 
-int		create_rgba(int a, int r, int g, int b);
+uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 
 /* ---------------------------------- debug --------------------------------- */
 

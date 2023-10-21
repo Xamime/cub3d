@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:15:04 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/17 16:02:48 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/20 20:37:20 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "includes/cub3d.h"
 
-int	create_rgba(int r, int g, int b, int a)
+uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
 	return (r << 24 | g << 16 | b << 8 | a);
 }
+
+
 
 void	ft_display_single_pixel(t_vars *vars, double x, double y, int color)
 {

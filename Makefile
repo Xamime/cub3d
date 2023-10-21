@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
+#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/17 15:42:56 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/10/20 17:05:26 by max              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./
 CC = clang
-CFLAGS = #-Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g
 OBJ = $(SRC:c=o)
 
 YELLOW=\033[0;33m
@@ -32,13 +32,13 @@ CLEANL=\r\033[K
 all: $(NAME)
 
 %.o: %.c
-	${CC} ${CFLAGS} -c $< -o $@
+	${CC} ${CFLAGS} -I/usr/include -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT) libmlx
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 libmlx:
-	cmake $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j4
+	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8 
 
 ${LIBFT}:
 	make all -C ${LIBFT_SRC} -s
@@ -53,5 +53,6 @@ fclean: clean
 	make fclean -C ${LIBFT_SRC} -s
 
 re: fclean all
+
 
 .PHONY: clean fclean re

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/17 15:18:42 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/21 20:20:59 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,29 +23,13 @@ void	init_img(t_img *img)
 
 void  init(t_vars *vars)
 {
+	vars->game = NULL;
 	vars->ray.lineheight = 0;
 	vars->ray.drawend = 0;
 	vars->ray.drawstart = 0;
 	//vars->ray.camerax = 0;
 	vars->ray.hit = 0;
 	vars->ray.side = 0;
-}
-
-void	init_textures(t_texture *textures)
-{
-	textures->north = NULL;
-	textures->south = NULL;
-	textures->west = NULL;
-	textures->east = NULL;
-	textures->floor = 0;
-	textures->ceiling = 0;
-	textures->hex_floor = 0x0;
-	textures->hex_ceiling = 0x0;
-	textures->size = 50;
-	textures->step = 0.0;
-	textures->pos = 0.0;
-	textures->x = 0;
-	textures->y = 0;
 }
 
 void	init_orientation(t_vars *vars)
@@ -78,4 +62,27 @@ void	init_orientation(t_vars *vars)
 		vars->ray.plane_x = 0.66;
 		vars->ray.plane_y = 0;
 	}
+}
+
+void    find_pos(t_vars *vars, char **map)
+{
+    int i;
+    int j;
+
+    i = 0;
+    while (map && map[i])
+    {
+        j = 0;
+        while (map[i][j])
+        {
+            if (map[i][j] != '0' && map[i][j] != '1')
+            {
+                vars->player.x = j;
+                vars->player.y = i;
+	            vars->player.orientation = map[i][j];
+            }
+            j++;
+        }
+        i++;
+    }
 }

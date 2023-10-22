@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 09:58:54 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 16:29:52 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,6 @@ typedef struct	s_render_tex
 {
 	mlx_image_t	*texture;
 	t_ipoint	pos;
-	int			start_pos;
-	double		step;
 }				t_render_tex;
 
 

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 09:59:33 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 16:12:41 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,17 +14,17 @@
 
 void	display_fps(t_vars *vars)
 {
-	printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
-	// char	*str = NULL;
-	// char	*tmp;
-	// str = malloc(sizeof(char) * 20);
-	// float_to_char((1.0 / vars->mlx->delta_time), str, 1);
-	// tmp = str;
-	// str = ft_strjoin(str, " FPS");
-	// free(tmp);
+	// printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
+	char	*str = NULL;
+	char	*tmp;
+	str = malloc(sizeof(char) * 20);
+	float_to_char((1.0 / vars->mlx->delta_time), str, 1);
+	tmp = str;
+	str = ft_strjoin(str, " FPS");
+	free(tmp);
 	// vars->instance2 = mlx_put_string(vars->mlx, str, 0, 20);
-	// // mlx_set_window_title(vars->mlx, str);
-	// free(str);
+	mlx_set_window_title(vars->mlx, str);
+	free(str);
 }
 
 void	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer)

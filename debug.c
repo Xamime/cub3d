@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   debug.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:15:04 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 00:27:36 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 03:55:13 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_update_offset_pos(int *step, double *side_dist, int step_val, double off
 		*step = step_val;
 		*side_dist = offset * delta;
 }
-
+/*
 void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray)
 {
 	int		fov = 90;
@@ -79,7 +79,7 @@ void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray)
 
 void	ft_display_rays(t_vars *vars, t_ray *ray)
 {
-	double	camera_step;
+	//double	camera_step;
 	double	ray_dir_x;
 	double	ray_dir_y;
 	double	delta_dist_x;
@@ -191,3 +191,4 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 	// printf(YELLOW"ray->plane_x : %f, ray->plane_y : %f\n"DEFAULT_COL, ray->plane_x, ray->plane_y);
 	// printf(BLUE"plane_x : %f, plane_y : %f\n"DEFAULT_COL, plane_x, plane_y);
 }
+*/

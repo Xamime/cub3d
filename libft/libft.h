@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   libft.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 19:13:38 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/07/31 23:50:37 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/10/22 03:49:44 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ typedef struct s_list
 	struct s_list	*next;
 }	t_list;
 
+void 		floatToChar(float number, char* str, int precision);
 long long	ft_atoll(const char *nptr);
 char		*ft_strnstr(const char *s1, const char *s2, size_t n);
 char		*ft_strstr(char *str, char *to_find);

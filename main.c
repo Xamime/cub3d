@@ -6,7 +6,7 @@
 /*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 03:14:28 by max              ###   ########.fr       */
+/*   Updated: 2023/10/22 04:04:29 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -217,7 +217,6 @@ void	 ft_draw_walls(t_vars *vars, t_ray *ray)
 	drawBuffer(vars, vars->game, vars->buffer);
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
 	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
-	//printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
 	// ft_display_rays(vars, ray);
 }
 
@@ -259,22 +258,13 @@ void ft_hook(void* param)
 		rotate_right(vars, &vars->ray);
 		ft_draw_walls(vars, &vars->ray);
 	}
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_1))
-	// {
-	// 	vars->ray.plane_x += 0.01f;
-	// 	vars->ray.plane_y += 0.01f;
-	// 	ft_draw_walls(vars, &vars->ray);
-	// }
-	// if (mlx_is_key_down(vars->mlx, MLX_KEY_2) && vars->ray.plane_x > 0.1f)
-	// {
-	// 	vars->ray.plane_x -= 0.01f;
-	// 	vars->ray.plane_y -= 0.01f;
-	// 	ft_draw_walls(vars, &vars->ray);
-	// }
-	//vars->player.image->instances[0].x = (int)(vars->player.x * 50);
-	//vars->player.image->instances[0].y = (int)(vars->player.y * 50);
-	/*vars->minimap->instances[0].x = (int)(vars->player.x * 50);
-	vars->minimap->instances[0].y = (int)(vars->player.y * 50);*/
+	//printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
+	char *str = NULL;
+	str = malloc(sizeof(char) * 20);
+	floatToChar((1.0 / vars->mlx->delta_time), str, 1);
+	str = ft_strjoin(str, " FPS");
+	mlx_set_window_title(vars->mlx, str);
+	free(str);
 }
 
 void	alloc_texture(t_vars *vars)
@@ -282,7 +272,7 @@ void	alloc_texture(t_vars *vars)
 	vars->buffer = (uint32_t *)malloc(sizeof(int) * HEIGHT * WIDTH);
 	if (vars->buffer == NULL) {
         perror("Memory allocation failed");
-        return ;
+        exit(1) ;
     }
 }
 
@@ -316,12 +306,8 @@ void	load_texture(t_vars *vars)
 	{
 		printf("this image doesnt exist\n");
 		exit(1);
-	}
-	//mlx_image_to_window(vars->mlx, vars->tex.north, 0, 0);
-	//drawtext(vars->mlx, vars->tex.north);
-	
+	}	
 	mlx_delete_texture(tes);
-
 	//todo free textures;
 }
 

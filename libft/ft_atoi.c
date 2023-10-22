@@ -3,12 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_atoi.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 17:53:28 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/08/01 22:30:17 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/10/22 03:56:53 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include <math.h>
+#include <stdbool.h>
 
 int	ft_atoi(const char *nptr)
 {
@@ -62,4 +65,53 @@ long long	ft_atoll(const char *nptr)
 		i++;
 	}
 	return (nbr * neg);
+}
+
+
+// Function to convert a float to a string
+void floatToChar(float number, char* str, int precision)
+{
+	int	integerPart;
+	int	intLength;
+	int	temp;
+	int	i;
+	float decimalPart;
+
+    if (number < 0)
+	{
+        *str++ = '-';
+        number = -number;
+    }
+    integerPart = (int)number;
+    intLength = 0;
+    temp = integerPart;
+    while (temp > 0)
+	{
+        temp /= 10;
+        intLength++;
+    }
+    intLength = (intLength == 0) ? 1 : intLength;
+    temp = integerPart;
+    i = 1;
+    while (i <= intLength)
+	{
+        str[intLength - i] = '0' + (temp % 10);
+        temp /= 10;
+        i++;
+    }
+    if (precision > 0)
+	{
+        str[intLength] = '.';
+        intLength++;
+    }
+    decimalPart = number - (float)integerPart;
+    i = 1;
+    while (i <= precision) {
+        decimalPart *= 10;
+        str[intLength] = '0' + (int)decimalPart;
+        decimalPart -= (int)decimalPart;
+        intLength++;
+        i++;
+    }
+    str[intLength] = '\0';
 }

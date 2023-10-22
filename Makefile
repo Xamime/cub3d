@@ -6,7 +6,7 @@
 #    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/20 17:05:26 by max              ###   ########.fr        #
+#    Updated: 2023/10/22 03:53:00 by max              ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ all: $(NAME)
 	${CC} ${CFLAGS} -I/usr/include -c $< -o $@
 
 $(NAME): $(OBJ) $(LIBFT) libmlx
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+	$(CC) -Iincludes -g $(OBJ) $(LIBS) -o $(NAME)
 
 libmlx:
 	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8 

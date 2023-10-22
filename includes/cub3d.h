@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 00:28:16 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 03:12:17 by max              ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,12 @@ typedef struct	t_player
 
 typedef struct	s_texture
 {
+	//eagle
 	mlx_image_t		*north;
 	mlx_image_t		*south;
+	//colorstone
 	mlx_image_t		*west;
+	//wood
 	mlx_image_t		*east;
 	int				*floor;
 	int				*ceiling;

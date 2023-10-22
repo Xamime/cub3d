@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 06:54:52 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 07:13:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -229,6 +229,16 @@ void ft_hook(void* param)
 		rotate_right(vars, &vars->ray);
 		ft_draw_walls(vars, &vars->ray);
 	}
+	// char	*str = NULL;
+	// char	*tmp;
+	// str = malloc(sizeof(char) * 20);
+	// float_to_char((1.0 / vars->mlx->delta_time), str, 1);
+	// tmp = str;
+	// str = ft_strjoin(str, " FPS");
+	// free(tmp);
+	// mlx_put_string(vars->mlx, str, 0, 20);
+	// // mlx_set_window_title(vars->mlx, str);
+	// free(str);
 	//vars->player.image->instances[0].x = (int)(vars->player.x * 50);
 	//vars->player.image->instances[0].y = (int)(vars->player.y * 50);
 	/*vars->minimap->instances[0].x = (int)(vars->player.x * 50);

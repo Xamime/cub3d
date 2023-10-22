@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 06:44:01 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 07:09:58 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,9 +101,12 @@ typedef struct	t_player
 
 typedef struct	s_texture
 {
+	//eagle
 	mlx_image_t		*north;
 	mlx_image_t		*south;
+	//colorstone
 	mlx_image_t		*west;
+	//wood
 	mlx_image_t		*east;
 	// int				*floor;
 	// int				*ceiling;
@@ -167,6 +170,7 @@ void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
 /* ---------------------------------- utils --------------------------------- */
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+void		float_to_char(float number, char* str, int precision);
 
 /* ---------------------------------- debug --------------------------------- */
 

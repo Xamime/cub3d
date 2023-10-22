@@ -6,7 +6,7 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/22 06:54:58 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/10/22 07:05:20 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,7 @@ all: $(NAME)
 	${CC} ${CFLAGS} -I/usr/include -c $< -o $@ -g
 
 $(NAME): $(OBJ) $(LIBFT) libmlx
-	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
+	$(CC) -Iincludes -g $(OBJ) $(LIBS) -o $(NAME)
 
 libmlx:
 	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8

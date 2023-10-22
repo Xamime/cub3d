@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:15:04 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 06:54:09 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 07:05:32 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ void	ft_update_offset_pos(int *step, double *side_dist, int step_val, double off
 		*step = step_val;
 		*side_dist = offset * delta;
 }
-
+/*
 void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray)
 {
 	int		fov = 90;
@@ -73,7 +73,7 @@ void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray)
 
 void	ft_display_rays(t_vars *vars, t_ray *ray)
 {
-	double	camera_step;
+	//double	camera_step;
 	double	ray_dir_x;
 	double	ray_dir_y;
 	double	delta_dist_x;
@@ -157,3 +157,4 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 	// printf(YELLOW"ray->plane.x : %f, ray->plane.y : %f\n"DEFAULT_COL, ray->plane.x, ray->plane.y);
 	// printf(BLUE"plane.x : %f, plane.y : %f\n"DEFAULT_COL, plane.x, plane.y);
 }
+*/

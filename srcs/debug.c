@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/17 07:15:04 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 07:05:32 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 07:24:31 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,8 @@ void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray)
 	double	start_dir_x;
 	double	start_dir_y;
 	double	start_angle = (fov / 2) * (PI / 180.0f);
-	start_dir_x = ray->dir.x * cos(start_angle) - ray->dir.y * sin(start_angle);
-	start_dir_y = ray->dir.x * sin(start_angle) + ray->dir.y * cos(start_angle);
+	start_dir_x = player->dir.x * cos(start_angle) - player->dir.y * sin(start_angle);
+	start_dir_y = player->dir.x * sin(start_angle) + player->dir.y * cos(start_angle);
 
 	double	angle;
 	double	rot_step = (double)-fov / WIDTH;
@@ -97,8 +97,8 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 		map_y = (int)(vars->player.y);
 
 		camera_step = 2 * x / (double)(WIDTH - 1);
-		ray_dir_x = ray->dir.x + ray->plane.x * camera_step;
-		ray_dir_y = ray->dir.y + ray->plane.y * camera_step;
+		ray_dir_x = player->dir.x + player->plane.x * camera_step;
+		ray_dir_y = player->dir.y + player->plane.y * camera_step;
 
 		ft_set_ray_dir(&ray_dir_x, &ray_dir_y, x, ray);
 		ft_display_single_ray(vars, ray_dir_x, ray_dir_y, create_rgba(0, 255, 0, 255));
@@ -149,12 +149,12 @@ void	ft_display_rays(t_vars *vars, t_ray *ray)
 	}
 	// ft_display_single_ray(vars, start_dir_x, start_dir_y, create_rgba(255, 0, 0, 255));
 	// ft_display_single_ray(vars, end_dir_x, end_dir_y, create_rgba(0, 0, 255, 255));
-	ft_display_single_ray(vars, ray->dir.x, ray->dir.y, create_rgba(255, 255, 0, 255));
+	ft_display_single_ray(vars, player->dir.x, player->dir.y, create_rgba(255, 255, 0, 255));
 	// ft_display_single_ray(vars, plane.x, plane.y, create_rgba(255, 150, 255, 255));
-	// ft_display_single_ray(vars, ray->plane.x, ray->plane.y, create_rgba(255, 0, 255, 255));
+	// ft_display_single_ray(vars, player->plane.x, player->plane.y, create_rgba(255, 0, 255, 255));
 	printf("player.x : %f, player.y : %f\n", vars->player.x, vars->player.y);
-	printf(RED"ray->dir.x : %f, ray->dir.y : %f\n"DEFAULT_COL, ray->dir.x, ray->dir.y);
-	// printf(YELLOW"ray->plane.x : %f, ray->plane.y : %f\n"DEFAULT_COL, ray->plane.x, ray->plane.y);
+	printf(RED"player->dir.x : %f, player->dir.y : %f\n"DEFAULT_COL, player->dir.x, player->dir.y);
+	// printf(YELLOW"player->plane.x : %f, player->plane.y : %f\n"DEFAULT_COL, player->plane.x, player->plane.y);
 	// printf(BLUE"plane.x : %f, plane.y : %f\n"DEFAULT_COL, plane.x, plane.y);
 }
 */

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 07:09:58 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 09:58:54 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,9 +78,7 @@ typedef struct	s_ray
 {
 	double		camerax;
 	double		angle;
-	t_fpoint	plane;
 	t_fpoint	ray_dir;
-	t_fpoint	dir;
 	double		wall_dist;
 	int			lineheight;
 	int			drawstart;
@@ -90,12 +88,15 @@ typedef struct	s_ray
 typedef struct	t_player
 {
 	mlx_image_t	*image;
+	t_fpoint	plane;
+	t_fpoint	dir;
 	double		x;
 	double		y;
 	double		angle;
 	double		movespeed;
 	double		rotspeed;
 	char		orientation;
+	int			has_moved;
 }				t_player;
 
 
@@ -120,14 +121,22 @@ typedef struct	s_texture
 	// int				y;
 }				t_tex;
 
+typedef struct	s_render_tex
+{
+	mlx_image_t	*texture;
+	t_ipoint	pos;
+	int			start_pos;
+	double		step;
+}				t_render_tex;
+
+
 typedef struct t_vars
 {
 	char		**map;
-	t_ray		ray;
-	t_dda		dda;
 	mlx_image_t	*minimap;
 	mlx_image_t	*game;
 	uint32_t	instance;
+	mlx_image_t	*instance2;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
@@ -142,7 +151,7 @@ typedef struct t_vars
 int	check_wall(t_vars *vars, double x, double y);
 
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
-void	ft_draw_walls(t_vars *vars, t_ray *ray);
+void	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
 void    dda(char **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
@@ -156,16 +165,37 @@ void	init_textures(t_vars *vars);
 void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/
-void    rotate_left(t_vars *vars, t_ray *ray);
-void    rotate_right(t_vars *vars, t_ray *ray);
-void	ft_up(t_vars *vars, t_ray *ray);
-void	ft_down(t_vars *vars, t_ray *ray);
-void	left_step(t_vars *vars, t_ray *ray);
-void	right_step(t_vars *vars, t_ray *ray);
+void    rotate_left(t_player *player);
+void    rotate_right(t_player *player);
+void	ft_up(t_player *player, char **map);
+void	ft_down(t_player *player, char **map);
+void	left_step(t_player *player, char **map);
+void	right_step(t_player *player, char **map);
 
 /*					Textures						*/
 void	get_texture_index(t_vars *vars);
 void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
+
+/* ----------------------------------- dda ---------------------------------- */
+
+double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
+t_dda	init_dda(t_player player, t_fpoint ray_dir);
+
+/* ---------------------------------- draw ---------------------------------- */
+
+void	draw_ceiling(uint32_t *buffer, int x, int y);
+void	draw_floor(uint32_t *buffer, int x, int y);
+void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
+void	draw_buffer(t_vars *vars, mlx_image_t *game, uint32_t *buffer);
+
+/* ------------------------------- draw_utils ------------------------------- */
+
+int		get_pixel_color(int i, int j, mlx_image_t *map_img);
+void	set_ray_draw_pos(t_ray *ray);
+
+/* ----------------------------- render_textures ---------------------------- */
+
+t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
 
 /* ---------------------------------- utils --------------------------------- */
 

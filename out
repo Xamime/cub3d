@@ -4846,14 +4846,14 @@ void ft_draw_walls(t_vars *vars, t_ray *ray)
   dda->map.x = (int)(vars->player.x);
   dda->map.y = (int)(vars->player.y);
   ray->camerax = 2 * x / (double)(1000 - 1);
-  double dir_x = ray->dir.x;
-  double dir_y = ray->dir.y;
+  double dir_x = player->dir.x;
+  double dir_y = player->dir.y;
   double oldDirX = dir_x;
   double angle = 44.7;
   dir_x = dir_x * cos(angle) - dir_y * sin(angle);
   dir_y = oldDirX * sin(angle) + dir_y * cos(angle);
-  ray->ray_dir.x = dir_x + ray->plane.x * ray->camerax;
-  ray->ray_dir.y = dir_y + ray->plane.y * ray->camerax;
+  ray->ray_dir.x = dir_x + player->plane.x * ray->camerax;
+  ray->ray_dir.y = dir_y + player->plane.y * ray->camerax;
 
 
 

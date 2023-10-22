@@ -463,9 +463,9 @@ typedef struct mlx_instance
  int32_t x;
  int32_t y;
  int32_t z;
- 
+
 # 306 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 306 "includes/../MLX42/include/MLX42/MLX42.h"
      enabled;
 } mlx_instance_t;
@@ -485,9 +485,9 @@ typedef struct mlx_image
  uint8_t* pixels;
  mlx_instance_t* instances;
  size_t count;
- 
+
 # 347 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 347 "includes/../MLX42/include/MLX42/MLX42.h"
        enabled;
  void* context;
@@ -562,9 +562,9 @@ typedef void mlx_win_cursor_t;
 # 481 "includes/../MLX42/include/MLX42/MLX42.h"
 const char* mlx_strerror(mlx_errno_t val);
 # 494 "includes/../MLX42/include/MLX42/MLX42.h"
-mlx_t* mlx_init(int32_t width, int32_t height, const char* title, 
+mlx_t* mlx_init(int32_t width, int32_t height, const char* title,
 # 494 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-                                                                 _Bool 
+                                                                 _Bool
 # 494 "includes/../MLX42/include/MLX42/MLX42.h"
                                                                       resize);
 # 503 "includes/../MLX42/include/MLX42/MLX42.h"
@@ -613,13 +613,13 @@ void mlx_set_window_title(mlx_t* mlx, const char* title);
 # 635 "includes/../MLX42/include/MLX42/MLX42.h"
 
 # 635 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 635 "includes/../MLX42/include/MLX42/MLX42.h"
     mlx_is_key_down(mlx_t* mlx, keys_t key);
 # 644 "includes/../MLX42/include/MLX42/MLX42.h"
 
 # 644 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 644 "includes/../MLX42/include/MLX42/MLX42.h"
     mlx_is_mouse_down(mlx_t* mlx, mouse_key_t key);
 # 657 "includes/../MLX42/include/MLX42/MLX42.h"
@@ -680,7 +680,7 @@ void mlx_resize_hook(mlx_t* mlx, mlx_resizefunc func, void* param);
 # 780 "includes/../MLX42/include/MLX42/MLX42.h"
 
 # 780 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 780 "includes/../MLX42/include/MLX42/MLX42.h"
     mlx_loop_hook(mlx_t* mlx, void (*f)(void*), void* param);
 # 790 "includes/../MLX42/include/MLX42/MLX42.h"
@@ -715,7 +715,7 @@ void mlx_delete_image(mlx_t* mlx, mlx_image_t* image);
 # 892 "includes/../MLX42/include/MLX42/MLX42.h"
 
 # 892 "includes/../MLX42/include/MLX42/MLX42.h" 3 4
-_Bool 
+_Bool
 # 892 "includes/../MLX42/include/MLX42/MLX42.h"
     mlx_resize_image(mlx_image_t* img, uint32_t nwidth, uint32_t nheight);
 # 904 "includes/../MLX42/include/MLX42/MLX42.h"
@@ -4639,21 +4639,21 @@ typedef struct s_ray
 {
  double camerax;
  double angle;
- double plane_x;
- double plane_y;
- double perpwalldist;
- double raydirx;
- double raydiry;
- double dirx;
- double diry;
- double sidedisty;
- double sidedistx;
- double deltadisty;
- double deltadistx;
- int mapx;
- int mapy;
- int stepx;
- int stepy;
+ double plane.x;
+ double plane.y;
+ double wall_dist;
+ double ray_dir.x;
+ double ray_dir.y;
+ double dir.x;
+ double dir.y;
+ double side_dist.y;
+ double side_dist.x;
+ double delta_dist.y;
+ double delta_dist.x;
+ int map.x;
+ int map.y;
+ int step.x;
+ int step.y;
  int lineheight;
  int drawstart;
  int drawend;
@@ -4843,69 +4843,69 @@ void ft_draw_walls(t_vars *vars, t_ray *ray)
  }
  for (int x = 0; x < 1000; x++)
  {
-  ray->mapx = (int)(vars->player.x);
-  ray->mapy = (int)(vars->player.y);
+  dda->map.x = (int)(vars->player.x);
+  dda->map.y = (int)(vars->player.y);
   ray->camerax = 2 * x / (double)(1000 - 1);
-  double dir_x = ray->dirx;
-  double dir_y = ray->diry;
+  double dir_x = ray->dir.x;
+  double dir_y = ray->dir.y;
   double oldDirX = dir_x;
   double angle = 44.7;
   dir_x = dir_x * cos(angle) - dir_y * sin(angle);
   dir_y = oldDirX * sin(angle) + dir_y * cos(angle);
-  ray->raydirx = dir_x + ray->plane_x * ray->camerax;
-  ray->raydiry = dir_y + ray->plane_y * ray->camerax;
+  ray->ray_dir.x = dir_x + ray->plane.x * ray->camerax;
+  ray->ray_dir.y = dir_y + ray->plane.y * ray->camerax;
 
 
 
 
-  ray->deltadistx = (ray->raydirx == 0) ? 1e30 : fabs(1 / ray->raydirx);
-  ray->deltadisty = (ray->raydiry == 0) ? 1e30 : fabs(1 / ray->raydiry);
-  if (ray->raydirx < 0)
+  dda->delta_dist.x = (ray->ray_dir.x == 0) ? 1e30 : fabs(1 / ray->ray_dir.x);
+  dda->delta_dist.y = (ray->ray_dir.y == 0) ? 1e30 : fabs(1 / ray->ray_dir.y);
+  if (ray->ray_dir.x < 0)
   {
-   ray->stepx = -1;
-   ray->sidedistx = (vars->player.x - ray->mapx) * ray->deltadistx;
+   dda->map.x = -1;
+   dda->side_dist.x = (vars->player.x - dda->map.x) * dda->delta_dist.x;
   }
   else
   {
-   ray->stepx = 1;
-   ray->sidedistx = (ray->mapx + 1.0 - vars->player.x) * ray->deltadistx;
+   dda->map.x = 1;
+   dda->side_dist.x = (dda->map.x + 1.0 - vars->player.x) * dda->delta_dist.x;
   }
-  if (ray->raydiry < 0)
+  if (ray->ray_dir.y < 0)
   {
-   ray->stepy = -1;
-   ray->sidedisty = (vars->player.y - ray->mapy) * ray->deltadisty;
+   dda->map.y = -1;
+   dda->side_dist.y = (vars->player.y - dda->map.y) * dda->delta_dist.y;
   }
   else
   {
-   ray->stepy = 1;
-   ray->sidedisty = (ray->mapy + 1.0 - vars->player.y) * ray->deltadisty;
+   dda->map.y = 1;
+   dda->side_dist.y = (dda->map.y + 1.0 - vars->player.y) * dda->delta_dist.y;
   }
   ray->hit = 0;
   while (ray->hit == 0)
   {
-   if (ray->sidedistx < ray->sidedisty)
+   if (dda->side_dist.x < dda->side_dist.y)
    {
-    ray->sidedistx += ray->deltadistx;
-    ray->mapx += ray->stepx;
-    ray->side = 0;
+    dda->side_dist.x += dda->delta_dist.x;
+    dda->map.x += dda->map.x;
+    dda->side = 0;
    }
    else
    {
-    ray->sidedisty += ray->deltadisty;
-    ray->mapy += ray->stepy;
-    ray->side = 1;
+    dda->side_dist.y += dda->delta_dist.y;
+    dda->map.y += dda->map.y;
+    dda->side = 1;
    }
 
 
 
-   if (vars->map[ray->mapy][ray->mapx] == '1')
+   if (vars->map[dda->map.y][dda->map.x] == '1')
     ray->hit = 1;
   }
-  if (ray->side == 0)
-   ray->perpwalldist = (ray->sidedistx - ray->deltadistx);
+  if (dda->side == 0)
+   ray->wall_dist = (dda->side_dist.x - dda->delta_dist.x);
   else
-   ray->perpwalldist = (ray->sidedisty - ray->deltadisty);
-  ray->lineheight = (int)(1000 / ray->perpwalldist);
+   ray->wall_dist = (dda->side_dist.y - dda->delta_dist.y);
+  ray->lineheight = (int)(1000 / ray->wall_dist);
 
   ray->drawstart = 1000 / 2 - ray->lineheight / 2;
   if (ray->drawstart < 0)
@@ -4917,17 +4917,17 @@ void ft_draw_walls(t_vars *vars, t_ray *ray)
 
 
       double wallX;
-      if (ray->side == 0)
-   wallX = vars->player.y + ray->perpwalldist * ray->raydiry;
+      if (dda->side == 0)
+   wallX = vars->player.y + ray->wall_dist * ray->ray_dir.y;
       else
-   wallX = vars->player.x + ray->perpwalldist * ray->raydirx;
+   wallX = vars->player.x + ray->wall_dist * ray->ray_dir.x;
       wallX -= floor((wallX));
 
 
       int texX = (int)(wallX * (double)64);
-      if(ray->side == 0 && ray->raydirx > 0)
+      if(dda->side == 0 && ray->ray_dir.x > 0)
    texX = 64 - texX - 1;
-      if(ray->side == 1 && ray->raydiry < 0)
+      if(dda->side == 1 && ray->ray_dir.y < 0)
    texX = 64 - texX - 1;
 
      double step = 1.0 * 64 / ray->lineheight;
@@ -4940,7 +4940,7 @@ void ft_draw_walls(t_vars *vars, t_ray *ray)
          texPos += step;
          color = vars->textures[0][64 * texY + texX];
 
-         if(ray->side == 1)
+         if(dda->side == 1)
     color = (color >> 1) & 8355711;
 
 
@@ -4948,11 +4948,11 @@ void ft_draw_walls(t_vars *vars, t_ray *ray)
      }
 
 
-  if (vars->map[ray->mapy][ray->mapx] == '1')
+  if (vars->map[dda->map.y][dda->map.x] == '1')
       color = create_rgba(0, 255, 255, 255);
   else
    color = create_rgba(0, 0, 0, 255);
-       if (ray->side == 1)
+       if (dda->side == 1)
    color = create_rgba(255, 0, 0, 255);
   if (!ray->hit)
    color = create_rgba(255, 0, 255, 255);
@@ -5012,7 +5012,7 @@ void alloc_texture(t_vars *vars)
     int i;
 
  vars->buffer = (uint32_t *)malloc(sizeof(int) * 1000 * 1000);
- if (vars->buffer == 
+ if (vars->buffer ==
 # 330 "main.c" 3 4
                     ((void *)0)
 # 330 "main.c"
@@ -5021,7 +5021,7 @@ void alloc_texture(t_vars *vars)
         return ;
     }
     vars->textures = (int**)malloc(numTextures * sizeof(int*));
-    if (vars->textures == 
+    if (vars->textures ==
 # 335 "main.c" 3 4
                          ((void *)0)
 # 335 "main.c"
@@ -5033,7 +5033,7 @@ void alloc_texture(t_vars *vars)
     for (i = 0; i < numTextures; i++) {
         vars->textures[i] = (int*)malloc(64 * 64 * sizeof(int));
 
-        if (vars->textures[i] == 
+        if (vars->textures[i] ==
 # 343 "main.c" 3 4
                                 ((void *)0)
 # 343 "main.c"
@@ -5066,25 +5066,25 @@ void load_texture(t_vars *vars)
 {
  mlx_texture_t *tes;
  tes = mlx_load_png("./textures/eagle.png");
- vars->tex.north = mlx_texture_to_image(vars->mlx, tes);
- mlx_resize_image(vars->tex.north, 64, 64);
- if(!vars->tex.north)
+ vars->textures[NORTH] = mlx_texture_to_image(vars->mlx, tes);
+ mlx_resize_image(vars->textures[NORTH], 64, 64);
+ if(!vars->textures[NORTH])
  {
   printf("this image doesnt exist\n");
   exit(1);
  }
- mlx_image_to_window(vars->mlx, vars->tex.north, 0, 0);
- for (int i = 0; vars->tex.north->pixels[i];i++){
-  printf("pixel %d i = %d\n", i,vars->tex.north->pixels[i]);
+ mlx_image_to_window(vars->mlx, vars->textures[NORTH], 0, 0);
+ for (int i = 0; vars->textures[NORTH]->pixels[i];i++){
+  printf("pixel %d i = %d\n", i,vars->textures[NORTH]->pixels[i]);
  }
- drawtext(vars->mlx, vars->tex.north);
+ drawtext(vars->mlx, vars->textures[NORTH]);
 
 
 }
 
 int start_loop(t_vars *vars)
 {
- vars->mlx = mlx_init(1000, 1000, "cub", 
+ vars->mlx = mlx_init(1000, 1000, "cub",
 # 390 "main.c" 3 4
                                            1
 # 390 "main.c"

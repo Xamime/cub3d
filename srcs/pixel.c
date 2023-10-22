@@ -3,21 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/16 19:34:15 by max              ###   ########.fr       */
+/*   Updated: 2023/10/22 06:54:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 void	ft_draw_pixels_grid(void* param)
 {
 	int x = 0;
 	int y = 0;
 	int	i = 0;
-	
+
 	t_vars *vars;
 
 	vars = param;
@@ -106,14 +106,14 @@ void ft_draw_pixels_player(void* param)
 	int x = 0;
 	int y;
 	t_vars *vars;
-	
+
 	vars = param;
 	//dda(vars, start, end);
-	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane_x;
-	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane_y;
+	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane.x;
+	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane.y;
 	dda(vars, start, end);
-	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) + vars->player.ray.plane_x;
-	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) + vars->player.ray.plane_y;
+	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) + vars->player.ray.plane.x;
+	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) + vars->player.ray.plane.y;
 	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
 	dda(vars, start, end);*/
 	while (x < 6)

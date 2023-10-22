@@ -3,14 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/21 20:20:59 by max              ###   ########.fr       */
+/*   Updated: 2023/10/22 06:54:16 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "./includes/cub3d.h"
+#include "../includes/cub3d.h"
 
 void	init_img(t_img *img)
 {
@@ -23,44 +23,48 @@ void	init_img(t_img *img)
 
 void  init(t_vars *vars)
 {
-	vars->game = NULL;
 	vars->ray.lineheight = 0;
 	vars->ray.drawend = 0;
 	vars->ray.drawstart = 0;
 	//vars->ray.camerax = 0;
-	vars->ray.hit = 0;
-	vars->ray.side = 0;
+	vars->dda.side = 0;
+
+	for (int y = 0; y < HEIGHT; y++){
+		for (int x = 0; x < WIDTH; x++){
+			vars->buffer[y * WIDTH + x] = 0;
+		}
+	}
 }
 
 void	init_orientation(t_vars *vars)
 {
 	if (vars->player.orientation == 'N')
 	{
-		vars->ray.dirx = 0;
-		vars->ray.diry = -1;
-		vars->ray.plane_x = -0.66;
-		vars->ray.plane_y = 0;
+		vars->ray.dir.x = 0;
+		vars->ray.dir.y = -1;
+		vars->ray.plane.x = -0.66;
+		vars->ray.plane.y = 0;
 	}
 	else if (vars->player.orientation == 'E')
 	{
-		vars->ray.dirx = 1;
-		vars->ray.diry = 0;
-		vars->ray.plane_x = 0;
-		vars->ray.plane_y = -0.66;
+		vars->ray.dir.x = 1;
+		vars->ray.dir.y = 0;
+		vars->ray.plane.x = 0;
+		vars->ray.plane.y = -0.66;
 	}
 	else if (vars->player.orientation == 'W')
 	{
-		vars->ray.dirx = -1;
-		vars->ray.diry = 0;
-		vars->ray.plane_x = 0;
-		vars->ray.plane_y = 0.66;
+		vars->ray.dir.x = -1;
+		vars->ray.dir.y = 0;
+		vars->ray.plane.x = 0;
+		vars->ray.plane.y = 0.66;
 	}
 	else if (vars->player.orientation == 'S')
 	{
-		vars->ray.dirx = 0;
-		vars->ray.diry = 1;
-		vars->ray.plane_x = 0.66;
-		vars->ray.plane_y = 0;
+		vars->ray.dir.x = 0;
+		vars->ray.dir.y = 1;
+		vars->ray.plane.x = 0.66;
+		vars->ray.plane.y = 0;
 	}
 }
 

@@ -3,14 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: max <max@student.42.fr>                    +#+  +:+       +#+         #
+#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/20 17:05:26 by max              ###   ########.fr        #
+#    Updated: 2023/10/22 06:54:58 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = $(wildcard *.c)
+SRC = $(wildcard srcs/*.c)
 
 NAME = cub3d
 LIBFT_SRC = libft
@@ -20,7 +20,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g
+CFLAGS = #-Wall -Wextra -Werror -Iincludes -g
 OBJ = $(SRC:c=o)
 
 YELLOW=\033[0;33m
@@ -32,13 +32,13 @@ CLEANL=\r\033[K
 all: $(NAME)
 
 %.o: %.c
-	${CC} ${CFLAGS} -I/usr/include -c $< -o $@
+	${CC} ${CFLAGS} -I/usr/include -c $< -o $@ -g
 
 $(NAME): $(OBJ) $(LIBFT) libmlx
 	$(CC) $(CFLAGS) $(OBJ) $(LIBS) -o $(NAME)
 
 libmlx:
-	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8 
+	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8
 
 ${LIBFT}:
 	make all -C ${LIBFT_SRC} -s
@@ -54,5 +54,10 @@ fclean: clean
 
 re: fclean all
 
+wlib_fclean:
+	rm -f $(OBJ)
+	rm -f $(NAME)
+
+wlib: wlib_fclean all
 
 .PHONY: clean fclean re

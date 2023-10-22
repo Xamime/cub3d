@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 00:28:16 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/22 06:44:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,11 @@
 #define texWidth 64
 #define texHeight 64
 
+#define NORTH 0
+#define SOUTH 1
+#define EAST 2
+#define WEST 3
+
 #define RED "\e[38;2;255;0;0m"
 #define ORANGE "\e[38;2;255;150;0m"
 #define YELLOW "\e[38;2;255;255;0m"
@@ -36,6 +41,18 @@
 #define BLUE "\e[38;2;150;150;255m"
 #define VIOLET "\e[38;2;200;0;200m"
 #define DEFAULT_COL "\e[m"
+
+typedef struct s_ipoint
+{
+	int	x;
+	int	y;
+}				t_ipoint;
+
+typedef struct s_fpoint
+{
+	float	x;
+	float	y;
+}				t_fpoint;
 
 typedef struct	s_img
 {
@@ -48,43 +65,38 @@ typedef struct	s_img
 	int		height;
 }				t_img;
 
+typedef struct	s_dda
+{
+	t_fpoint	delta_dist;
+	t_ipoint	map;
+	t_ipoint	step;
+	int			side;
+}				t_dda;
+
+
 typedef struct	s_ray
 {
-	double	camerax;
-	double	angle;
-	double	plane_x;
-	double	plane_y;
-	double	perpwalldist;
-	double	raydirx;
-	double	raydiry;
-	double	dirx;
-	double	diry;
-	double	sidedisty;
-	double	sidedistx;
-	double	deltadisty;
-	double	deltadistx;
-	int		mapx;
-	int		mapy;
-	int		stepx;
-	int		stepy;
-	int		lineheight;
-	int		drawstart;
-	int		drawend;
-	int		hit;
-	int		side;
-
-}		t_ray;
+	double		camerax;
+	double		angle;
+	t_fpoint	plane;
+	t_fpoint	ray_dir;
+	t_fpoint	dir;
+	double		wall_dist;
+	int			lineheight;
+	int			drawstart;
+	int			drawend;
+}				t_ray;
 
 typedef struct	t_player
 {
 	mlx_image_t	*image;
-	double	x;
-	double	y;
-	double	angle;
-	double	movespeed;
-	double	rotspeed;
-	char	orientation;
-}			t_player;
+	double		x;
+	double		y;
+	double		angle;
+	double		movespeed;
+	double		rotspeed;
+	char		orientation;
+}				t_player;
 
 
 typedef struct	s_texture
@@ -93,31 +105,34 @@ typedef struct	s_texture
 	mlx_image_t		*south;
 	mlx_image_t		*west;
 	mlx_image_t		*east;
-	int				*floor;
-	int				*ceiling;
-	unsigned long	hex_floor;
-	unsigned long	hex_ceiling;
-	int				size;
-	int				index;
-	double			step;
-	double			pos;
-	int				x;
-	int				y;
+	// int				*floor;
+	// int				*ceiling;
+	// unsigned long	hex_floor;
+	// unsigned long	hex_ceiling;
+	// int				size;
+	// int				index;
+	// double			step;
+	// double			pos;
+	// int				x;
+	// int				y;
 }				t_tex;
 
 typedef struct t_vars
 {
 	char		**map;
 	t_ray		ray;
-	mlx_image_t *minimap;
-	mlx_image_t *game;
+	t_dda		dda;
+	mlx_image_t	*minimap;
+	mlx_image_t	*game;
+	uint32_t	instance;
 	mlx_t		*mlx;
 	t_player	player;
-	t_tex		tex;
+	mlx_image_t	*textures[4];
+	// t_tex		tex;
 	uint32_t	*buffer;
 	char		*title;
-	int			**texture_pixels;
-	int			**textures;
+	// int			**texture_pixels;
+	// int			**textures;
 }				t_vars;
 
 
@@ -134,7 +149,7 @@ void	ft_draw_pixels_player(void* param);
 void	init_img(t_img *img);
 void	init(t_vars *vars);
 void	init_orientation(t_vars *vars);
-void	init_textures(t_tex *textures);
+void	init_textures(t_vars *vars);
 void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/

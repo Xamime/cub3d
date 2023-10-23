@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 06:54:43 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:43:57 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ void	init_textures(t_vars *vars)
 {
 	vars->textures[NORTH] = load_texture("./textures/eagle.png", vars->mlx);
 	vars->textures[SOUTH] = load_texture("./textures/redbrick.png", vars->mlx);
-	vars->textures[EAST] = load_texture("./textures/pillar.png", vars->mlx);
-	vars->textures[WEST] = load_texture("./textures/greenlight.png", vars->mlx);
+	vars->textures[EAST] = load_texture("./textures/wood.png", vars->mlx);
+	vars->textures[WEST] = load_texture("./textures/colorstone.png", vars->mlx);
 	//drawtext(vars->mlx, vars->textures[NORTH]);
 
 	alloc_texture(vars);

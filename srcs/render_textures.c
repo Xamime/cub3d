@@ -3,32 +3,31 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 16:34:43 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/23 15:43:16 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], int wallx, int side)
+static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], t_ray ray, int side)
 {
-	(void)wallx;
-	if (side == 0)
+	if (side == 0 && ray.ray_dir.x < 0)
 		return (textures[EAST]);
-	if (side)
+	else if (side == 0 && ray.ray_dir.x > 0)
 		return (textures[WEST]);
-	return (textures[NORTH]);
+	else if (side == 1 && ray.ray_dir.y < 0)
+		return (textures[NORTH]);
+	else
+		return (textures[SOUTH]);
 }
 
 t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4])
 {
-	//texturing calculations
-	//int texNum = vars->map[dda->map.y][dda->map.x] - 1 - 48; //1 subtracted from it so that texture 0 can be used!
-	//calculate value of wallX
 	t_render_tex	rtex;
-	double			wallX; // where exactly the wall was hit
+	double			wallX;
 
 	if (side == 0)
 		wallX = player.y + ray.wall_dist * ray.ray_dir.y;
@@ -36,7 +35,7 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 		wallX = player.x + ray.wall_dist * ray.ray_dir.x;
 	wallX -= floor((wallX));
 
-	rtex.texture = find_tex_side(textures, wallX, side);
+	rtex.texture = find_tex_side(textures, ray, side);
 
 	//printf("wallx = %f\n",wallX);
 	rtex.pos.x = (int)(wallX * (double)rtex.texture->width);

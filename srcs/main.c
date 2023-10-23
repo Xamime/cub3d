@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 16:12:41 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/23 18:24:51 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,13 @@
 
 void	display_fps(t_vars *vars)
 {
-	// printf("fps = %f\n", 1.0 / vars->mlx->delta_time);
 	char	*str = NULL;
 	char	*tmp;
-	str = malloc(sizeof(char) * 20);
-	float_to_char((1.0 / vars->mlx->delta_time), str, 1);
+	
+	str = ft_itoa((int)(1.0 / vars->mlx->delta_time));
 	tmp = str;
 	str = ft_strjoin(str, " FPS");
 	free(tmp);
-	// vars->instance2 = mlx_put_string(vars->mlx, str, 0, 20);
 	mlx_set_window_title(vars->mlx, str);
 	free(str);
 }
@@ -68,7 +66,7 @@ void ft_hook(void* param)
 		rotate_left(&vars->player);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(&vars->player);
-	if (vars->player.has_moved)
+	if (vars->player.has_moved || vars->start == 0)
 	{
 		init(vars);
 		update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
@@ -78,6 +76,7 @@ void ft_hook(void* param)
 		// ft_display_rays(vars, ray);
 		display_fps(vars);
 		vars->player.has_moved = 0;
+		vars->start = 1;
 	}
 	//vars->player.image->instances[0].x = (int)(vars->player.x * 50);
 	//vars->player.image->instances[0].y = (int)(vars->player.y * 50);
@@ -88,6 +87,7 @@ void ft_hook(void* param)
 int	start_loop(t_vars *vars)
 {
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
+	vars->start = 0;
 	init_textures(vars);
 	//reset_window(vars);
 	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);

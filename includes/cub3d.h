@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 16:29:52 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/23 18:24:37 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,16 +109,6 @@ typedef struct	s_texture
 	mlx_image_t		*west;
 	//wood
 	mlx_image_t		*east;
-	// int				*floor;
-	// int				*ceiling;
-	// unsigned long	hex_floor;
-	// unsigned long	hex_ceiling;
-	// int				size;
-	// int				index;
-	// double			step;
-	// double			pos;
-	// int				x;
-	// int				y;
 }				t_tex;
 
 typedef struct	s_render_tex
@@ -131,6 +121,7 @@ typedef struct	s_render_tex
 typedef struct t_vars
 {
 	char		**map;
+	t_ray		*ray;
 	mlx_image_t	*minimap;
 	mlx_image_t	*game;
 	uint32_t	instance;
@@ -138,11 +129,9 @@ typedef struct t_vars
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
-	// t_tex		tex;
 	uint32_t	*buffer;
 	char		*title;
-	// int			**texture_pixels;
-	// int			**textures;
+	int			start;
 }				t_vars;
 
 

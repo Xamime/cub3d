@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/23 18:24:51 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/24 03:53:20 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,22 @@ void	display_fps(t_vars *vars)
 {
 	char	*str = NULL;
 	char	*tmp;
-	
-	str = ft_itoa((int)(1.0 / vars->mlx->delta_time));
-	tmp = str;
-	str = ft_strjoin(str, " FPS");
-	free(tmp);
-	mlx_set_window_title(vars->mlx, str);
-	free(str);
+	char	fps[15];
+	mlx_image_t	*lol;
+
+	// str = ft_itoa((int)(1.0 / vars->mlx->delta_time));
+	// tmp = str;
+	// str = ft_strjoin(str, " FPS");
+	// free(tmp);
+	// mlx_put_string(vars->mlx, str, 0, 100);
+	// free(str);
+	ft_bzero(fps, 15);
+	ft_itoa_no_malloc((int)(1.0 / vars->mlx->delta_time), fps);
+	ft_strlcat(fps, " FPS", 16);
+	// printf("%s\n", fps);
+	// mlx_put_string(vars->mlx, "             ", 0, 100);
+	// mlx_put_string(vars->mlx, fps, 0, 100);
+	mlx_set_window_title(vars->mlx, fps);
 }
 
 void	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer)
@@ -39,8 +48,8 @@ void	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(*player, ray.ray_dir, &dda, map);
 		set_ray_draw_pos(&ray);
-		draw_floor(buffer, x, ray.drawend);
-		draw_ceiling(buffer, x, ray.drawstart);
+		// draw_floor(buffer, x, ray.drawend);
+		// draw_ceiling(buffer, x, ray.drawstart);
 		rtex = set_render_texture(*player, ray, dda.side, textures);
 		draw_wall(ray, rtex, x, buffer);
 	}
@@ -71,10 +80,10 @@ void ft_hook(void* param)
 		init(vars);
 		update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 		draw_buffer(vars, vars->game, vars->buffer);
+		display_fps(vars);
 		vars->player.movespeed = vars->mlx->delta_time * 5.0;
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		// ft_display_rays(vars, ray);
-		display_fps(vars);
 		vars->player.has_moved = 0;
 		vars->start = 1;
 	}
@@ -89,7 +98,7 @@ int	start_loop(t_vars *vars)
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
 	vars->start = 0;
 	init_textures(vars);
-	//reset_window(vars);
+	display_background(vars->mlx);
 	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);

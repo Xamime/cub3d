@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/23 18:24:37 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/24 03:06:23 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ typedef struct t_vars
 	t_ray		*ray;
 	mlx_image_t	*minimap;
 	mlx_image_t	*game;
+	mlx_image_t	*screen;
 	uint32_t	instance;
 	mlx_image_t	*instance2;
 	mlx_t		*mlx;
@@ -187,7 +188,8 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 /* ---------------------------------- utils --------------------------------- */
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-void		float_to_char(float number, char* str, int precision);
+void		display_background(mlx_t *mlx);
+char		*ft_itoa_no_malloc(int n, char *str);
 
 /* ---------------------------------- debug --------------------------------- */
 

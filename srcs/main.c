@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/23 18:24:51 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/24 13:40:47 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	display_fps(t_vars *vars)
 	free(str);
 }
 
-void	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer)
+t_ray	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer)
 {
 	t_dda			dda;
 	t_ray			ray;
@@ -44,10 +44,12 @@ void	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint
 		rtex = set_render_texture(*player, ray, dda.side, textures);
 		draw_wall(ray, rtex, x, buffer);
 	}
+	return (ray);
 }
 
 void ft_hook(void* param)
 {
+	t_ray	ray;
 	t_vars *vars  = param;
 
 	//ft_draw_pixels_grid(vars);
@@ -69,8 +71,10 @@ void ft_hook(void* param)
 	if (vars->player.has_moved || vars->start == 0)
 	{
 		init(vars);
-		update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
+		ray = update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 		draw_buffer(vars, vars->game, vars->buffer);
+		ft_draw_pixels_grid(vars);
+		ft_draw_pixels_player(vars, ray);
 		vars->player.movespeed = vars->mlx->delta_time * 5.0;
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		// ft_display_rays(vars, ray);
@@ -78,10 +82,6 @@ void ft_hook(void* param)
 		vars->player.has_moved = 0;
 		vars->start = 1;
 	}
-	//vars->player.image->instances[0].x = (int)(vars->player.x * 50);
-	//vars->player.image->instances[0].y = (int)(vars->player.y * 50);
-	/*vars->minimap->instances[0].x = (int)(vars->player.x * 50);
-	vars->minimap->instances[0].y = (int)(vars->player.y * 50);*/
 }
 
 int	start_loop(t_vars *vars)

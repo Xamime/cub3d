@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/22 06:54:48 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/24 14:02:25 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,15 @@ void	ft_draw_pixels_grid(void* param)
 		while (vars->map[y][x])
 		{
 			i = 0;
-			while (i < 50)
+			while (i < 10)
 			{
 				int j = 0;
-				while (j < 50)
+				while (j < 10)
 				{
 					if (vars->map[y][x] == '1' || j == 0 || i == 0)
-						mlx_put_pixel(vars->minimap, x * 50 + j, y * 50 + i, 0x000000FF);
+						mlx_put_pixel(vars->game, x * 10 + j, y * 10 + i, create_rgba(0, 0, 0, 150));
 					else
-						mlx_put_pixel(vars->minimap, x * 50 + j, y * 50 + i, 0xFFFFFFFF);
+						mlx_put_pixel(vars->game, x * 10 + j, y * 10 + i, create_rgba(255, 255, 255, 150));
 					j++;
 				}
 				i++;
@@ -101,27 +101,19 @@ int	check_wall(t_vars *vars, double x, double y)
 	}
 }*/
 
-void ft_draw_pixels_player(void* param)
+void ft_draw_pixels_player(void* param, t_ray)
 {
 	int x = 0;
 	int y;
 	t_vars *vars;
 
 	vars = param;
-	//dda(vars, start, end);
-	/*end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) - vars->player.ray.plane.x;
-	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) - vars->player.ray.plane.y;
-	dda(vars, start, end);
-	end.x = vars->player.x + 3 + (SPEED * vars->player.ray.deltadistX) + vars->player.ray.plane.x;
-	end.y = vars->player.y + 3 + (SPEED * vars->player.ray.deltadistY) + vars->player.ray.plane.y;
-	//printf("startx = %d, starty = %d endx = %d endy = %d dtx= %f dty = %f\n", start.x, start.y, end.x, end.y,vars->player.ray.deltadistX,vars->player.ray.deltadistY);
-	dda(vars, start, end);*/
-	while (x < 6)
+	while (x < 3)
 	{
 		y = 0;
-		while (y < 6)
+		while (y < 3)
 		{
-			mlx_put_pixel(vars->player.image, x, y, 0xFF0000FF);
+			mlx_put_pixel(vars->game, (int)(vars->player.x * 10 + x), (int)(vars->player.y * 10 + y), create_rgba(255, 0, 0, 150));
 			y++;
 		}
 		x++;

@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/23 18:24:37 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/24 13:41:24 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,11 +138,11 @@ typedef struct t_vars
 int	check_wall(t_vars *vars, double x, double y);
 
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
-void	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
+t_ray	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
 void    dda(char **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
-void	ft_draw_pixels_player(void* param);
+void	ft_draw_pixels_player(void* param, t_ray ray);
 
 /*					Initialisation					*/
 void	init_img(t_img *img);

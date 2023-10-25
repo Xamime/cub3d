@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/24 14:02:25 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/25 09:06:53 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ int	check_wall(t_vars *vars, double x, double y)
 	}
 }*/
 
-void ft_draw_pixels_player(void* param, t_ray)
+void ft_draw_pixels_player(void* param, t_ray ray)
 {
 	int x = 0;
 	int y;

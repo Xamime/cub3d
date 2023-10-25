@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/10/22 09:09:38 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/25 09:42:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 // a reduire
 
-void	rotate_left(t_player *player)
+void	rotate_left(t_player *player, double speed)
 {
 	double oldDirX = player->dir.x;
-    player->dir.x = player->dir.x * cos(player->rotspeed) - player->dir.y * sin(player->rotspeed);
-    player->dir.y = oldDirX * sin(player->rotspeed) + player->dir.y * cos(player->rotspeed);
+    player->dir.x = player->dir.x * cos(speed) - player->dir.y * sin(speed);
+    player->dir.y = oldDirX * sin(speed) + player->dir.y * cos(speed);
     double oldPlaneX = player->plane.x;
-    player->plane.x = player->plane.x * cos(player->rotspeed) - player->plane.y * sin(player->rotspeed);
-    player->plane.y = oldPlaneX * sin(player->rotspeed) + player->plane.y * cos(player->rotspeed);
+    player->plane.x = player->plane.x * cos(speed) - player->plane.y * sin(speed);
+    player->plane.y = oldPlaneX * sin(speed) + player->plane.y * cos(speed);
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
 	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);
@@ -29,14 +29,14 @@ void	rotate_left(t_player *player)
 	// printf("deltax %f  deltay %f\n\n", dda->delta_dist.x, dda->delta_dist.y);
 }
 
-void	rotate_right(t_player *player)
+void	rotate_right(t_player *player, double speed)
 {
 	double oldDirX = player->dir.x;
-    player->dir.x = player->dir.x * cos(-(player->rotspeed)) - player->dir.y * sin(-(player->rotspeed));
-    player->dir.y = oldDirX * sin(-(player->rotspeed)) + player->dir.y * cos(-(player->rotspeed));
+    player->dir.x = player->dir.x * cos(-(speed)) - player->dir.y * sin(-(speed));
+    player->dir.y = oldDirX * sin(-(speed)) + player->dir.y * cos(-(speed));
     double oldPlaneX = player->plane.x;
-    player->plane.x = player->plane.x * cos(-(player->rotspeed)) - player->plane.y * sin(-(player->rotspeed));
-    player->plane.y = oldPlaneX * sin(-(player->rotspeed)) + player->plane.y * cos(-(player->rotspeed));
+    player->plane.x = player->plane.x * cos(-(speed)) - player->plane.y * sin(-(speed));
+    player->plane.y = oldPlaneX * sin(-(speed)) + player->plane.y * cos(-(speed));
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
 	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);

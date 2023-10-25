@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/24 14:06:39 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/25 10:32:20 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,9 @@ void ft_hook(void* param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 		ft_down(&vars->player, vars->map);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-		rotate_left(&vars->player);
+		rotate_left(&vars->player, vars->player.rotspeed);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-		rotate_right(&vars->player);
+		rotate_right(&vars->player, vars->player.rotspeed);
 	if (vars->player.has_moved || vars->start == 0)
 	{
 		init(vars);
@@ -87,9 +87,21 @@ void ft_hook(void* param)
 		vars->player.movespeed = vars->mlx->delta_time * 5.0;
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		// ft_display_rays(vars, ray);
+		// display_fps(vars);
 		vars->player.has_moved = 0;
 		vars->start = 1;
 	}
+}
+
+void	cursor_hook(double x, double y, void *param)
+{
+	t_vars			*vars;
+	static double	last_x = 0;
+
+	vars = (t_vars *)param;
+	rotate_right(&vars->player, (x - last_x) / 200);
+	last_x = x;
+	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
 int	start_loop(t_vars *vars)
@@ -102,6 +114,7 @@ int	start_loop(t_vars *vars)
 	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
+	// mlx_cursor_hook(vars->mlx, cursor_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	return (EXIT_SUCCESS);

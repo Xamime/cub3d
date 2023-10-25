@@ -6,13 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2023/10/24 13:41:24 by xamime           ###   ########.fr       */
-=======
-/*   Updated: 2023/10/24 03:06:23 by jfarkas          ###   ########.fr       */
->>>>>>> refs/remotes/origin/main
 /*                                                                            */
-/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -157,8 +151,8 @@ void	init_textures(t_vars *vars);
 void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/
-void    rotate_left(t_player *player);
-void    rotate_right(t_player *player);
+void    rotate_left(t_player *player, double speed);
+void    rotate_right(t_player *player, double speed);
 void	ft_up(t_player *player, char **map);
 void	ft_down(t_player *player, char **map);
 void	left_step(t_player *player, char **map);

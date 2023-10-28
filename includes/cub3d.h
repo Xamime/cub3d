@@ -3,10 +3,12 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
+/*   Updated: 2023/10/27 17:54:55 by xamime           ###   ########.fr       */
 /*                                                                            */
+/* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
@@ -17,6 +19,13 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <stdbool.h>
+
+//open files
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <errno.h>
+#include <string.h>
 
 #define PI 3.14159
 
@@ -31,6 +40,9 @@
 #define SOUTH 1
 #define EAST 2
 #define WEST 3
+#define FLOOR 4
+#define CEILING 5
+#define MAP 6
 
 #define RED "\e[38;2;255;0;0m"
 #define ORANGE "\e[38;2;255;150;0m"
@@ -134,6 +146,7 @@ typedef struct t_vars
 }				t_vars;
 
 
+void	init_textures_test(t_vars *vars, char *path, int direction);
 int	check_wall(t_vars *vars, double x, double y);
 
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);

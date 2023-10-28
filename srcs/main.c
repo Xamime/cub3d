@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/25 10:32:20 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/28 14:43:04 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -114,19 +114,107 @@ int	start_loop(t_vars *vars)
 	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
-	// mlx_cursor_hook(vars->mlx, cursor_hook, vars);
+	mlx_cursor_hook(vars->mlx, cursor_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	return (EXIT_SUCCESS);
 }
 
+int	open_file(const char *path)
+{
+	int	fd;
+
+	fd = open(path, O_RDONLY, 644);
+	if (fd == -1)
+	{
+		printf("Error\n%s : %s\n", path, strerror(errno));
+		exit(1);
+	}
+	return (fd);
+}
+
+int	check_dir_path(char *str, int i)
+{
+	if (str[i] == 'S' && str[i + 1] == 'O')
+		return (SOUTH);
+	else if (str[i] == 'N' && str[i + 1] == 'O')
+		return (NORTH);
+	else if (str[i] == 'E' && str[i + 1] == 'A')
+		return (EAST);
+	else if (str[i] == 'W' && str[i + 1] == 'E')
+		return (WEST);
+	else if (str[i] == 'F')
+		return (FLOOR);
+	else if (str[i] == 'C')
+		return (CEILING);
+	else if (str[i] == '1' || str[i] == '0')
+		return (MAP);
+	return (-1);
+}
+
+//parcourt la ligne pour voir si c'est le debut de la map
+// return true if it's the map
+int	is_it_the_map(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '1' || str[i] == '0')
+		return (1);
+	return (0);
+}
+
+/*le premier caractere dois etre une lettre ou un chiffre, sauf si c'est la map*/
+void	find_path_tex(char *str)
+{
+	int	i;
+	int	dir;
+
+	i = 0;
+	while (str[i] == ' ' || str[i] == '\t')
+		i++;
+	if (str[i] == '\n')
+	{
+		free(str);
+		return ;
+	}
+	dir = check_dir_path(str, i);
+	if (dir == -1 && !is_it_the_map(str))
+	{
+		printf("Error\nBad identifier\n");
+		free(str);
+		exit(1);
+	}
+	if (dir != MAP)
+	{
+
+	}
+}
+
+void	parse_file(t_vars *vars, const char *path)
+{
+	int		fd;
+	char	*tmp;
+
+	fd = open_file(path);
+	int i = 0;
+	while ((tmp = get_next_line(fd)))
+	{
+		printf("%s",tmp);
+		find_path_tex(tmp);
+		i++;
+	}
+	
+}
 
 int	main(int32_t argc, const char* argv[])
 {
 	t_vars	vars;
 
-	(void)argc;(void)argv;
-	//system("clear");
+	(void)argc;
+	parse_file(&vars, argv[1]);
 	vars.map = ft_split("11111111:10000001:10000001:1010S001:10000001:10000001:10000001:11111111",':');
 	find_pos(&vars, vars.map);
 	init_orientation(&vars);

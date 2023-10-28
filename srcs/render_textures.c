@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/23 15:43:16 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/27 16:24:36 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,9 @@ static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], t_ray ray, int side)
 		return (textures[WEST]);
 	else if (side == 1 && ray.ray_dir.y < 0)
 		return (textures[NORTH]);
-	else
+	else if (side == 1 && ray.ray_dir.y > 0)
 		return (textures[SOUTH]);
+	return (NULL);
 }
 
 t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4])

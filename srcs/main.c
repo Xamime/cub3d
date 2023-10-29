@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/29 15:26:42 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 17:02:24 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,12 @@ int	start_loop(t_vars *vars, const char *path)
 	t_bgrd bgrd;
 
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
-	parse_file(vars, path, &bgrd);
+	if (!parse_file(vars, path, &bgrd))
+	{
+		for (int i = 0; vars->map[i]; i++)
+			free(vars->map[i]);
+		free(vars->map);
+	}
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	alloc_texture(vars);

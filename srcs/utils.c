@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/24 03:07:55 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/28 20:08:15 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	display_background(mlx_t *mlx)
+void	display_background(mlx_t *mlx, t_bgrd bgrd)
 {
 	mlx_image_t	*background;
 	int			x;
@@ -26,9 +26,9 @@ void	display_background(mlx_t *mlx)
 		while (y < HEIGHT)
 		{
 			if (y < HEIGHT / 2)
-				mlx_put_pixel(background, x, y, create_rgba(150, 150, 70, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r, bgrd.ceil.g, bgrd.ceil.b, 255));
 			else
-				mlx_put_pixel(background, x, y, create_rgba(50, 50, 140, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r, bgrd.floor.g, bgrd.floor.b, 255));
 			y++;
 		}
 		x++;

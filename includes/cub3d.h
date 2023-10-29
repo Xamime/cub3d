@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/27 17:54:55 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 05:02:56 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,19 @@ typedef struct	s_render_tex
 	t_ipoint	pos;
 }				t_render_tex;
 
+typedef struct	s_rgb
+{
+	int32_t	r;
+	int32_t	g;
+	int32_t	b;
+}				t_rgb;
+
+typedef struct	s_background
+{
+	t_rgb	ceil;
+	t_rgb	floor;
+}				t_bgrd;
+
 
 typedef struct t_vars
 {
@@ -148,7 +161,10 @@ typedef struct t_vars
 
 void	init_textures_test(t_vars *vars, char *path, int direction);
 int	check_wall(t_vars *vars, double x, double y);
+void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
 
+void	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);
+void	alloc_texture(t_vars *vars);
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
 t_ray	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
@@ -199,7 +215,7 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 /* ---------------------------------- utils --------------------------------- */
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-void		display_background(mlx_t *mlx);
+void		display_background(mlx_t *mlx, t_bgrd bgrd);
 char		*ft_itoa_no_malloc(int n, char *str);
 
 /* ---------------------------------- debug --------------------------------- */

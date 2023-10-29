@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/28 14:43:04 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 15:26:42 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,8 +61,6 @@ void ft_hook(void* param)
 	t_ray	ray;
 	t_vars *vars  = param;
 
-	//ft_draw_pixels_grid(vars);
-	//ft_draw_pixels_player(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
@@ -104,12 +102,17 @@ void	cursor_hook(double x, double y, void *param)
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
-int	start_loop(t_vars *vars)
+int	start_loop(t_vars *vars, const char *path)
 {
+	t_bgrd bgrd;
+
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
+	parse_file(vars, path, &bgrd);
+	find_pos(vars, vars->map);
+	init_orientation(vars);
+	alloc_texture(vars);
 	vars->start = 0;
-	init_textures(vars);
-	display_background(vars->mlx);
+	display_background(vars->mlx, bgrd);
 	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
@@ -120,105 +123,12 @@ int	start_loop(t_vars *vars)
 	return (EXIT_SUCCESS);
 }
 
-int	open_file(const char *path)
-{
-	int	fd;
-
-	fd = open(path, O_RDONLY, 644);
-	if (fd == -1)
-	{
-		printf("Error\n%s : %s\n", path, strerror(errno));
-		exit(1);
-	}
-	return (fd);
-}
-
-int	check_dir_path(char *str, int i)
-{
-	if (str[i] == 'S' && str[i + 1] == 'O')
-		return (SOUTH);
-	else if (str[i] == 'N' && str[i + 1] == 'O')
-		return (NORTH);
-	else if (str[i] == 'E' && str[i + 1] == 'A')
-		return (EAST);
-	else if (str[i] == 'W' && str[i + 1] == 'E')
-		return (WEST);
-	else if (str[i] == 'F')
-		return (FLOOR);
-	else if (str[i] == 'C')
-		return (CEILING);
-	else if (str[i] == '1' || str[i] == '0')
-		return (MAP);
-	return (-1);
-}
-
-//parcourt la ligne pour voir si c'est le debut de la map
-// return true if it's the map
-int	is_it_the_map(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	if (str[i] == '1' || str[i] == '0')
-		return (1);
-	return (0);
-}
-
-/*le premier caractere dois etre une lettre ou un chiffre, sauf si c'est la map*/
-void	find_path_tex(char *str)
-{
-	int	i;
-	int	dir;
-
-	i = 0;
-	while (str[i] == ' ' || str[i] == '\t')
-		i++;
-	if (str[i] == '\n')
-	{
-		free(str);
-		return ;
-	}
-	dir = check_dir_path(str, i);
-	if (dir == -1 && !is_it_the_map(str))
-	{
-		printf("Error\nBad identifier\n");
-		free(str);
-		exit(1);
-	}
-	if (dir != MAP)
-	{
-
-	}
-}
-
-void	parse_file(t_vars *vars, const char *path)
-{
-	int		fd;
-	char	*tmp;
-
-	fd = open_file(path);
-	int i = 0;
-	while ((tmp = get_next_line(fd)))
-	{
-		printf("%s",tmp);
-		find_path_tex(tmp);
-		i++;
-	}
-	
-}
-
 int	main(int32_t argc, const char* argv[])
 {
 	t_vars	vars;
 
 	(void)argc;
-	parse_file(&vars, argv[1]);
-	vars.map = ft_split("11111111:10000001:10000001:1010S001:10000001:10000001:10000001:11111111",':');
-	find_pos(&vars, vars.map);
-	init_orientation(&vars);
-	start_loop(&vars);
+	start_loop(&vars, argv[1]);
 	for (int i = 0; vars.map[i]; i++)
 		free(vars.map[i]);
 	free(vars.map);

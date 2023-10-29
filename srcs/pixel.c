@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pixel.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/25 09:06:53 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/29 15:46:12 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,9 @@ void	ft_draw_pixels_grid(void* param)
 				{
 					if (vars->map[y][x] == '1' || j == 0 || i == 0)
 						mlx_put_pixel(vars->game, x * 10 + j, y * 10 + i, create_rgba(0, 0, 0, 150));
-					else
+					else if (vars->map[y][x] == ' ')
+						mlx_put_pixel(vars->game, x * 10 + j, y * 10 + i, create_rgba(0, 0, 0, 0));
+					else 
 						mlx_put_pixel(vars->game, x * 10 + j, y * 10 + i, create_rgba(255, 255, 255, 150));
 					j++;
 				}

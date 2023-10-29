@@ -6,7 +6,7 @@
 /*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/27 17:09:09 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 05:20:46 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 void	alloc_texture(t_vars *vars)
 {
 	vars->buffer = (uint32_t *)malloc(sizeof(int) * HEIGHT * WIDTH);
-	if (vars->buffer == NULL) {
+	if (vars->buffer == NULL)
+	{
 		perror("Memory allocation failed");
 		return ;
 	}
@@ -33,6 +34,7 @@ mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 		mlx_terminate(mlx);
 		exit(1);
 	}
+	printf("%s\n",path);
 	tex = mlx_texture_to_image(mlx, tmp);
 	if(!tex)
 	{
@@ -46,23 +48,13 @@ mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 
 void	init_textures_test(t_vars *vars, char *path, int direction)
 {
+	int i = 0;
+	while (path[i])
+	{
+		if (path[i] == '\n')
+			path[i] = '\0';
+		i++;
+	}
 	vars->textures[direction] = load_texture(path, vars->mlx);
-	//drawtext(vars->mlx, vars->textures[NORTH]);
-
-	alloc_texture(vars);
-
-	//todo free textures;
-}
-
-void	init_textures(t_vars *vars)
-{
-	vars->textures[NORTH] = load_texture("./textures/eagle.png", vars->mlx);
-	vars->textures[SOUTH] = load_texture("./textures/redbrick.png", vars->mlx);
-	vars->textures[EAST] = load_texture("./textures/wood.png", vars->mlx);
-	vars->textures[WEST] = load_texture("./textures/colorstone.png", vars->mlx);
-	//drawtext(vars->mlx, vars->textures[NORTH]);
-
-	alloc_texture(vars);
-
 	//todo free textures;
 }

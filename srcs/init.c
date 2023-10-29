@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/22 09:54:52 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/29 15:43:39 by xamime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void    find_pos(t_vars *vars, char **map)
         j = 0;
         while (map[i][j])
         {
-            if (map[i][j] != '0' && map[i][j] != '1')
+            if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
             {
                 vars->player.x = j;
                 vars->player.y = i;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/10/29 15:27:12 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/31 15:34:34 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,17 @@ int is_in_set(char c, char *charset)
     return (0);
 }
 
+int	check_side_char(char **map, int i, int j)
+{
+	if (map[i][j] == '0' && (j == 0 || i == 0 || !map[i + 1] || !map[i][j + 1]))
+	{
+		return (1);
+	}
+	return (0);
+}
+
 // risque de segfault si map[0] est regarder
-// espace seulement suivis d'espace ou de 1, 
+// espace seulement suivis d'espace ou de 1,
 int check_if_map_is_close(char **map)
 {
     int i;
@@ -39,9 +48,15 @@ int check_if_map_is_close(char **map)
         j = 0;
         while (map[i][j])
         {
-            if (map[i][j] == '0' && (is_in_set(map[i + 1][j], " \n")
-            || is_in_set(map[i - 1][j], " \n") || is_in_set(map[i][j + 1], " \n")
-            || is_in_set(map[i][j - 1], " \n")))
+			if (i == 0 || j == 0 || map[i + 1] == NULL || map[i][j + 1] == '\0')
+			{
+				if (check_side_char(map, i, j))
+					return (1);
+			}
+			else if (map[i][j] == '0' && (is_in_set(map[i + 1][j], " \0\t")
+            || is_in_set(map[i - 1][j], " \0\t")
+			|| is_in_set(map[i][j + 1], " \0\t")
+            || is_in_set(map[i][j - 1], " \0\t")))
                 return (1);
             j++;
         }
@@ -122,7 +137,7 @@ void	extract_path(t_vars *vars, char *str, int dir, t_bgrd *bgrd)
 		i++;
 	if (str[i] == '\n')
 		return ;
-	if (dir != FLOOR && dir != CEILING && dir != MAP)
+	if (dir != FLOOR && dir != CEILING)
 		init_textures_test(vars, str + i, dir);
 	else
 		init_background(bgrd, str + i, dir);
@@ -130,17 +145,20 @@ void	extract_path(t_vars *vars, char *str, int dir, t_bgrd *bgrd)
 
 void	read_map(t_vars *vars, char *str, char **to_split)
 {
-	int	i = 0;
+	int		i;
 	char	*tmp;
+	static	int	count;
 
+	i = 0;
 	while (str[i] && str[i] != '\n')
-	{
 		i++;
-	}
 	str[i] = '\0';
 	tmp = ft_strjoin(*to_split, str);
+	if (count > 0)
+		free(*to_split);
 	*to_split = ft_strjoin(tmp, ",");
 	free(tmp);
+	count++;
 	//*todo free
 }
 
@@ -168,9 +186,10 @@ void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split)
 		read_map(vars, str, to_split);
 	else
 		extract_path(vars, str + i, dir, bgrd);
+	free(str);
 }
 
-void	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
+int	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
 {
 	int		fd;
 	char	*tmp;
@@ -187,5 +206,12 @@ void	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
 	while (to_split[i])
 		i++;
 	to_split[i-1] = '\0';
-	vars->map = ft_split(to_split, ',');	
+	vars->map = ft_split(to_split, ',');
+	free(to_split);
+	if (check_if_map_is_close(vars->map))
+	{
+		printf("Error\nInvalid map\n");
+		return (1);
+	}
+	return (0);
 }

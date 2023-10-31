@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/29 19:29:01 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/31 16:59:24 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void    find_pos(t_vars *vars, char **map)
         j = 0;
         while (map[i][j])
         {
-            if (map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
+            if (map[i][j] && map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
             {
                 vars->player.x = j;
                 vars->player.y = i;

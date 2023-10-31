@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/10/29 17:00:02 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/31 15:34:34 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ void	extract_path(t_vars *vars, char *str, int dir, t_bgrd *bgrd)
 		i++;
 	if (str[i] == '\n')
 		return ;
-	if (dir != FLOOR && dir != CEILING && dir != MAP)
+	if (dir != FLOOR && dir != CEILING)
 		init_textures_test(vars, str + i, dir);
 	else
 		init_background(bgrd, str + i, dir);
@@ -145,17 +145,20 @@ void	extract_path(t_vars *vars, char *str, int dir, t_bgrd *bgrd)
 
 void	read_map(t_vars *vars, char *str, char **to_split)
 {
-	int	i = 0;
+	int		i;
 	char	*tmp;
+	static	int	count;
 
+	i = 0;
 	while (str[i] && str[i] != '\n')
-	{
 		i++;
-	}
 	str[i] = '\0';
 	tmp = ft_strjoin(*to_split, str);
+	if (count > 0)
+		free(*to_split);
 	*to_split = ft_strjoin(tmp, ",");
 	free(tmp);
+	count++;
 	//*todo free
 }
 
@@ -183,6 +186,7 @@ void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split)
 		read_map(vars, str, to_split);
 	else
 		extract_path(vars, str + i, dir, bgrd);
+	free(str);
 }
 
 int	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
@@ -203,6 +207,7 @@ int	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
 		i++;
 	to_split[i-1] = '\0';
 	vars->map = ft_split(to_split, ',');
+	free(to_split);
 	if (check_if_map_is_close(vars->map))
 	{
 		printf("Error\nInvalid map\n");

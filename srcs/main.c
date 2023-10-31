@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/29 17:02:24 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/31 16:01:16 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,9 @@ t_ray	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uin
 void ft_hook(void* param)
 {
 	t_ray	ray;
-	t_vars *vars  = param;
-
+	t_vars *vars;
+	
+	vars = param;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
@@ -85,7 +86,7 @@ void ft_hook(void* param)
 		vars->player.movespeed = vars->mlx->delta_time * 5.0;
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		// ft_display_rays(vars, ray);
-		// display_fps(vars);
+		//display_fps(vars);
 		vars->player.has_moved = 0;
 		vars->start = 1;
 	}
@@ -102,16 +103,28 @@ void	cursor_hook(double x, double y, void *param)
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
+void	free_2d_array(char **str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i])
+	{
+		free(str[i]);
+		i++;
+	}
+	free(str);
+}
+
 int	start_loop(t_vars *vars, const char *path)
 {
 	t_bgrd bgrd;
 
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
-	if (!parse_file(vars, path, &bgrd))
+	if (parse_file(vars, path, &bgrd))
 	{
-		for (int i = 0; vars->map[i]; i++)
-			free(vars->map[i]);
-		free(vars->map);
+		free_2d_array(vars->map);
+		exit(1);
 	}
 	find_pos(vars, vars->map);
 	init_orientation(vars);
@@ -134,9 +147,7 @@ int	main(int32_t argc, const char* argv[])
 
 	(void)argc;
 	start_loop(&vars, argv[1]);
-	for (int i = 0; vars.map[i]; i++)
-		free(vars.map[i]);
-	free(vars.map);
+	free_2d_array(vars.map);
 	free(vars.buffer);
 	return (EXIT_SUCCESS);
 }

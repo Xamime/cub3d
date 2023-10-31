@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/29 05:20:46 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 18:39:21 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,6 @@ mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 		mlx_terminate(mlx);
 		exit(1);
 	}
-	printf("%s\n",path);
 	tex = mlx_texture_to_image(mlx, tmp);
 	if(!tex)
 	{

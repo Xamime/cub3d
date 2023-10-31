@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/29 15:26:42 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:33:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ t_ray	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uin
 	for (int x = 0; x < WIDTH; x++)
 	{
 		ray.camerax = (2.0f / (double)(WIDTH - 1)) * x; // pas droit quand different de 2.0 ?
-		ray.ray_dir.x = (player->dir.x - player->plane.x) + (player->plane.x * ray.camerax);
-		ray.ray_dir.y = (player->dir.y - player->plane.y) + (player->plane.y * ray.camerax);
+		ray.ray_dir.x = (player->dir.x + player->plane.x) - (player->plane.x * ray.camerax);
+		ray.ray_dir.y = (player->dir.y + player->plane.y) - (player->plane.y * ray.camerax);
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(*player, ray.ray_dir, &dda, map);
 		set_ray_draw_pos(&ray);
@@ -59,7 +59,7 @@ t_ray	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uin
 void ft_hook(void* param)
 {
 	t_ray	ray;
-	t_vars *vars  = param;
+	t_vars *vars = param;
 
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
@@ -75,13 +75,25 @@ void ft_hook(void* param)
 		rotate_left(&vars->player, vars->player.rotspeed);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(&vars->player, vars->player.rotspeed);
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
+	{
+		vars->case_size *= 1.1f;
+		vars->player.has_moved = 1;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
+	{
+		if (vars->case_size > 1.0f)
+			vars->case_size *= 0.9f;
+		vars->player.has_moved = 1;
+	}
 	if (vars->player.has_moved || vars->start == 0)
 	{
 		init(vars);
 		ray = update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 		draw_buffer(vars, vars->game, vars->buffer);
-		ft_draw_pixels_grid(vars);
-		ft_draw_pixels_player(vars, ray);
+		draw_minimap(vars);
+		// ft_draw_pixels_grid(vars);
+		// ft_draw_pixels_player(vars, ray);
 		vars->player.movespeed = vars->mlx->delta_time * 5.0;
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		// ft_display_rays(vars, ray);
@@ -112,12 +124,13 @@ int	start_loop(t_vars *vars, const char *path)
 	init_orientation(vars);
 	alloc_texture(vars);
 	vars->start = 0;
+	vars->case_size = 10.0f;
 	display_background(vars->mlx, bgrd);
 	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
 	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	mlx_loop_hook(vars->mlx, ft_hook, vars);
-	mlx_cursor_hook(vars->mlx, cursor_hook, vars);
+	// mlx_cursor_hook(vars->mlx, cursor_hook, vars);
 	mlx_loop(vars->mlx);
 	mlx_terminate(vars->mlx);
 	return (EXIT_SUCCESS);

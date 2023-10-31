@@ -3,10 +3,84 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: max <max@student.42.fr>                    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/10/03 02:00:01 by max              ###   ########.fr       */
+/*   Updated: 2023/10/29 19:43:07 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include "../includes/cub3d.h"
+
+#define MINIMAP_WIDTH 200
+#define MINIMAP_HEIGHT 200
+
+uint32_t	put_color(t_vars *vars, double x, double y)
+{
+	if (vars->map[(int)y][(int)x] == '1')
+		return (create_rgba(0, 0, 0, 255));
+	else if (vars->map[(int)y][(int)x] == ' ')
+		return (create_rgba(0, 0, 255, 255));
+	else if ((int)x + 1 - x < 0.01f || (int)x + 1 - x < 0.09f || (int)y + 1 - y < 0.01f || (int)y + 1 - y < 0.09f)
+		return (create_rgba(0, 0, 0, 255));
+	return (create_rgba(255, 255, 255, 255));
+}
+
+void	draw_minimap(t_vars *vars)
+{
+	int x = 0;
+	int y = 0;
+	int	i = 0;
+	int	j = 0;
+	double	map_x;
+	double	map_y;
+
+	x = WIDTH - MINIMAP_WIDTH - 1;
+	map_x = vars->player.x - (MINIMAP_WIDTH / vars->case_size) / 2;
+	map_y = vars->player.y - (MINIMAP_HEIGHT / vars->case_size) / 2;
+	double	step = 1.0f / vars->case_size;
+
+	int	max_y = 0;
+
+	while (vars->map[max_y])
+		max_y++;
+
+	while (x < WIDTH)
+	{
+		y = HEIGHT - MINIMAP_HEIGHT - 1;
+		while (y < HEIGHT)
+		{
+			mlx_put_pixel(vars->game, x, y, create_rgba(0, 0, 255, 255));
+			y++;
+		}
+		x++;
+	}
+
+	x = WIDTH - MINIMAP_WIDTH - 1;
+	while (x < WIDTH)
+	{
+		y = HEIGHT - MINIMAP_HEIGHT - 1;
+		map_y = vars->player.y - (MINIMAP_HEIGHT / vars->case_size) / 2;
+		while (y < HEIGHT)
+		{
+			if (map_y > 0.0f && map_y < (double)max_y && map_x > 0.0f && map_x < ft_strlen(vars->map[(int)map_y]))
+				mlx_put_pixel(vars->game, x, y, put_color(vars, map_x, map_y));
+			y++;
+			map_y += step;
+		}
+		x++;
+		map_x += step;
+	}
+
+	x = WIDTH - MINIMAP_WIDTH / 2 - 1;
+	while (x < WIDTH - MINIMAP_WIDTH / 2 - 1 + 3)
+	{
+		y = HEIGHT - MINIMAP_HEIGHT / 2 - 1;
+		while (y < HEIGHT - MINIMAP_HEIGHT / 2 - 1 + 3)
+		{
+			mlx_put_pixel(vars->game, x, y, create_rgba(255, 0, 0, 150));
+			y++;
+		}
+		x++;
+	}
+}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/27 16:24:36 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:09:29 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,9 @@
 static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], t_ray ray, int side)
 {
 	if (side == 0 && ray.ray_dir.x < 0)
-		return (textures[EAST]);
-	else if (side == 0 && ray.ray_dir.x > 0)
 		return (textures[WEST]);
+	else if (side == 0 && ray.ray_dir.x > 0)
+		return (textures[EAST]);
 	else if (side == 1 && ray.ray_dir.y < 0)
 		return (textures[NORTH]);
 	else if (side == 1 && ray.ray_dir.y > 0)

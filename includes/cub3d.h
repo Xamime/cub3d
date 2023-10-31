@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/29 05:02:56 by xamime           ###   ########.fr       */
+/*   Updated: 2023/10/29 19:19:05 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,6 +146,7 @@ typedef struct t_vars
 	char		**map;
 	t_ray		*ray;
 	mlx_image_t	*minimap;
+	double		case_size;
 	mlx_image_t	*game;
 	mlx_image_t	*screen;
 	uint32_t	instance;
@@ -171,6 +172,7 @@ void 	ft_draw_pixels_grid(void* param);
 void    dda(char **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
 void	ft_draw_pixels_player(void* param, t_ray ray);
+void	draw_minimap(t_vars *vars);
 
 /*					Initialisation					*/
 void	init_img(t_img *img);

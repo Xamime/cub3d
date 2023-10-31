@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/22 16:33:29 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/29 17:01:25 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,8 @@ void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 	for (int y = ray.drawstart; y < ray.drawend; y++)
 	{
 		// Cast the texture coordinate to integer, and mask with (tex->height - 1) in case of overflow
-		rtex.pos.y = (int)start_pos & (rtex.texture->height - 1);
+		// rtex.pos.y = (int)start_pos & (rtex.texture->height - 1); voir à quoi ça sert
+		rtex.pos.y = (int)start_pos;
 		start_pos += step;
 		color = get_pixel_color(rtex.pos.x, rtex.pos.y, rtex.texture);
 		buffer[y * WIDTH + x] = color;

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/10/25 09:42:59 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/29 19:07:47 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@
 void	rotate_left(t_player *player, double speed)
 {
 	double oldDirX = player->dir.x;
-    player->dir.x = player->dir.x * cos(speed) - player->dir.y * sin(speed);
-    player->dir.y = oldDirX * sin(speed) + player->dir.y * cos(speed);
+    player->dir.x = player->dir.x * cos(-(speed)) - player->dir.y * sin(-(speed));
+    player->dir.y = oldDirX * sin(-(speed)) + player->dir.y * cos(-(speed));
     double oldPlaneX = player->plane.x;
-    player->plane.x = player->plane.x * cos(speed) - player->plane.y * sin(speed);
-    player->plane.y = oldPlaneX * sin(speed) + player->plane.y * cos(speed);
+    player->plane.x = player->plane.x * cos(-(speed)) - player->plane.y * sin(-(speed));
+    player->plane.y = oldPlaneX * sin(-(speed)) + player->plane.y * cos(-(speed));
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
 	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);
@@ -32,11 +32,11 @@ void	rotate_left(t_player *player, double speed)
 void	rotate_right(t_player *player, double speed)
 {
 	double oldDirX = player->dir.x;
-    player->dir.x = player->dir.x * cos(-(speed)) - player->dir.y * sin(-(speed));
-    player->dir.y = oldDirX * sin(-(speed)) + player->dir.y * cos(-(speed));
+    player->dir.x = player->dir.x * cos(speed) - player->dir.y * sin(speed);
+    player->dir.y = oldDirX * sin(speed) + player->dir.y * cos(speed);
     double oldPlaneX = player->plane.x;
-    player->plane.x = player->plane.x * cos(-(speed)) - player->plane.y * sin(-(speed));
-    player->plane.y = oldPlaneX * sin(-(speed)) + player->plane.y * cos(-(speed));
+    player->plane.x = player->plane.x * cos(speed) - player->plane.y * sin(speed);
+    player->plane.y = oldPlaneX * sin(speed) + player->plane.y * cos(speed);
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
 	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);
@@ -73,18 +73,18 @@ void	ft_down(t_player *player, char **map)
 
 void	right_step(t_player *player, char **map)
 {
-	if(map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)] != '1')
-		(player->y ) += player->plane.y * player->movespeed;
-    if(map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)] != '1')
-		player->x += player->plane.x * player->movespeed;
+	if (map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)] != '1')
+		(player->y ) -= player->plane.y * player->movespeed;
+	if (map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)] != '1')
+		player->x -= player->plane.x * player->movespeed;
 	player->has_moved = 1;
 }
 
 void	left_step(t_player *player, char **map)
 {
-	if (map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)] != '1')
-		(player->y ) -= player->plane.y * player->movespeed;
-    if (map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)] != '1')
-		player->x -= player->plane.x * player->movespeed;
+	if(map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)] != '1')
+		(player->y ) += player->plane.y * player->movespeed;
+	if(map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)] != '1')
+		player->x += player->plane.x * player->movespeed;
 	player->has_moved = 1;
 }

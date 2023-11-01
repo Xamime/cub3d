@@ -6,7 +6,7 @@
 /*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/10/31 15:34:34 by maxime           ###   ########.fr       */
+/*   Updated: 2023/10/31 18:16:46 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ int	check_side_char(char **map, int i, int j)
 	return (0);
 }
 
-// risque de segfault si map[0] est regarder
-// espace seulement suivis d'espace ou de 1,
 int check_if_map_is_close(char **map)
 {
     int i;

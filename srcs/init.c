@@ -3,30 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/31 16:59:24 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:24:47 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	init_img(t_img *img)
-{
-	img->img = NULL;
-	img->addr = NULL;
-	img->bits_per_pixel = 0;
-	img->line_length = 0;
-	img->endian = 0;
-}
-
 void  init(t_vars *vars)
 {
-	for (int y = 0; y < HEIGHT; y++){
-		for (int x = 0; x < WIDTH; x++){
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
 			vars->buffer[y * WIDTH + x] = 0;
+			x++;
 		}
+		y++;
 	}
 }
 

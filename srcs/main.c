@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/31 16:59:51 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:39:31 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,14 +133,11 @@ int	start_loop(t_vars *vars, const char *path)
 	t_bgrd bgrd;
 
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
+	alloc_buffer(vars);
 	if (parse_file(vars, path, &bgrd))
-	{
-		free_2d_array(vars->map);
-		exit(1);
-	}
+		return (1);
 	find_pos(vars, vars->map);
 	init_orientation(vars);
-	alloc_texture(vars);
 	vars->start = 0;
 	vars->case_size = 10.0f;
 	display_background(vars->mlx, bgrd);

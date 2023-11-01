@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/31 17:00:53 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:25:33 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,17 +63,6 @@ typedef struct s_fpoint
 	float	x;
 	float	y;
 }				t_fpoint;
-
-typedef struct	s_img
-{
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-	int		width;
-	int		height;
-}				t_img;
 
 typedef struct	s_dda
 {
@@ -165,7 +154,7 @@ int	check_wall(t_vars *vars, double x, double y);
 void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);
-void	alloc_texture(t_vars *vars);
+void	alloc_buffer(t_vars *vars);
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
 t_ray	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
@@ -175,7 +164,6 @@ void	ft_draw_pixels_player(void* param, t_ray ray);
 void	draw_minimap(t_vars *vars);
 
 /*					Initialisation					*/
-void	init_img(t_img *img);
 void	init(t_vars *vars);
 void	init_orientation(t_vars *vars);
 void	init_textures(t_vars *vars);

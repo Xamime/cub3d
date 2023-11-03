@@ -6,7 +6,7 @@
 /*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/31 18:25:33 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/02 18:25:54 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,13 +52,13 @@
 #define VIOLET "\e[38;2;200;0;200m"
 #define DEFAULT_COL "\e[m"
 
-typedef struct s_ipoint
+typedef struct	s_ipoint
 {
 	int	x;
 	int	y;
 }				t_ipoint;
 
-typedef struct s_fpoint
+typedef struct	s_fpoint
 {
 	float	x;
 	float	y;
@@ -101,12 +101,9 @@ typedef struct	t_player
 
 typedef struct	s_texture
 {
-	//eagle
 	mlx_image_t		*north;
 	mlx_image_t		*south;
-	//colorstone
 	mlx_image_t		*west;
-	//wood
 	mlx_image_t		*east;
 }				t_tex;
 
@@ -149,8 +146,11 @@ typedef struct t_vars
 }				t_vars;
 
 
+int		multiple_player(char **map);
+int 	check_if_map_is_close(char **map);
 void	init_textures_test(t_vars *vars, char *path, int direction);
-int	check_wall(t_vars *vars, double x, double y);
+int		check_wall(t_vars *vars, double x, double y);
+void	init_background(t_bgrd *bgrd, char *str, int dir);
 void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);

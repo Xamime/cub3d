@@ -6,7 +6,7 @@
 /*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/31 15:46:16 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/02 17:32:07 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,9 +26,11 @@ void	display_background(mlx_t *mlx, t_bgrd bgrd)
 		while (y < HEIGHT)
 		{
 			if (y < HEIGHT / 2)
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r, bgrd.ceil.g, bgrd.ceil.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r,
+				bgrd.ceil.g, bgrd.ceil.b, 255));
 			else
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r, bgrd.floor.g, bgrd.floor.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r,
+				bgrd.floor.g, bgrd.floor.b, 255));
 			y++;
 		}
 		x++;

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/10/31 17:15:36 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/10 15:18:58 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,10 @@ void	display_fps(t_vars *vars)
 	char	*str = NULL;
 	char	*tmp;
 	char	fps[15];
-	mlx_image_t	*lol;
 
-	// str = ft_itoa((int)(1.0 / vars->mlx->delta_time));
-	// tmp = str;
-	// str = ft_strjoin(str, " FPS");
-	// free(tmp);
-	// mlx_put_string(vars->mlx, str, 0, 100);
-	// free(str);
 	ft_bzero(fps, 15);
 	ft_itoa_no_malloc((int)(1.0 / vars->mlx->delta_time), fps);
 	ft_strlcat(fps, " FPS", 16);
-	// printf("%s\n", fps);
-	// mlx_put_string(vars->mlx, "             ", 0, 100);
-	// mlx_put_string(vars->mlx, fps, 0, 100);
 	mlx_set_window_title(vars->mlx, fps);
 }
 
@@ -48,12 +38,35 @@ t_ray	 update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uin
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(*player, ray.ray_dir, &dda, map);
 		set_ray_draw_pos(&ray);
-		// draw_floor(buffer, x, ray.drawend);
-		// draw_ceiling(buffer, x, ray.drawstart);
 		rtex = set_render_texture(*player, ray, dda.side, textures);
 		draw_wall(ray, rtex, x, buffer);
 	}
 	return (ray);
+}
+
+void	hook_again(t_vars *vars, t_ray ray)
+{
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
+	{
+		vars->case_size *= 1.1f;
+		vars->player.has_moved = 1;
+	}
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
+	{
+		if (vars->case_size > 1.0f)
+			vars->case_size *= 0.9f;
+		vars->player.has_moved = 1;
+	}
+	if (vars->player.has_moved)
+	{
+		init(vars);
+		ray = update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
+		draw_buffer(vars, vars->game, vars->buffer);
+		draw_minimap(vars);
+		vars->player.movespeed = vars->mlx->delta_time * 5.0;
+		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
+		vars->player.has_moved = 0;
+	}
 }
 
 void ft_hook(void* param)
@@ -76,32 +89,8 @@ void ft_hook(void* param)
 		rotate_left(&vars->player, vars->player.rotspeed);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(&vars->player, vars->player.rotspeed);
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
-	{
-		vars->case_size *= 1.1f;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
-	{
-		if (vars->case_size > 1.0f)
-			vars->case_size *= 0.9f;
-		vars->player.has_moved = 1;
-	}
-	if (vars->player.has_moved || vars->start == 0)
-	{
-		init(vars);
-		ray = update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
-		draw_buffer(vars, vars->game, vars->buffer);
-		draw_minimap(vars);
-		// ft_draw_pixels_grid(vars);
-		// ft_draw_pixels_player(vars, ray);
-		vars->player.movespeed = vars->mlx->delta_time * 5.0;
-		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
-		// ft_display_rays(vars, ray);
-		//display_fps(vars);
-		vars->player.has_moved = 0;
-		vars->start = 1;
-	}
+	hook_again(vars, ray);
+
 }
 
 void	cursor_hook(double x, double y, void *param)
@@ -133,15 +122,11 @@ int	start_loop(t_vars *vars, const char *path)
 	t_bgrd bgrd;
 
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
+	alloc_buffer(vars);
 	if (parse_file(vars, path, &bgrd))
-	{
-		free_2d_array(vars->map);
-		exit(1);
-	}
+		return (1);
 	find_pos(vars, vars->map);
 	init_orientation(vars);
-	alloc_texture(vars);
-	vars->start = 0;
 	vars->case_size = 10.0f;
 	display_background(vars->mlx, bgrd);
 	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);

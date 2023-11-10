@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/31 16:59:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/10/31 18:28:32 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	alloc_texture(t_vars *vars)
+void	alloc_buffer(t_vars *vars)
 {
 	vars->buffer = (uint32_t *)malloc(sizeof(int) * HEIGHT * WIDTH);
 	if (vars->buffer == NULL)
@@ -22,7 +22,19 @@ void	alloc_texture(t_vars *vars)
 	}
 }
 
-mlx_image_t	*load_texture(char *path, mlx_t *mlx)
+void	free_images(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4 && vars->textures[i])
+	{
+		free(vars->textures[i]);
+		i++;
+	}
+}
+
+mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 {
 	mlx_texture_t	*tmp;
 	mlx_image_t		*tex;
@@ -30,7 +42,6 @@ mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 	tmp = mlx_load_png(path);
 	if (!tmp)
 	{
-		printf("this texture doesnt exist\n");
 		mlx_terminate(mlx);
 		exit(1);
 	}
@@ -54,6 +65,6 @@ void	init_textures_test(t_vars *vars, char *path, int direction)
 			path[i] = '\0';
 		i++;
 	}
-	vars->textures[direction] = load_texture(path, vars->mlx);
+	vars->textures[direction] = load_texture(vars, path, vars->mlx);
 	//todo free textures;
 }

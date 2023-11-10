@@ -1,14 +1,7 @@
-<<<<<<< HEAD
 NO textures/test.png
 SO textures/redbrick.png
 WE textures/colorstone.png
 EA textures/wood.png
-=======
-NO ./textures/eagle.png
-SO ./textures/redbrick.png
-WE ./textures/colorstone.png
-EA ./textures/wood.png
->>>>>>> refs/remotes/origin/main
 
 F 220,100,0
 C 225,30,0

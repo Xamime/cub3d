@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: xamime <xamime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/29 15:38:11 by xamime           ###   ########.fr       */
+/*   Updated: 2023/11/10 13:27:45 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,22 @@ static double	init_side_dist(double ray_dir, double player_pos, int map_pos, dou
 		return ((map_pos + 1.0f - player_pos) * delta);
 }
 
+static void	next_dda_step(t_dda *dda, t_fpoint *side_dist)
+{
+	if (side_dist->x < side_dist->y)
+	{
+		side_dist->x += dda->delta_dist.x;
+		dda->map.x += dda->step.x;
+		dda->side = 0;
+	}
+	else
+	{
+		side_dist->y += dda->delta_dist.y;
+		dda->map.y += dda->step.y;
+		dda->side = 1;
+	}
+}
+
 double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map)
 {
 	t_fpoint	side_dist;
@@ -35,20 +51,7 @@ double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map)
 	side_dist.x = init_side_dist(ray_dir.x, player.x, dda->map.x, dda->delta_dist.x);
 	side_dist.y = init_side_dist(ray_dir.y, player.y, dda->map.y, dda->delta_dist.y);
 	while (map[dda->map.y][dda->map.x] != '1')
-	{
-		if (side_dist.x < side_dist.y)
-		{
-			side_dist.x += dda->delta_dist.x;
-			dda->map.x += dda->step.x;
-			dda->side = 0;
-		}
-		else
-		{
-			side_dist.y += dda->delta_dist.y;
-			dda->map.y += dda->step.y;
-			dda->side = 1;
-		}
-	}
+		next_dda_step(dda, &side_dist);
 	if (dda->side == 0)
 		return (side_dist.x - dda->delta_dist.x);
 	return (side_dist.y - dda->delta_dist.y);

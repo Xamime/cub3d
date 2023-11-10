@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/29 17:01:25 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/10 13:12:03 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	draw_floor(uint32_t *buffer, int x, int y)
 void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 {
 	double		step = 1.0 * rtex.texture->height / ray.lineheight;
-	double		start_pos = (ray.drawstart - HEIGHT / 2 + ray.lineheight / 2) * step;
+	double		tex_y = (ray.drawstart - HEIGHT / 2 + ray.lineheight / 2) * step;
 	uint32_t	color;
 
 	// tex_pos, tex_start_pos, tex, buffer, x
@@ -44,10 +44,10 @@ void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 	{
 		// Cast the texture coordinate to integer, and mask with (tex->height - 1) in case of overflow
 		// rtex.pos.y = (int)start_pos & (rtex.texture->height - 1); voir à quoi ça sert
-		rtex.pos.y = (int)start_pos;
-		start_pos += step;
-		color = get_pixel_color(rtex.pos.x, rtex.pos.y, rtex.texture);
+		// rtex.pos.y = (int)start_pos;
+		color = get_pixel_color(rtex.pos.x, (int)tex_y, rtex.texture);
 		buffer[y * WIDTH + x] = color;
+		tex_y += step;
 	}
 }
 

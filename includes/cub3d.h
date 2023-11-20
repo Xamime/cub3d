@@ -6,12 +6,13 @@
 /*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/02 18:25:54 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/18 15:33:17 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
+
 
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
@@ -29,8 +30,8 @@
 
 #define PI 3.14159
 
-#define WIDTH 1000
-#define HEIGHT 1000
+#define WIDTH 1920
+#define HEIGHT 1080
 #define ROTATE 2.50
 #define SPEED 4
 #define texWidth 64
@@ -143,6 +144,7 @@ typedef struct t_vars
 	uint32_t	*buffer;
 	char		*title;
 	int			start;
+	int			bonus;
 }				t_vars;
 
 
@@ -206,6 +208,7 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
 void		display_background(mlx_t *mlx, t_bgrd bgrd);
+void		free_2d_array(char **str);
 char		*ft_itoa_no_malloc(int n, char *str);
 
 /* ---------------------------------- debug --------------------------------- */

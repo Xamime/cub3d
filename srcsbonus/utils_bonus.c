@@ -38,42 +38,6 @@ void	display_background(mlx_t *mlx, t_bgrd bgrd)
 	mlx_image_to_window(mlx, background, 0, 0);
 }
 
-void	free_2d_array(char **str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i])
-	{
-		free(str[i]);
-		i++;
-	}
-	free(str);
-}
-
-void	free_map(t_object **map)
-{
-	int	i;
-
-	i = 0;
-	while (map && map[i])
-	{
-		free(map[i]);
-		i++;
-	}
-	free(map);
-}
-
-int	ft_line_len(t_object *line)
-{
-	int	i;
-
-	i = 0;
-	while (line && line[i].type)
-		i++;
-	return (i);
-}
-
 static int	ft_size(long long nb)
 {
 	long long	len;

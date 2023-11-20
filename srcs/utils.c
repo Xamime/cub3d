@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/13 17:56:41 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:27:07 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ void	free_2d_array(char **str)
 	free(str);
 }
 
-void	free_map(t_object **map)
+uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
+{
+	return (r << 24 | g << 16 | b << 8 | a);
+}
+
+void	free_map(char **map)
 {
 	int	i;
 
@@ -64,12 +69,12 @@ void	free_map(t_object **map)
 	free(map);
 }
 
-int	ft_line_len(t_object *line)
+int	ft_line_len(char *line)
 {
 	int	i;
 
 	i = 0;
-	while (line && line[i].type)
+	while (line && line[i])
 		i++;
 	return (i);
 }

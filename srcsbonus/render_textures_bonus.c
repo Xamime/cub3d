@@ -34,13 +34,11 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 		wallX = player.y + ray.wall_dist * ray.ray_dir.y;
 	else
 		wallX = player.x + ray.wall_dist * ray.ray_dir.x;
-	wallX -= floor(wallX);
-	wallX = 1.0f - wallX;
+	wallX -= floor((wallX));
 
 	rtex.texture = find_tex_side(textures, ray, side);
 
-	// printf("(tex) wallx : %f, wall_dist : %f\n", wallX, ray.wall_dist);
-	// printf("(tex) ray_dir.y : %f\n", ray.ray_dir.y);
+	//printf("wallx = %f\n",wallX);
 	rtex.pos.x = (int)(wallX * (double)rtex.texture->width);
 	if ((side == 0 && ray.ray_dir.x > 0) || (side == 1 && ray.ray_dir.y < 0))
 		rtex.pos.x = rtex.texture->width - rtex.pos.x - 1;

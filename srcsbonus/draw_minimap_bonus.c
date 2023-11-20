@@ -1,25 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   draw_minimap.c                                     :+:      :+:    :+:   */
+/*   draw_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
+<<<<<<< HEAD:srcs/draw_minimap.c
 /*   Updated: 2023/11/13 17:42:00 by jfarkas          ###   ########.fr       */
+=======
+/*   Updated: 2023/11/18 14:52:37 by maxime           ###   ########.fr       */
+>>>>>>> refs/remotes/origin/main:srcsbonus/draw_minimap_bonus.c
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 #define MINIMAP_WIDTH 200
 #define MINIMAP_HEIGHT 200
 
 uint32_t	put_color(t_vars *vars, double x, double y)
 {
-	if (vars->map[(int)y][(int)x].type == '1')
+	if (vars->map[(int)y][(int)x] == '1')
 		return (create_rgba(255, 255, 255, 255));
-	else if (vars->map[(int)y][(int)x].type == ' ')
+	else if (vars->map[(int)y][(int)x] == ' ')
 		return (create_rgba(0, 0, 0, 0));
 	// else if ((int)x + 1 - x < 0.01f || (int)x + 1 - x < 0.09f || (int)y + 1 - y < 0.01f || (int)y + 1 - y < 0.09f)
 	// 	return (create_rgba(0, 0, 0, 255));

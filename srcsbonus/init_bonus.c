@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   init.c                                             :+:      :+:    :+:   */
+/*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/11/20 15:23:07 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void  init(t_vars *vars)
 {
@@ -73,8 +73,7 @@ void    find_pos(t_vars *vars, char **map)
         j = 0;
         while (map[i][j])
         {
-            if (map[i][j] && (map[i][j] == 'N' || map[i][j] == 'S'
-				|| map[i][j] == 'W' || map[i][j] == 'E'))
+            if (map[i][j] && map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
             {
                 vars->player.x = j;
                 vars->player.y = i;

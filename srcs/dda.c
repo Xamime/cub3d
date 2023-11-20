@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/17 23:02:55 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:25:45 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static double	init_side_dist(double ray_dir, double player_pos, int map_pos, dou
 		return ((map_pos + 1.0f - player_pos) * delta);
 }
 
-static void	dda_loop(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player player, t_fpoint ray_dir)
+static void	dda_loop(t_dda *dda, t_fpoint *side_dist, char **map, t_player player, t_fpoint ray_dir)
 {
 	int	x;
 	int	y;
@@ -41,19 +41,8 @@ static void	dda_loop(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player p
 		y = (int)player.y;
 	else
 		y = (int)(player.y + 1);
-	while (map[dda->map.y][dda->map.x].type != '1')
+	while (map[dda->map.y][dda->map.x] != '1')
 	{
-		if (map[dda->map.y][dda->map.x].type == 'D')
-		{
-			if (collide_with_door(dda, side_dist, map, player, ray_dir))
-			{
-				// if (side_dist->x < side_dist->y)
-				// 	printf("x : %d, y : %d\n", x, y - dda->step.y);
-				// else
-				// 	printf("x : %d, y : %d\n", x - dda->step.x, y);
-				break ;
-			}
-		}
 		if (side_dist->x < side_dist->y)
 		{
 			dda->side = 0;
@@ -71,7 +60,7 @@ static void	dda_loop(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player p
 	}
 }
 
-double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **map)
+double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map)
 {
 	t_fpoint	side_dist;
 
@@ -79,12 +68,6 @@ double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **m
 	side_dist.y = init_side_dist(ray_dir.y, player.y, dda->map.y, dda->delta_dist.y);
 
 	dda_loop(dda, &side_dist, map, player, ray_dir);
-
-	if (map[dda->map.y][dda->map.x].type == 'D')
-	{
-		// printf("coucou x\n");
-		return (side_dist.y - (dda->delta_dist.y / 2));
-	}
 
 	if (dda->side == 0)
 		return (side_dist.x - dda->delta_dist.x);

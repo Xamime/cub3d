@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moving.c                                           :+:      :+:    :+:   */
+/*   moving_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/11/20 15:23:07 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 // a reduire
 
@@ -46,9 +46,9 @@ void	rotate_right(t_player *player, double speed)
 
 void	ft_up(t_player *player, char **map)
 {
-	if (map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)] != '1')
+	if(map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)] != '1')
 		(player->y ) += player->dir.y * player->movespeed;
-	if (map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)] != '1')
+	if(map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)] != '1')
 		player->x += player->dir.x * player->movespeed;
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);

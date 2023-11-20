@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/15 16:32:00 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/13 17:27:53 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:23:07 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@
 // 	while (vars->map[i])
 // 	{
 // 		j = 0;
-// 		while (vars->map[i][j].type)
+// 		while (vars->map[i][j])
 // 		{
-// 			if (vars->map[i][j].type == '1' && (y > i * 50 && y < (i + 1) * 50)
+// 			if (vars->map[i][j] == '1' && (y > i * 50 && y < (i + 1) * 50)
 // 			|| (x > j * 50 && x < (j + 1) * 50))
 // 				return (0);
 // 			j++;

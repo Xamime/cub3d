@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   moving.c                                           :+:      :+:    :+:   */
+/*   moving_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/11/13 17:26:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 15:46:49 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 // a reduire
 
@@ -73,9 +73,14 @@ void	ft_down(t_player *player, t_object **map)
 
 void	right_step(t_player *player, t_object **map)
 {
-	if (map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)].type != '1')
-		(player->y ) -= player->plane.y * player->movespeed;
-	if (map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)].type != '1')
+	t_object	obj_x;
+	t_object	obj_y;
+
+	obj_x = map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)];
+	obj_y = map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)];
+	if (obj_y.type != '1')
+		player->y -= player->plane.y * player->movespeed;
+	if (obj_x.type != '1')
 		player->x -= player->plane.x * player->movespeed;
 	player->has_moved = 1;
 }

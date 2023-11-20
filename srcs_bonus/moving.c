@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/10/29 19:07:47 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/13 17:26:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,11 +44,11 @@ void	rotate_right(t_player *player, double speed)
 	// printf("deltax %f  deltay %f\n\n", dda->delta_dist.x, dda->delta_dist.y);
 }
 
-void	ft_up(t_player *player, char **map)
+void	ft_up(t_player *player, t_object **map)
 {
-	if(map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)] != '1')
+	if (map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)].type != '1')
 		(player->y ) += player->dir.y * player->movespeed;
-	if(map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)] != '1')
+	if (map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)].type != '1')
 		player->x += player->dir.x * player->movespeed;
 	player->has_moved = 1;
 	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
@@ -57,11 +57,11 @@ void	ft_up(t_player *player, char **map)
 	// printf("deltax %f  deltay %f\n\n", dda->delta_dist.x, dda->delta_dist.y);
 }
 
-void	ft_down(t_player *player, char **map)
+void	ft_down(t_player *player, t_object **map)
 {
-	if (map[(int)((player->y ) - player->dir.y * player->movespeed)][(int)(player->x)] != '1')
+	if (map[(int)((player->y ) - player->dir.y * player->movespeed)][(int)(player->x)].type != '1')
 		(player->y ) -= player->dir.y * player->movespeed;
-    if (map[(int)((player->y ))][(int)(player->x - player->dir.x * player->movespeed)] != '1')
+    if (map[(int)((player->y ))][(int)(player->x - player->dir.x * player->movespeed)].type != '1')
 		player->x -= player->dir.x * player->movespeed;
 	player->has_moved = 1;
 	// printf("x = %f, y = %f, side_dist.x = %f, side_dist.y = %f\n", player->x , player->y, dda->side_dist.x, dda->side_dist.y);
@@ -71,20 +71,20 @@ void	ft_down(t_player *player, char **map)
 
 }
 
-void	right_step(t_player *player, char **map)
+void	right_step(t_player *player, t_object **map)
 {
-	if (map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)] != '1')
+	if (map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)].type != '1')
 		(player->y ) -= player->plane.y * player->movespeed;
-	if (map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)] != '1')
+	if (map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)].type != '1')
 		player->x -= player->plane.x * player->movespeed;
 	player->has_moved = 1;
 }
 
-void	left_step(t_player *player, char **map)
+void	left_step(t_player *player, t_object **map)
 {
-	if(map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)] != '1')
+	if(map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)].type != '1')
 		(player->y ) += player->plane.y * player->movespeed;
-	if(map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)] != '1')
+	if(map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)].type != '1')
 		player->x += player->plane.x * player->movespeed;
 	player->has_moved = 1;
 }

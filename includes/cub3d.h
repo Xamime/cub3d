@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/02 18:25:54 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/20 14:40:27 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ typedef struct	s_ipoint
 
 typedef struct	s_fpoint
 {
-	float	x;
-	float	y;
+	double	x;
+	double	y;
 }				t_fpoint;
 
 typedef struct	s_dda
@@ -71,7 +71,6 @@ typedef struct	s_dda
 	t_ipoint	step;
 	int			side;
 }				t_dda;
-
 
 typedef struct	s_ray
 {
@@ -96,6 +95,8 @@ typedef struct	t_player
 	double		rotspeed;
 	char		orientation;
 	int			has_moved;
+	int			map_length; // aled
+	double		door_status;
 }				t_player;
 
 
@@ -126,13 +127,30 @@ typedef struct	s_background
 	t_rgb	floor;
 }				t_bgrd;
 
+typedef struct	s_debug
+{
+	double	x_offset;
+	double	y_offset;
+	int		zoom;
+}				t_debug;
+
+typedef struct	s_object
+{
+	char	type;
+	int		orientation;
+	int		mode;
+	double	timer;
+}				t_object;
+
 
 typedef struct t_vars
 {
-	char		**map;
+	// char		**map;
+	t_object	**map;
 	t_ray		*ray;
 	mlx_image_t	*minimap;
-	double		case_size;
+	double		case_size; // pour minimap, struct ?
+	t_debug		debug;
 	mlx_image_t	*game;
 	mlx_image_t	*screen;
 	uint32_t	instance;
@@ -146,8 +164,8 @@ typedef struct t_vars
 }				t_vars;
 
 
-int		multiple_player(char **map);
-int 	check_if_map_is_close(char **map);
+int		multiple_player(t_object **map);
+int 	check_if_map_is_close(t_object **map);
 void	init_textures_test(t_vars *vars, char *path, int direction);
 int		check_wall(t_vars *vars, double x, double y);
 void	init_background(t_bgrd *bgrd, char *str, int dir);
@@ -155,10 +173,10 @@ void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);
 void	alloc_buffer(t_vars *vars);
-void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
-t_ray	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
+void    draw_pixels_around(mlx_image_t *minimap, int x, int y, t_object **map);
+t_ray	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
-void    dda(char **map, t_ray *ray);
+void    dda(t_object **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
 void	ft_draw_pixels_player(void* param, t_ray ray);
 void	draw_minimap(t_vars *vars);
@@ -167,15 +185,15 @@ void	draw_minimap(t_vars *vars);
 void	init(t_vars *vars);
 void	init_orientation(t_vars *vars);
 void	init_textures(t_vars *vars);
-void    find_pos(t_vars *vars, char **map);
+void    find_pos(t_vars *vars, t_object **map);
 
 /*					Moving							*/
 void    rotate_left(t_player *player, double speed);
 void    rotate_right(t_player *player, double speed);
-void	ft_up(t_player *player, char **map);
-void	ft_down(t_player *player, char **map);
-void	left_step(t_player *player, char **map);
-void	right_step(t_player *player, char **map);
+void	ft_up(t_player *player, t_object **map);
+void	ft_down(t_player *player, t_object **map);
+void	left_step(t_player *player, t_object **map);
+void	right_step(t_player *player, t_object **map);
 
 /*					Textures						*/
 void	get_texture_index(t_vars *vars);
@@ -183,7 +201,8 @@ void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
+int		collide_with_door(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player player, t_fpoint ray_dir);
+double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **map);
 t_dda	init_dda(t_player player, t_fpoint ray_dir);
 
 /* ---------------------------------- draw ---------------------------------- */
@@ -205,12 +224,15 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 /* ---------------------------------- utils --------------------------------- */
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+void		free_2d_array(char **str);
+void		free_map(t_object **map);
+int			ft_line_len(t_object *line);
 void		display_background(mlx_t *mlx, t_bgrd bgrd);
 char		*ft_itoa_no_malloc(int n, char *str);
 
 /* ---------------------------------- debug --------------------------------- */
 
-void	ft_display_rays(t_vars *vars, t_ray *ray);
+void	ft_display_rays(t_vars *vars, t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer);
 void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray);
 
 #endif

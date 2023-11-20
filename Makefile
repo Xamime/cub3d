@@ -6,11 +6,11 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/10/24 02:59:48 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/11/20 14:42:21 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = $(wildcard srcs/*.c)
+SRC = $(wildcard srcs_bonus/*.c)
 
 NAME = cub3d
 LIBFT_SRC = libft

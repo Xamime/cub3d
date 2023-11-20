@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/10/31 18:24:47 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/13 17:25:08 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	init_orientation(t_vars *vars)
 	}
 }
 
-void    find_pos(t_vars *vars, char **map)
+void    find_pos(t_vars *vars, t_object **map)
 {
     int i;
     int j;
@@ -71,13 +71,14 @@ void    find_pos(t_vars *vars, char **map)
     while (map && map[i])
     {
         j = 0;
-        while (map[i][j])
+        while (map[i][j].type)
         {
-            if (map[i][j] && map[i][j] != '0' && map[i][j] != '1' && map[i][j] != ' ')
+            if (map[i][j].type && (map[i][j].type == 'N' || map[i][j].type == 'S'
+				|| map[i][j].type == 'W' || map[i][j].type == 'E'))
             {
                 vars->player.x = j;
                 vars->player.y = i;
-	            vars->player.orientation = map[i][j];
+	            vars->player.orientation = map[i][j].type;
             }
             j++;
         }

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/10/31 17:54:24 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/13 17:42:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@
 
 uint32_t	put_color(t_vars *vars, double x, double y)
 {
-	if (vars->map[(int)y][(int)x] == '1')
+	if (vars->map[(int)y][(int)x].type == '1')
 		return (create_rgba(255, 255, 255, 255));
-	else if (vars->map[(int)y][(int)x] == ' ')
+	else if (vars->map[(int)y][(int)x].type == ' ')
 		return (create_rgba(0, 0, 0, 0));
 	// else if ((int)x + 1 - x < 0.01f || (int)x + 1 - x < 0.09f || (int)y + 1 - y < 0.01f || (int)y + 1 - y < 0.09f)
 	// 	return (create_rgba(0, 0, 0, 255));
@@ -65,7 +65,7 @@ void	draw_minimap(t_vars *vars)
 		map_y = vars->player.y - (MINIMAP_HEIGHT / vars->case_size) / 2;
 		while (y < HEIGHT)
 		{
-			if (map_y > 0.0f && map_y < (double)max_y && map_x > 0.0f && map_x < ft_strlen(vars->map[(int)map_y]))
+			if (map_y > 0.0f && map_y < (double)max_y && map_x > 0.0f && map_x < ft_line_len(vars->map[(int)map_y]))
 			{
 				color = put_color(vars, map_x, map_y);
 				if (color)

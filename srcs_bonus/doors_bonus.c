@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 16:17:08 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,13 +42,12 @@ int	collide_with_door(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player 
 {
 	int		next_side;
 	double	next_side_dist;
-	double	wallX;
-	double	next_wallX;
+	double	doorX;
 	double	wallY;
 	double	next_wallY;
 
-	int		door_axis = 1;
-	int		not_door_axis = 0;
+	int		door_axis = 0;
+	int		not_door_axis = 1;
 
 	double	threshold = 0.5f;
 	double	rayd;
@@ -62,25 +61,25 @@ int	collide_with_door(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player 
 
 	if (door_axis == 1)
 	{
-		next_wallX = init_wallY(player.x, side_dist->y, ray_dir.x);
+		doorX = init_wallY(player.x, side_dist->y - dda->delta_dist.y / 2, ray_dir.x);
 		wallY = init_wallY(player.y, side_dist->x, ray_dir.y);
 	}
 	else
+	{
+		doorX = init_wallY(player.y, side_dist->x - dda->delta_dist.x / 2, ray_dir.y);
 		wallY = init_wallY(player.x, side_dist->y, ray_dir.x);
+	}
 	if (dda->side == not_door_axis && door_axis == 1)
 		wallY = init_wallY(player.y, side_dist->x - dda->delta_dist.x, ray_dir.y);
 	else if (dda->side == not_door_axis && door_axis == 0)
 		wallY = init_wallY(player.x, side_dist->y - dda->delta_dist.y, ray_dir.x);
 
-	wallX = init_wallY(player.x, side_dist->y - dda->delta_dist.y, ray_dir.x);
 	// wallY += 0.25f;
 	// printf("side : %d\n", dda->side);
 	// printf("side : %d, next_side : %d\n", dda->side, next_side);
 
 	// printf("raw X : %d, raw next X : %d\n", (int)(side_dist->x - dda->delta_dist.x), (int)side_dist->x);
 	// printf("wallX : %f, next wallX : %f\n", wallX, next_wallX);
-
-	double	doorX = init_wallY(player.x, side_dist->y - dda->delta_dist.y / 2, ray_dir.x);
 
 	// printf("doorX : %f\n", doorX);
 	if (doorX > 0.5f - player.door_status && doorX < 0.5f + player.door_status)

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/11/20 15:23:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/20 16:05:07 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,8 @@ void	init_background(t_bgrd *bgrd, char *str, int dir)
 char	**malloc_map(char **split)
 {
 	char	**map;
-	int			lines_nb;
-	int			line;
+	int		lines_nb;
+	int		line;
 
 	lines_nb = 0;
 	while (split[lines_nb])

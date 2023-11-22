@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/20 15:35:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/21 22:49:18 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_fpoint
 typedef struct	s_dda
 {
 	t_fpoint	delta_dist;
+	t_fpoint	side_dist;
 	t_ipoint	map;
 	t_ipoint	step;
 	int			side;
@@ -163,6 +164,7 @@ typedef struct t_vars
 	char		*title;
 	int			start;
 	int			bonus;
+	double		time;
 }				t_vars;
 
 
@@ -203,7 +205,7 @@ void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-int		collide_with_door(t_dda *dda, t_fpoint *side_dist, t_object **map, t_player player, t_fpoint ray_dir);
+int		collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir);
 double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **map);
 t_dda	init_dda(t_player player, t_fpoint ray_dir);
 

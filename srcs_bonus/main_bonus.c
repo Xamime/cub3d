@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/21 22:30:40 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,6 +111,12 @@ void	hook_again(t_vars *vars, t_ray ray)
 		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 		vars->player.has_moved = 0;
 		// ft_display_rays(vars, &vars->player, vars->map, vars->textures, vars->buffer);
+	}
+	vars->time += vars->mlx->delta_time;
+	if (vars->time > 1.0f)
+	{
+		vars->time = 0.0f;
+		// printf("sec\n");
 	}
 }
 

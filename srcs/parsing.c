@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/11/20 16:05:07 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:53:13 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,72 +52,37 @@ void	init_background(t_bgrd *bgrd, char *str, int dir)
 	free(colors);
 }
 
-char	**malloc_map(char **split)
+char	*get_file_as_line(t_vars *vars, const char *path, t_bgrd *bgrd)
 {
-	char	**map;
-	int		lines_nb;
-	int		line;
+	int		fd;
+	char	*tmp;
+	char	*to_split;
 
-	lines_nb = 0;
-	while (split[lines_nb])
-		lines_nb++;
-	map = malloc(sizeof(char *) * lines_nb + 1);
-	if (!map)
-		return (NULL);
-	map[lines_nb] = NULL;
-	line = 0;
-	while (split[line])
+	to_split = "";
+	fd = open_file(path);
+	tmp = get_next_line(fd);
+	while (tmp)
 	{
-		map[line] = malloc(sizeof(char) * (ft_strlen(split[line]) + 1));
-		if (!map[line])
-			return (NULL);
-		map[line][ft_strlen(split[line])] = 0;
-		line++;
-	}
-	return (map);
-}
-
-char	**char_to_obj_map(char **split)
-{
-	char	**map;
-	int			x;
-	int			y;
-
-	map = NULL;
-	map = malloc_map(split);
-	if (!map)
-		return (NULL);
-	y = 0;
-	while (split[y])
-	{
-		x = 0;
-		while (split[y][x])
+		if (-1 == find_path_tex(vars, tmp, bgrd, &to_split))
 		{
-			map[y][x] = split[y][x];
-			x++;
+			close(fd);
+			return (NULL);
 		}
-		y++;
+		tmp = get_next_line(fd);
 	}
-	free_2d_array(split);
-	return (map);
+	close(fd);
+	return (to_split);
 }
 
 int	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
 {
-	// close le fd
-	int		fd;
-	char	*tmp;
 	char	*to_split;
-	int i = 0;
 
-	to_split = "";
-	fd = open_file(path);
-	while ((tmp = get_next_line(fd)))
-		find_path_tex(vars, tmp, bgrd, &to_split);
-	while (to_split[i])
-		i++;
-	to_split[i-1] = '\0';
-	vars->map = char_to_obj_map(ft_split(to_split, ','));
+	to_split = get_file_as_line(vars, path, bgrd);
+	if (!to_split)
+		return (1);
+	to_split[ft_strlen(to_split) - 1] = '\0';
+	vars->map = ft_split(to_split, ',');
 	free(to_split);
 	if (!vars->map)
 		return (1);

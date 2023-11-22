@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/20 15:27:07 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:21:34 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	display_background(mlx_t *mlx, t_bgrd bgrd)
 		{
 			if (y < HEIGHT / 2)
 				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r,
-				bgrd.ceil.g, bgrd.ceil.b, 255));
+						bgrd.ceil.g, bgrd.ceil.b, 255));
 			else
 				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r,
-				bgrd.floor.g, bgrd.floor.b, 255));
+						bgrd.floor.g, bgrd.floor.b, 255));
 			y++;
 		}
 		x++;
@@ -77,50 +77,4 @@ int	ft_line_len(char *line)
 	while (line && line[i])
 		i++;
 	return (i);
-}
-
-static int	ft_size(long long nb)
-{
-	long long	len;
-
-	len = 0;
-	if (nb == 0)
-		return (1);
-	if (nb < 0)
-	{
-		nb = -nb;
-		len++;
-	}
-	while (nb > 0)
-	{
-		nb /= 10;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa_no_malloc(int n, char *str)
-{
-	long long	i;
-	long long	nbr;
-
-	nbr = n;
-	i = ft_size(nbr);
-	if (str == NULL)
-		return (NULL);
-	if (nbr == 0)
-		str[0] = '0';
-	if (nbr < 0)
-	{
-		str[0] = '-';
-		nbr *= -1;
-	}
-	str[i] = '\0';
-	while (nbr > 0)
-	{
-		str[i - 1] = 48 + (nbr % 10);
-		nbr = nbr / 10;
-		i--;
-	}
-	return (str);
 }

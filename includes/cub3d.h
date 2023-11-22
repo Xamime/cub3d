@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/20 15:31:05 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/22 18:20:35 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ typedef struct	s_fpoint
 typedef struct	s_dda
 {
 	t_fpoint	delta_dist;
+	t_fpoint	side_dist;
 	t_ipoint	map;
 	t_ipoint	step;
 	int			side;
@@ -152,7 +153,7 @@ int 	check_if_map_is_close(char **map);
 void	init_textures_test(t_vars *vars, char *path, int direction);
 int		check_wall(t_vars *vars, double x, double y);
 void	init_background(t_bgrd *bgrd, char *str, int dir);
-void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
+int		find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);
 void	alloc_buffer(t_vars *vars);
@@ -171,12 +172,9 @@ void	init_textures(t_vars *vars);
 void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/
-void    rotate_left(t_player *player, double speed);
-void    rotate_right(t_player *player, double speed);
-void	ft_up(t_player *player, char **map);
-void	ft_down(t_player *player, char **map);
-void	left_step(t_player *player, char **map);
-void	right_step(t_player *player, char **map);
+void	move(t_player *player, char **map, int up);
+void	rotate(t_player *player, double speed, int left);
+void	side_step(t_player *player, char **map, int left);
 
 /*					Textures						*/
 void	get_texture_index(t_vars *vars);

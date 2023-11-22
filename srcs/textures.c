@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/10/31 18:28:32 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/22 17:54:33 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 		exit(1);
 	}
 	tex = mlx_texture_to_image(mlx, tmp);
-	if(!tex)
+	if (!tex)
 	{
 		printf("this image doesnt exist\n");
 		mlx_terminate(mlx);
@@ -58,7 +58,9 @@ mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 
 void	init_textures_test(t_vars *vars, char *path, int direction)
 {
-	int i = 0;
+	int	i;
+
+	i = 0;
 	while (path[i])
 	{
 		if (path[i] == '\n')
@@ -66,5 +68,4 @@ void	init_textures_test(t_vars *vars, char *path, int direction)
 		i++;
 	}
 	vars->textures[direction] = load_texture(vars, path, vars->mlx);
-	//todo free textures;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_files_path.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:20:08 by maxime            #+#    #+#             */
-/*   Updated: 2023/11/02 18:54:59 by maxime           ###   ########.fr       */
+/*   Updated: 2023/11/22 18:33:55 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static int	check_dir_path(char *str, int i)
 
 static void	read_map(t_vars *vars, char *str, char **to_split)
 {
-	int		i;
-	char	*tmp;
-	static	int	count;
+	int			i;
+	char		*tmp;
+	static int	count;
 
 	i = 0;
 	while (str[i] && str[i] != '\n')
@@ -68,7 +68,7 @@ static void	read_map(t_vars *vars, char *str, char **to_split)
 	count++;
 }
 
-void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split)
+int	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split)
 {
 	int	i;
 	int	dir;
@@ -79,18 +79,19 @@ void	find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split)
 	if (str[i] == '\n')
 	{
 		free(str);
-		return ;
+		return (0);
 	}
 	dir = check_dir_path(str, i);
 	if (dir == -1)
 	{
 		printf("Error\nBad identifier\n");
 		free(str);
-		exit(1);
+		return (-1);
 	}
 	else if (dir == MAP)
 		read_map(vars, str, to_split);
 	else
 		extract_path(vars, str + i, dir, bgrd);
 	free(str);
+	return (0);
 }

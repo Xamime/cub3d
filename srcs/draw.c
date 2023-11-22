@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/20 15:27:59 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/22 17:58:53 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,27 +35,37 @@ void	draw_floor(uint32_t *buffer, int x, int y)
 
 void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 {
-	double		step = 1.0 * rtex.texture->height / ray.lineheight;
-	double		tex_y = (ray.drawstart - HEIGHT / 2 + ray.lineheight / 2) * step;
+	double		step;
+	double		tex_y;
 	uint32_t	color;
+	int			y;
 
-	// tex_pos, tex_start_pos, tex, buffer, x
-	for (int y = ray.drawstart; y < ray.drawend; y++)
+	y = ray.drawstart;
+	step = 1.0 * rtex.texture->height / ray.lineheight;
+	tex_y = (ray.drawstart - HEIGHT / 2 + ray.lineheight / 2) * step;
+	while (y < ray.drawend)
 	{
-		// Cast the texture coordinate to integer, and mask with (tex->height - 1) in case of overflow
-		// rtex.pos.y = (int)start_pos & (rtex.texture->height - 1); voir à quoi ça sert
-		// rtex.pos.y = (int)start_pos;
 		color = get_pixel_color(rtex.pos.x, (int)tex_y, rtex.texture);
 		buffer[y * WIDTH + x] = color;
 		tex_y += step;
+		y++;
 	}
 }
 
 void	draw_buffer(t_vars *vars, mlx_image_t *game, uint32_t *buffer)
 {
-	for (int y = 0; y < HEIGHT; y++) {
-		for (int x = 0; x < WIDTH; x++) {
+	int	y;
+	int	x;
+
+	y = 0;
+	while (y < HEIGHT)
+	{
+		x = 0;
+		while (x < WIDTH)
+		{
 			mlx_put_pixel(vars->game, x, y, buffer[y * WIDTH + x]);
+			x++;
 		}
+		y++;
 	}
 }

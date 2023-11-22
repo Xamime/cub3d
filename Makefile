@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
+#    By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/11/20 15:24:00 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/11/22 18:30:25 by mdesrose         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,10 +19,10 @@ SRC = 	srcs/dda.c \
 		srcs/moving.c \
 		srcs/parse_map.c \
 		srcs/parsing.c \
-		srcs/pixel.c \
 		srcs/render_textures.c \
 		srcs/textures.c \
-		srcs/utils.c
+		srcs/utils.c \
+		srcs/utils2.c
 
 SRC_BONUS =	srcs_bonus/dda_bonus.c \
 			srcs_bonus/doors_bonus.c \
@@ -35,7 +35,6 @@ SRC_BONUS =	srcs_bonus/dda_bonus.c \
 			srcs_bonus/moving_bonus.c \
 			srcs_bonus/parse_map_bonus.c \
 			srcs_bonus/parsing_bonus.c \
-			srcs_bonus/pixel_bonus.c \
 			srcs_bonus/render_textures_bonus.c \
 			srcs_bonus/textures_bonus.c \
 			srcs_bonus/utils_bonus.c \
@@ -50,7 +49,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./
 CC = clang
-CFLAGS = #-Wall -Wextra -Werror -Iincludes -g
+CFLAGS = -g #-Wall -Wextra -Werror -Iincludes -g
 OBJ = $(SRC:c=o)
 OBJB = $(SRC_BONUS:c=o)
 

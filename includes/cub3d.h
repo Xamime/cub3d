@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/22 18:20:35 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:28:02 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,11 +149,11 @@ typedef struct t_vars
 
 
 int		multiple_player(char **map);
-int 	check_if_map_is_close(char **map);
-void	init_textures_test(t_vars *vars, char *path, int direction);
+int		check_if_map_is_close(char **map);
+int		init_textures_test(t_vars *vars, char *path, int direction);
 int		check_wall(t_vars *vars, double x, double y);
 void	init_background(t_bgrd *bgrd, char *str, int dir);
-int		find_path_tex(t_vars *vars, char *str, t_bgrd *bgrd, char **to_split);
+int		find_path_tex(char *tex[4], char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);
 void	alloc_buffer(t_vars *vars);
@@ -179,6 +179,8 @@ void	side_step(t_player *player, char **map, int left);
 /*					Textures						*/
 void	get_texture_index(t_vars *vars);
 void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
+
+int		load_textures(t_vars *vars, char *tex_paths[4]);
 
 /* ----------------------------------- dda ---------------------------------- */
 
@@ -211,6 +213,9 @@ int			ft_line_len(char *line);
 void		display_background(mlx_t *mlx, t_bgrd bgrd);
 void		free_2d_array(char **str);
 char		*ft_itoa_no_malloc(int n, char *str);
+
+void		replace_address(char **addr1, char *addr2);
+void		remove_endl(char *str);
 
 /* ---------------------------------- debug --------------------------------- */
 

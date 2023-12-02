@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/22 18:00:30 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/22 18:00:40 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:27:49 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,20 @@ char	*ft_itoa_no_malloc(int n, char *str)
 		i--;
 	}
 	return (str);
+}
+
+void	replace_address(char **addr1, char *addr2)
+{
+	char	*tmp;
+
+	tmp = *addr1;
+	*addr1 = addr2;
+	free(tmp);
+}
+
+void	remove_endl(char *str)
+{
+	if (str && ft_strlen(str))
+		if (str[ft_strlen(str) - 1] == '\n')
+			str[ft_strlen(str) - 1] = '\0';
 }

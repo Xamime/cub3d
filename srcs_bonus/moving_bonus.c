@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/11/20 16:12:21 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/26 23:21:29 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,9 @@ void	ft_up(t_player *player, t_object **map)
 
 	obj_x = map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)];
 	obj_y = map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type != '1' || (obj_x.type == 'D' && obj_x.mode != 0))
+	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
 		player->x += player->dir.x * player->movespeed;
-	if (obj_y.type != '1' || (obj_x.type == 'D' && obj_x.mode != 0))
+	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y += player->dir.y * player->movespeed;
 	player->has_moved = 1;
 }
@@ -65,9 +65,9 @@ void	ft_down(t_player *player, t_object **map)
 
 	obj_x = map[(int)((player->y ))][(int)(player->x - player->dir.x * player->movespeed)];
 	obj_y = map[(int)((player->y ) - player->dir.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type != '1')
+	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
 		player->x -= player->dir.x * player->movespeed;
-	if (obj_y.type != '1')
+	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y -= player->dir.y * player->movespeed;
 	player->has_moved = 1;
 }
@@ -79,9 +79,9 @@ void	right_step(t_player *player, t_object **map)
 
 	obj_x = map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)];
 	obj_y = map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type != '1')
+	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
 		player->x -= player->plane.x * player->movespeed;
-	if (obj_y.type != '1')
+	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y -= player->plane.y * player->movespeed;
 	player->has_moved = 1;
 }
@@ -93,9 +93,9 @@ void	left_step(t_player *player, t_object **map)
 
 	obj_x = map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)];
 	obj_y = map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type != '1')
+	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
 		player->x += player->plane.x * player->movespeed;
-	if (obj_y.type != '1')
+	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y += player->plane.y * player->movespeed;
 	player->has_moved = 1;
 }

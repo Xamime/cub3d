@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/22 17:54:33 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/11/30 11:24:23 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,30 +42,28 @@ mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 	tmp = mlx_load_png(path);
 	if (!tmp)
 	{
-		mlx_terminate(mlx);
-		exit(1);
+		// Pourquoi erreur explicite jpp (cf. src/textures/mlx_png.c.31)
+		printf("Error\n");
+		perror(path);
+		return (NULL);
 	}
-	tex = mlx_texture_to_image(mlx, tmp);
+	tex = mlx_texture_to_image(vars->mlx, tmp);
 	if (!tex)
 	{
-		printf("this image doesnt exist\n");
-		mlx_terminate(mlx);
-		exit(1);
+		printf("\n");
+		return (NULL);
 	}
 	mlx_delete_texture(tmp);
 	return (tex);
 }
 
-void	init_textures_test(t_vars *vars, char *path, int direction)
+int	init_textures_test(t_vars *vars, char *path, int direction)
 {
-	int	i;
-
-	i = 0;
-	while (path[i])
-	{
-		if (path[i] == '\n')
-			path[i] = '\0';
-		i++;
-	}
 	vars->textures[direction] = load_texture(vars, path, vars->mlx);
+	if (!vars->textures[direction])
+	{
+		mlx_terminate(vars->mlx);
+		return (1);
+	}
+	return (0);
 }

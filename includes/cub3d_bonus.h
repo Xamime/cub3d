@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/21 22:49:18 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/26 23:11:44 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,14 @@ typedef struct	s_fpoint
 	double	y;
 }				t_fpoint;
 
+typedef struct	s_object
+{
+	char	type;
+	int		orientation;
+	double	mode;
+	double	timer;
+}				t_object;
+
 typedef struct	s_dda
 {
 	t_fpoint	delta_dist;
@@ -72,6 +80,7 @@ typedef struct	s_dda
 	t_ipoint	map;
 	t_ipoint	step;
 	int			side;
+	t_object	hit;
 }				t_dda;
 
 typedef struct	s_ray
@@ -98,7 +107,8 @@ typedef struct	t_player
 	char		orientation;
 	int			has_moved;
 	int			map_length; // aled
-	double		door_status;
+	double		door_status; // aled
+	int			is_door; // aled
 }				t_player;
 
 
@@ -135,15 +145,6 @@ typedef struct	s_debug
 	double	y_offset;
 	int		zoom;
 }				t_debug;
-
-typedef struct	s_object
-{
-	char	type;
-	int		orientation;
-	int		mode;
-	double	timer;
-}				t_object;
-
 
 typedef struct t_vars
 {
@@ -206,7 +207,7 @@ void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
 /* ----------------------------------- dda ---------------------------------- */
 
 int		collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir);
-double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **map);
+double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map);
 t_dda	init_dda(t_player player, t_fpoint ray_dir);
 
 /* ---------------------------------- draw ---------------------------------- */
@@ -223,7 +224,7 @@ void	set_ray_draw_pos(t_ray *ray);
 
 /* ----------------------------- render_textures ---------------------------- */
 
-t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
+t_render_tex	set_render_texture(t_player player, t_ray ray, t_dda *dda, mlx_image_t *textures[4]);
 
 /* ---------------------------------- utils --------------------------------- */
 

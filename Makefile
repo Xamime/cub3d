@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+         #
+#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/11/22 18:30:25 by mdesrose         ###   ########.fr        #
+#    Updated: 2023/11/30 13:48:09 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,7 @@ SRC = 	srcs/dda.c \
 		srcs/main.c \
 		srcs/moving.c \
 		srcs/parse_map.c \
+		srcs/parse_textures.c \
 		srcs/parsing.c \
 		srcs/render_textures.c \
 		srcs/textures.c \
@@ -73,7 +74,7 @@ $(NAMEB): $(OBJB) $(LIBFT) libmlx
 	$(CC) -Iincludes $(OBJB) $(LIBS) -o $(NAMEB) -O3
 
 libmlx:
-	cmake -DDEBUG=1 $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8
+	cmake $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8
 
 ${LIBFT}:
 	make all -C ${LIBFT_SRC} -s

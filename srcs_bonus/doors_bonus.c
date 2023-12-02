@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/22 02:49:06 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/26 07:43:51 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 		door_x = wall_hitpos(player.x, dda->side_dist.y - dda->delta_dist.y / 2, ray_dir.x);
 	else
 		door_x = wall_hitpos(player.y, dda->side_dist.x - dda->delta_dist.x / 2, ray_dir.y);
-
+	door_x = 1.0f - door_x;
 
 	// if (door_axis == 1)
 	// {
@@ -111,8 +111,9 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 	// printf("wallX : %f, next wallX : %f\n", wallX, next_wallX);
 
 	// printf("door_x : %f\n", door_x);
-	if (door_x > 0.5f - player.door_status && door_x < 0.5f + player.door_status)
+	if (door_x > player.door_status)
 		return (0);
+
 	// ray enters in the NS axis and exits in the NS axis
 	if (dda->side == door_axis && next_side == door_axis)
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/11/22 18:35:30 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:02:27 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ void	init_orientation(t_vars *vars)
 	{
 		vars->player.dir.x = 0;
 		vars->player.dir.y = -1;
-		vars->player.plane.x = -0.66;
+		vars->player.plane.x = -0.5;
 		vars->player.plane.y = 0;
 	}
 	else if (vars->player.orientation == 'E')
@@ -65,7 +65,7 @@ void	init_orientation(t_vars *vars)
 		vars->player.plane.y = -0.66;
 	}
 	else
-		init_orientation_W_S(vars);
+		init_orientation_w_s(vars);
 }
 
 void	find_pos(t_vars *vars, char **map)

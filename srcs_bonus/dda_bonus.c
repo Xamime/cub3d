@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/21 22:49:03 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/11/26 23:40:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,15 @@ static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_d
 			dda->map.y += dda->step.y;
 		}
 	}
+	dda->hit = map[dda->map.y][dda->map.x];
 }
 
-double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, t_object **map)
+double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map)
 {
-	dda->side_dist.x = init_side_dist(ray_dir.x, player.x, dda->map.x, dda->delta_dist.x);
-	dda->side_dist.y = init_side_dist(ray_dir.y, player.y, dda->map.y, dda->delta_dist.y);
+	dda->side_dist.x = init_side_dist(ray_dir.x, (*player).x, dda->map.x, dda->delta_dist.x);
+	dda->side_dist.y = init_side_dist(ray_dir.y, (*player).y, dda->map.y, dda->delta_dist.y);
 
-	dda_loop(dda, map, player, ray_dir);
+	dda_loop(dda, map, *player, ray_dir);
 
 	if (map[dda->map.y][dda->map.x].type == 'D')
 	{

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/22 18:20:08 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:07:03 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,8 @@ int	start_loop(t_vars *vars, const char *path)
 {
 	t_bgrd	bgrd;
 
-	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
-	alloc_buffer(vars);
 	if (parse_file(vars, path, &bgrd))
-		return (1);
+		exit(1);
 	find_pos(vars, vars->map);
 	init_orientation(vars);
 	display_background(vars->mlx, bgrd);

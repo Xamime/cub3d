@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/22 17:58:53 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/01 17:02:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,9 @@ void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 	double		tex_y;
 	uint32_t	color;
 	int			y;
+
+	// ray.drawstart += ray.lineheight / 6;
+	// ray.drawend -= ray.lineheight / 6;
 
 	y = ray.drawstart;
 	step = 1.0 * rtex.texture->height / ray.lineheight;

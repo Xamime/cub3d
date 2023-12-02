@@ -1,0 +1,9 @@
+NO textures/testcub.png
+WE textures/testcub.png
+C 10,130,130
+SO textures/testcub.png
+
+EA textures/testcub.png
+F 0,0,0
+
+

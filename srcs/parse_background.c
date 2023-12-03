@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_background.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:07:46 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 18:53:33 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 19:04:30 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ int	check_color(char **color)
 	i = 0;
 	while (color && color[i])
 	{
+		printf("%s\n",color[i]);
 		if (ft_atoi((color[i])) > 255 || ft_atoi((color[i])) < 0
 			|| !str_isdigit(color[i]))
 			return (1);
@@ -57,7 +58,8 @@ int	get_background(t_bg *bg, char *str, int dir)
 
 	i = 0;
 	rgb = ft_split(str, ',');
-	remove_endl(rgb[2]);
+	if (rgb && rgb[0] && rgb[1] && rgb[2])
+		remove_endl(rgb[2]);
 	if (check_color(rgb))
 	{
 		printf("Error\nInvalid color\n");

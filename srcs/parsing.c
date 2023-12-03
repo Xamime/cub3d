@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/03 16:47:41 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 17:52:42 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ char	*get_file_as_line(t_vars *vars, const char *path,
 	return (to_split);
 }
 
-void	init_vars(char	*tex_paths[4], t_bg *bg)
+void	init_vars(char *tex_paths[4], t_bg *bg)
 {
 	int	i;
 
@@ -93,7 +93,11 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 	init_vars(tex_paths, bg);
 	to_split = get_file_as_line(vars, path, bg, tex_paths);
 	if (!to_split || test_tex_paths(tex_paths))
+	{
+		for (int i = 0; i < 4; i++)
+			free(tex_paths[i]);
 		return (1);
+	}
 	to_split[ft_strlen(to_split) - 1] = '\0';
 	vars->map = ft_split(to_split, ',');
 	free(to_split);

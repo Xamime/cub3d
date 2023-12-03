@@ -7,10 +7,10 @@ EA textures/testcub.png
 
 
 WE textures/testcub.png
-        SO       textures/testcub.png
+        SO       textures/barrel.png
 C 10,130,130
 
-        F        120,120,79
+        F        120,120,1a
 
          11111111111111111111111
         1000000000110000000000001

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/03 19:34:30 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 19:45:47 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,6 @@ char	*get_file_as_line(t_vars *vars, const char *path,
 	char	*tmp;
 	char	*to_split;
 
-	for (int i = 0; i < 4; i++)
-		tex_paths[i] = NULL;
 	to_split = NULL;
 	fd = open_file(path);
 	tmp = get_textures(fd, tex_paths, bg, &to_split);

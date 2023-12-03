@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 18:04:49 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_orientation(t_vars *vars)
 	{
 		vars->player.dir.x = 0;
 		vars->player.dir.y = -1;
-		vars->player.plane.x = -0.66;
+		vars->player.plane.x = -0.5;
 		vars->player.plane.y = 0;
 	}
 	else if (vars->player.orientation == 'E')
@@ -44,20 +44,20 @@ void	init_orientation(t_vars *vars)
 		vars->player.dir.x = 1;
 		vars->player.dir.y = 0;
 		vars->player.plane.x = 0;
-		vars->player.plane.y = -0.66;
+		vars->player.plane.y = -0.5;
 	}
 	else if (vars->player.orientation == 'W')
 	{
 		vars->player.dir.x = -1;
 		vars->player.dir.y = 0;
 		vars->player.plane.x = 0;
-		vars->player.plane.y = 0.66;
+		vars->player.plane.y = 0.5;
 	}
 	else if (vars->player.orientation == 'S')
 	{
 		vars->player.dir.x = 0;
 		vars->player.dir.y = 1;
-		vars->player.plane.x = 0.66;
+		vars->player.plane.x = 0.5;
 		vars->player.plane.y = 0;
 	}
 }

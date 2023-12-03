@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   textures.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 15:41:48 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 21:55:43 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	free_images(t_vars *vars)
 	}
 }
 
-mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
+static mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 {
 	mlx_texture_t	*tmp;
 	mlx_image_t		*tex;
@@ -42,24 +42,23 @@ mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 	tmp = mlx_load_png(path);
 	if (!tmp)
 	{
-		// Pourquoi erreur explicite jpp (cf. src/textures/mlx_png.c.31)
 		printf("Error\n");
 		perror(path);
 		return (NULL);
 	}
-	tex = mlx_texture_to_image(vars->mlx, tmp);
+	tex = mlx_texture_to_image(mlx, tmp);
 	if (!tex)
 	{
-		printf("\n");
+		printf("Error\nCan't convert to image\n");
 		return (NULL);
 	}
 	mlx_delete_texture(tmp);
 	return (tex);
 }
 
-int	init_textures_test(t_vars *vars, char *path, int direction)
+static int	init_textures(t_vars *vars, char *path, int direction)
 {
-	vars->textures[direction] = load_texture(vars, path, vars->mlx);
+	vars->textures[direction] = load_texture(path, vars->mlx);
 	if (!vars->textures[direction])
 	{
 		mlx_terminate(vars->mlx);
@@ -77,7 +76,7 @@ int	load_textures(t_vars *vars, char *tex_paths[4])
 	error = 0;
 	while (i < 4)
 	{
-		if (!error && init_textures_test(vars, tex_paths[i], i))
+		if (!error && init_textures(vars, tex_paths[i], i))
 			error = 1;
 		free(tex_paths[i]);
 		i++;

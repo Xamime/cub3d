@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 16:35:16 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:01:22 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-t_ray	update_buffer(t_player *player, char **map,
+void	update_buffer(t_player *player, char **map,
 	mlx_image_t *textures[4], uint32_t *buffer)
 {
 	t_dda			dda;
@@ -23,7 +23,6 @@ t_ray	update_buffer(t_player *player, char **map,
 	x = 0;
 	while (x < WIDTH)
 	{
-		// pas droit quand different de 2.0 ?
 		ray.camerax = (2.0f / (double)(WIDTH - 1)) * x;
 		ray.ray_dir.x = (player->dir.x + player->plane.x)
 			- (player->plane.x * ray.camerax);
@@ -36,23 +35,10 @@ t_ray	update_buffer(t_player *player, char **map,
 		draw_wall(ray, rtex, x, buffer);
 		x++;
 	}
-	return (ray);
-}
-
-void	hook_again(t_vars *vars, t_ray ray)
-{
-	init(vars);
-	ray = update_buffer(&vars->player,
-			vars->map, vars->textures, vars->buffer);
-	draw_buffer(vars, vars->game, vars->buffer);
-	vars->player.movespeed = vars->mlx->delta_time * 5.0;
-	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
-	vars->player.has_moved = 0;
 }
 
 void	ft_hook(void *param)
 {
-	t_ray	ray;
 	t_vars	*vars;
 
 	vars = param;
@@ -70,33 +56,29 @@ void	ft_hook(void *param)
 		rotate(&vars->player, vars->player.rotspeed, 1);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate(&vars->player, vars->player.rotspeed, 0);
-	hook_again(vars, ray);
-}
-
-int	start_loop(t_vars *vars, const char *path)
-{
-	t_bg	bg;
-
-	if (parse_file(vars, path, &bg))
-		exit(1);
-	find_pos(vars, vars->map);
-	init_orientation(vars);
-	display_background(vars->mlx, bg);
-	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
+	init(vars);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
-	mlx_loop_hook(vars->mlx, ft_hook, vars);
-	mlx_loop(vars->mlx);
-	return (EXIT_SUCCESS);
+	draw_buffer(vars->game, vars->buffer);
+	vars->player.movespeed = vars->mlx->delta_time * 5.0;
+	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 }
 
-int	main(int32_t argc, const char *argv[])
+int	main(int argc, const char *argv[])
 {
 	t_vars	vars;
-	int		fd;
+	t_bg	bg;
 
 	(void)argc;
-	start_loop(&vars, argv[1]);
+	if (parse_file(&vars, argv[1], &bg))
+		exit(1);
+	find_pos(&vars, vars.map);
+	init_orientation(&vars);
+	display_background(vars.mlx, bg);
+	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
+	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
+	mlx_loop_hook(vars.mlx, ft_hook, &vars);
+	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_map(vars.map);
 	free(vars.buffer);

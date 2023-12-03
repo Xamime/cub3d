@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/22 17:40:37 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/03 21:46:44 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static double	init_side_dist(double ray_dir, double player_pos,
 		return ((map_pos + 1.0f - player_pos) * delta);
 }
 
-static void	dda_loop(t_dda *dda, char **map, t_player player, t_fpoint ray_dir)
+static void	dda_loop(t_dda *dda, char **map)
 {
 	while (map[dda->map.y][dda->map.x] != '1')
 	{
@@ -50,13 +50,11 @@ static void	dda_loop(t_dda *dda, char **map, t_player player, t_fpoint ray_dir)
 
 double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map)
 {
-	t_fpoint	side_dist;
-
 	dda->side_dist.x = init_side_dist(ray_dir.x, player.x,
 			dda->map.x, dda->delta_dist.x);
 	dda->side_dist.y = init_side_dist(ray_dir.y, player.y,
 			dda->map.y, dda->delta_dist.y);
-	dda_loop(dda, map, player, ray_dir);
+	dda_loop(dda, map);
 	if (dda->side == 0)
 		return (dda->side_dist.x - dda->delta_dist.x);
 	return (dda->side_dist.y - dda->delta_dist.y);

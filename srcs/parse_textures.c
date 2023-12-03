@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:47:41 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 19:13:21 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/03 21:49:08 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,13 +73,15 @@ int	set_tmp(char ***tmp, char *str)
 	*tmp = ft_split(str, ' ');
 	if (!(*tmp) || !(*tmp)[0] || ((*tmp)[1] && (*tmp)[2]))
 	{
+		if (!(*tmp))
+			printf("Error\nMap is empty\n");
 		free_2d_array(*tmp);
 		return (-1);
 	}
 	return (0);
 }
 
-char	*get_textures(int fd, char *tex_paths[4], t_bg *bg, char **to_split)
+char	*get_textures(int fd, char *tex_paths[4], t_bg *bg)
 {
 	char	*str;
 	char	**tmp;

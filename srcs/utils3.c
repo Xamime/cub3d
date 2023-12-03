@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 19:49:27 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 21:24:37 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,6 @@ int	test_tex_paths(char *tex_paths[4])
 	int	i;
 	int	fd;
 
-	// soit ameliorer la fonction soit la degager
 	i = 0;
 	while (i < 4)
 	{
@@ -46,9 +45,15 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 	int	i;
 
 	i = 0;
-	while (i < 4)
+	while (tex_paths[i] && i < 4)
 		i++;
 	if (i < 3 || bg->color_set != 2)
+	{
+		if (i < 3)
+			printf("Error\nA texture is missing\n");
+		else if (bg->color_set != 2)
+			printf("Error\nA color is missing\n");
 		return (1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/11/22 18:27:38 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/03 21:31:24 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,6 @@ void	rotate(t_player *player, double speed, int left)
 	player->plane.x = player->plane.x * cos(speed)
 		- player->plane.y * sin(speed);
 	player->plane.y = oldplane_x * sin(speed) + player->plane.y * cos(speed);
-	player->has_moved = 1;
 }
 
 void	move(t_player *player, char **map, int up)
@@ -49,7 +48,6 @@ void	move(t_player *player, char **map, int up)
 				* player->movespeed)] != '1')
 			player->x -= player->dir.x * player->movespeed;
 	}
-	player->has_moved = 1;
 }
 
 void	side_step(t_player *player, char **map, int left)
@@ -72,5 +70,4 @@ void	side_step(t_player *player, char **map, int left)
 				* player->movespeed)] != '1')
 			player->x -= player->plane.x * player->movespeed;
 	}
-	player->has_moved = 1;
 }

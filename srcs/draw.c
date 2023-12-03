@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/01 17:02:00 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 21:48:05 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 	uint32_t	color;
 	int			y;
 
-	// ray.drawstart += ray.lineheight / 6;
-	// ray.drawend -= ray.lineheight / 6;
-
 	y = ray.drawstart;
 	step = 1.0 * rtex.texture->height / ray.lineheight;
 	tex_y = (ray.drawstart - HEIGHT / 2 + ray.lineheight / 2) * step;
@@ -55,7 +52,7 @@ void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 	}
 }
 
-void	draw_buffer(t_vars *vars, mlx_image_t *game, uint32_t *buffer)
+void	draw_buffer(mlx_image_t *game, uint32_t *buffer)
 {
 	int	y;
 	int	x;
@@ -66,7 +63,7 @@ void	draw_buffer(t_vars *vars, mlx_image_t *game, uint32_t *buffer)
 		x = 0;
 		while (x < WIDTH)
 		{
-			mlx_put_pixel(vars->game, x, y, buffer[y * WIDTH + x]);
+			mlx_put_pixel(game, x, y, buffer[y * WIDTH + x]);
 			x++;
 		}
 		y++;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 18:29:15 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 22:04:25 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,12 @@
 #include "../libft/libft.h"
 #include <math.h>
 #include <stdio.h>
-#include <stdlib.h>
-#include <stdbool.h>
-
-//open files
-#include <sys/types.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include <errno.h>
-#include <string.h>
-
-#define PI 3.14159
 
 #define WIDTH 1000
 #define HEIGHT 1000
 #define ROTATE 2.50
 #define SPEED 4
-#define texWidth 64
-#define texHeight 64
 
 #define NORTH 0
 #define SOUTH 1
@@ -68,7 +56,6 @@ typedef struct	s_dda
 typedef struct	s_ray
 {
 	double		camerax;
-	double		angle;
 	t_fpoint	ray_dir;
 	double		wall_dist;
 	int			lineheight;
@@ -78,28 +65,14 @@ typedef struct	s_ray
 
 typedef struct	t_player
 {
-	mlx_image_t	*image;
 	t_fpoint	plane;
 	t_fpoint	dir;
 	double		x;
 	double		y;
-	double		angle;
 	double		movespeed;
 	double		rotspeed;
 	char		orientation;
-	int			has_moved;
-	int			map_length; // aled
-	double		door_status;
 }				t_player;
-
-
-typedef struct	s_texture
-{
-	mlx_image_t		*north;
-	mlx_image_t		*south;
-	mlx_image_t		*west;
-	mlx_image_t		*east;
-}				t_tex;
 
 typedef struct	s_render_tex
 {
@@ -123,20 +96,12 @@ typedef struct	s_bg
 
 typedef struct t_vars
 {
-	// char		**map;
 	char		**map;
-	t_ray		*ray;
 	mlx_image_t	*game;
-	mlx_image_t	*screen;
-	uint32_t	instance;
-	mlx_image_t	*instance2;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
 	uint32_t	*buffer;
-	char		*title;
-	int			start;
-	int			bonus;
 }				t_vars;
 
 
@@ -150,7 +115,7 @@ int		find_path_tex(char *tex[4], char *str, t_bg *bgrd, char **to_split);
 int		parse_file(t_vars *vars, const char *path, t_bg *bgrd);
 void	alloc_buffer(t_vars *vars);
 void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
-t_ray	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
+void	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
 void 	ft_draw_pixels_grid(void* param);
 void    dda(char **map, t_ray *ray);
 void 	ft_draw_first_player(void* param);
@@ -160,7 +125,6 @@ void	draw_minimap(t_vars *vars);
 /*					Initialisation					*/
 void	init(t_vars *vars);
 void	init_orientation(t_vars *vars);
-void	init_textures(t_vars *vars);
 void    find_pos(t_vars *vars, char **map);
 
 /*					Moving							*/
@@ -170,7 +134,7 @@ void	side_step(t_player *player, char **map, int left);
 
 /* -------------------------------- textures -------------------------------- */
 
-char	*get_textures(int fd, char *tex_paths[4], t_bg *bgrd, char **to_split);
+char	*get_textures(int fd, char *tex_paths[4], t_bg *bgrd);
 int		load_textures(t_vars *vars, char *tex_paths[4]);
 
 int		get_background(t_bg *bgrd, char *str, int dir);
@@ -189,7 +153,7 @@ t_dda	init_dda(t_player player, t_fpoint ray_dir);
 void	draw_ceiling(uint32_t *buffer, int x, int y);
 void	draw_floor(uint32_t *buffer, int x, int y);
 void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
-void	draw_buffer(t_vars *vars, mlx_image_t *game, uint32_t *buffer);
+void	draw_buffer(mlx_image_t *game, uint32_t *buffer);
 
 /* ------------------------------- draw_utils ------------------------------- */
 

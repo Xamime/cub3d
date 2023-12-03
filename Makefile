@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+         #
+#    By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/03 17:46:41 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/03 21:36:36 by mdesrose         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -53,7 +53,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./
 CC = clang
-CFLAGS = -g #-Wall -Wextra -Werror -Iincludes -g
+CFLAGS = -Wall -Wextra -Werror -Iincludes -g
 OBJ = $(SRC:c=o)
 OBJB = $(SRC_BONUS:c=o)
 

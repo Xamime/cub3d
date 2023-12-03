@@ -3,7 +3,7 @@ WE textures/testcub.png
 SO textures/testcub.png
 C 10,130,130
 
-F 120,120,320
+F 120,120,250
 EA textures/testcub.png
 
          11111111111111111111111

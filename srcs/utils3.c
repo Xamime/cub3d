@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 16:46:30 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 18:35:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,10 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 
 	i = 0;
 	while (tex_paths[i])
+	{
+		// printf("tex_paths[%d] : %s\n", i, tex_paths[i]);
 		i++;
+	}
 	if (i < 3 || bg->color_set != 2)
 		return (1);
 	return (0);

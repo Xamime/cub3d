@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 16:46:37 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 18:29:15 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,17 +107,17 @@ typedef struct	s_render_tex
 	t_ipoint	pos;
 }				t_render_tex;
 
-typedef struct	s_rgb
+typedef struct	s_color
 {
 	int32_t	r;
 	int32_t	g;
 	int32_t	b;
-}				t_rgb;
+}				t_color;
 
 typedef struct	s_bg
 {
-	t_rgb	ceil;
-	t_rgb	floor;
+	t_color	ceil;
+	t_color	floor;
 	int		color_set;
 }				t_bg;
 

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/03 17:52:42 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 19:34:30 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,6 +94,7 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 	to_split = get_file_as_line(vars, path, bg, tex_paths);
 	if (!to_split || test_tex_paths(tex_paths))
 	{
+		free(to_split);
 		for (int i = 0; i < 4; i++)
 			free(tex_paths[i]);
 		return (1);
@@ -105,6 +106,9 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 		return (1);
 	if (check_if_map_is_close(vars->map) || multiple_player(vars->map))
 	{
+		free_2d_array(vars->map);
+		for (int i = 0; i < 4; i++)
+			free(tex_paths[i]);
 		printf("Error\nInvalid map\n");
 		return (1);
 	}

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/03 16:05:04 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:47:41 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,30 +35,8 @@ int	open_file(const char *path)
 	return (fd);
 }
 
-void	init_background(t_bgrd *bgrd, char *str, int dir)
-{
-	char	**colors;
-	int		i;
-
-	i = 0;
-	colors = ft_split(str, ',');
-	if (dir == FLOOR)
-	{
-		bgrd->floor.r = ft_atoi(colors[0]);
-		bgrd->floor.g = ft_atoi(colors[1]);
-		bgrd->floor.b = ft_atoi(colors[2]);
-	}
-	else
-	{
-		bgrd->ceil.r = ft_atoi(colors[0]);
-		bgrd->ceil.g = ft_atoi(colors[1]);
-		bgrd->ceil.b = ft_atoi(colors[2]);
-	}
-	free_2d_array(colors);
-}
-
 char	*get_file_as_line(t_vars *vars, const char *path,
-	t_bgrd *bgrd, char *tex_paths[4])
+	t_bg *bg, char *tex_paths[4])
 {
 	int		fd;
 	char	*tmp;
@@ -68,18 +46,22 @@ char	*get_file_as_line(t_vars *vars, const char *path,
 		tex_paths[i] = NULL;
 	to_split = NULL;
 	fd = open_file(path);
-	tmp = get_textures(fd, tex_paths, bgrd, &to_split);
+	tmp = get_textures(fd, tex_paths, bg, &to_split);
 	remove_endl(tmp);
-	if (!is_map(tmp) || check_id(tmp) >= 0)
+	if (!is_map(tmp) || check_count(tex_paths, bg) /* || check_id(tmp) >= 0*/)
 	{
 		if (tmp)
 		{
-			if (check_id(tmp) >= 0)
-				printf("Error\n%s: Already set\n", tmp);
-			else
-				printf("Error\n%s: Bad identifier\n", tmp);
+			// if (check_id(tmp) >= 0)
+			// 	printf("Error\n%s: Already set\n", tmp);
+			// else
+			// 	printf("Error\n%s: Bad identifier\n", tmp);
 			free(tmp);
 		}
+		if (check_count(tex_paths, bg))
+			printf("Error\nA texture or background color is missing\n");
+		else
+			printf("Error\nInvalid texture or background\n");
 		close(fd);
 		return (to_split);
 	}
@@ -90,21 +72,33 @@ char	*get_file_as_line(t_vars *vars, const char *path,
 	return (to_split);
 }
 
-int	parse_file(t_vars *vars, const char *path, t_bgrd *bgrd)
+void	init_vars(char	*tex_paths[4], t_bg *bg)
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		tex_paths[i] = NULL;
+		i++;
+	}
+	bg->color_set = 0;
+}
+
+int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 {
 	char	*to_split;
 	char	*tex_paths[4];
 
-	to_split = get_file_as_line(vars, path, bgrd, tex_paths);
-	if (!to_split /*|| test_tex_paths(tex_paths)*/)
+	init_vars(tex_paths, bg);
+	to_split = get_file_as_line(vars, path, bg, tex_paths);
+	if (!to_split || test_tex_paths(tex_paths))
 		return (1);
 	to_split[ft_strlen(to_split) - 1] = '\0';
 	vars->map = ft_split(to_split, ',');
 	free(to_split);
 	if (!vars->map)
 		return (1);
-	// for (int i = 0; vars->map[i]; i++)
-	// 	printf("map : %s\n", vars->map[i]);
 	if (check_if_map_is_close(vars->map) || multiple_player(vars->map))
 	{
 		printf("Error\nInvalid map\n");

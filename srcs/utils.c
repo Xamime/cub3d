@@ -6,13 +6,13 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/01 15:59:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:32:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	display_background(mlx_t *mlx, t_bgrd bgrd)
+void	display_background(mlx_t *mlx, t_bg bg)
 {
 	mlx_image_t	*background;
 	int			x;
@@ -26,11 +26,11 @@ void	display_background(mlx_t *mlx, t_bgrd bgrd)
 		while (y < HEIGHT)
 		{
 			if (y < HEIGHT / 2)
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r,
-						bgrd.ceil.g, bgrd.ceil.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bg.ceil.r,
+						bg.ceil.g, bg.ceil.b, 255));
 			else
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r,
-						bgrd.floor.g, bgrd.floor.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bg.floor.r,
+						bg.floor.g, bg.floor.b, 255));
 			y++;
 		}
 		x++;
@@ -48,7 +48,8 @@ void	free_2d_array(char **str)
 		free(str[i]);
 		i++;
 	}
-	free(str);
+	if (str)
+		free(str);
 }
 
 uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)

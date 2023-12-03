@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 15:48:32 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:32:19 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,11 +133,11 @@ typedef struct	s_rgb
 	int32_t	b;
 }				t_rgb;
 
-typedef struct	s_background
+typedef struct	s_bg
 {
 	t_rgb	ceil;
 	t_rgb	floor;
-}				t_bgrd;
+}				t_bg;
 
 typedef struct	s_debug
 {

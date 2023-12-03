@@ -6,7 +6,7 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/03 15:56:16 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/03 16:38:46 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,15 @@ SRC = 	srcs/check_map.c \
 		srcs/init.c \
 		srcs/main.c \
 		srcs/moving.c \
+		srcs/parse_background.c \
 		srcs/parse_map.c \
 		srcs/parse_textures.c \
 		srcs/parsing.c \
 		srcs/render_textures.c \
 		srcs/textures.c \
 		srcs/utils.c \
-		srcs/utils2.c
+		srcs/utils2.c \
+		srcs/utils3.c
 
 SRC_BONUS =	srcs_bonus/dda_bonus.c \
 			srcs_bonus/doors_bonus.c \

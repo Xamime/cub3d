@@ -6,40 +6,11 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:47:41 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 16:02:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:32:50 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-int	test_tex_paths(char *tex_paths[4])
-{
-	int	i;
-	int	fd;
-
-	// soit ameliorer la fonction soit la degager
-	i = 0;
-	while (i < 4)
-	{
-		if (ft_strlen(tex_paths[i]) < 4
-			|| ft_strcmp(&tex_paths[i][ft_strlen(tex_paths[i]) - 4], ".png"))
-		{
-			printf("Error\n%s: wrong texture extension\n", tex_paths[i]);
-			return (1);
-		}
-		fd = open(tex_paths[i], O_RDONLY);
-		if (fd == -1)
-		{
-			printf("Error\n");
-			perror(tex_paths[i]);
-			return (1);
-		}
-		else
-			close(fd);
-		i++;
-	}
-	return (0);
-}
 
 static int	check_id(char *str)
 {
@@ -58,7 +29,7 @@ static int	check_id(char *str)
 	return (-1);
 }
 
-int	is_empty_line(char *str)
+static int	is_empty_line(char *str)
 {
 	int	i;
 
@@ -70,7 +41,7 @@ int	is_empty_line(char *str)
 	return (0);
 }
 
-char	*gnl_non_empty(int fd)
+static char	*gnl_non_empty(int fd)
 {
 	char	*str;
 
@@ -83,7 +54,7 @@ char	*gnl_non_empty(int fd)
 	return (str);
 }
 
-char	*get_textures(int fd, char *tex_paths[4], t_bgrd *bgrd, char **to_split)
+char	*get_textures(int fd, char *tex_paths[4], t_bg *bg, char **to_split)
 {
 	char	*str;
 	char	**tmp;
@@ -114,7 +85,7 @@ char	*get_textures(int fd, char *tex_paths[4], t_bgrd *bgrd, char **to_split)
 			tex_paths[id][ft_strlen(tex_paths[id]) - 1] = 0;
 		}
 		else if (id != -1)
-			init_background(bgrd, tmp[1], id);
+			id = get_background(bg, tmp[1], id);
 		free_2d_array(tmp);
 		if (id != -1)
 			free(str);

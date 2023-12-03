@@ -6,13 +6,13 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:20:08 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/02 15:02:08 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:32:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-// static void	extract_path(char *tex[4], char *str, int dir, t_bgrd *bgrd)
+// static void	extract_path(char *tex[4], char *str, int dir, t_bg *bg)
 // {
 // 	int	i;
 
@@ -31,7 +31,7 @@
 // 		tex[dir][ft_strlen(tex[dir]) - 1] = 0;
 // 	}
 // 	else
-// 		init_background(bgrd, str + i, dir);
+// 		init_background(bg, str + i, dir);
 // }
 
 // static int	check_dir_path(char *str, int i)
@@ -74,7 +74,7 @@
 // 	count++;
 // }
 
-// int	find_path_tex(char *tex[4], char *str, t_bgrd *bgrd, char **to_split)
+// int	find_path_tex(char *tex[4], char *str, t_bg *bg, char **to_split)
 // {
 // 	int	i;
 // 	int	dir;
@@ -104,7 +104,7 @@
 // 			free(str);
 // 			return (-1);
 // 		}
-// 		extract_path(tex, str + i, dir, bgrd);
+// 		extract_path(tex, str + i, dir, bg);
 // 	}
 // 	free(str);
 // 	return (0);

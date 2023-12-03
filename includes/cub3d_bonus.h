@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/26 23:11:44 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 15:48:32 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,9 +200,7 @@ void	ft_down(t_player *player, t_object **map);
 void	left_step(t_player *player, t_object **map);
 void	right_step(t_player *player, t_object **map);
 
-/*					Textures						*/
-void	get_texture_index(t_vars *vars);
-void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
+/* -------------------------------- textures -------------------------------- */
 
 /* ----------------------------------- dda ---------------------------------- */
 

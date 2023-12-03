@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/30 11:24:23 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 15:41:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,5 +65,24 @@ int	init_textures_test(t_vars *vars, char *path, int direction)
 		mlx_terminate(vars->mlx);
 		return (1);
 	}
+	return (0);
+}
+
+int	load_textures(t_vars *vars, char *tex_paths[4])
+{
+	int	i;
+	int	error;
+
+	i = 0;
+	error = 0;
+	while (i < 4)
+	{
+		if (!error && init_textures_test(vars, tex_paths[i], i))
+			error = 1;
+		free(tex_paths[i]);
+		i++;
+	}
+	if (error)
+		return (1);
 	return (0);
 }

@@ -6,13 +6,12 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/01 17:28:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 15:58:37 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
-
 
 #include "../MLX42/include/MLX42/MLX42.h"
 #include "../libft/libft.h"
@@ -44,14 +43,6 @@
 #define FLOOR 4
 #define CEILING 5
 #define MAP 6
-
-#define RED "\e[38;2;255;0;0m"
-#define ORANGE "\e[38;2;255;150;0m"
-#define YELLOW "\e[38;2;255;255;0m"
-#define GREEN "\e[38;2;0;255;0m"
-#define BLUE "\e[38;2;150;150;255m"
-#define VIOLET "\e[38;2;200;0;200m"
-#define DEFAULT_COL "\e[m"
 
 typedef struct	s_ipoint
 {
@@ -176,15 +167,13 @@ void	move(t_player *player, char **map, int up);
 void	rotate(t_player *player, double speed, int left);
 void	side_step(t_player *player, char **map, int left);
 
-/*					Textures						*/
-void	get_texture_index(t_vars *vars);
-void	update_texture_pixels(t_vars *vars, t_tex *tex, t_ray *ray, int x);
+/* -------------------------------- textures -------------------------------- */
 
+char	*get_textures(int fd, char *tex_paths[4], t_bgrd *bgrd, char **to_split);
 int		load_textures(t_vars *vars, char *tex_paths[4]);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-int		collide_with_door(t_dda *dda, t_fpoint *side_dist, char **map, t_player player, t_fpoint ray_dir);
 double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
 t_dda	init_dda(t_player player, t_fpoint ray_dir);
 

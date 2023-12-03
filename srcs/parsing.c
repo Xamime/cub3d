@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/02 15:00:24 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:05:04 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,129 +57,6 @@ void	init_background(t_bgrd *bgrd, char *str, int dir)
 	free_2d_array(colors);
 }
 
-static int	check_id(char *str)
-{
-	if (!ft_strcmp(str, "SO"))
-		return (SOUTH);
-	else if (!ft_strcmp(str, "NO"))
-		return (NORTH);
-	else if (!ft_strcmp(str, "EA"))
-		return (EAST);
-	else if (!ft_strcmp(str, "WE"))
-		return (WEST);
-	else if (!ft_strcmp(str, "F"))
-		return (FLOOR);
-	else if (!ft_strcmp(str, "C"))
-		return (CEILING);
-	return (-1);
-}
-
-int	is_empty_line(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (!str[i] || str[i] == '\n')
-		return (1);
-	return (0);
-}
-
-char	*gnl_non_empty(int fd)
-{
-	char	*str;
-
-	str = get_next_line(fd);
-	while (str && is_empty_line(str))
-	{
-		free(str);
-		str = get_next_line(fd);
-	}
-	return (str);
-}
-
-char	*parse_textures(int fd, char *tex_paths[4], t_bgrd *bgrd, char **to_split)
-{
-	char	*str;
-	char	**tmp;
-	int		id;
-
-	id = 0;
-	str = "";
-	while (str && id != -1)
-	{
-		str = gnl_non_empty(fd);
-		tmp = ft_split(str, ' ');
-		if (!tmp || !tmp[0] || (tmp[1] && tmp[2]))
-		{
-			free_2d_array(tmp);
-			break ;
-		}
-		id = check_id(tmp[0]);
-		if (id >= 0 && id < 4 && tex_paths[id])
-		{
-			printf("Error\n%s: texture already set\n", tmp[0]);
-			free_2d_array(tmp);
-			free(str);
-			return (NULL);
-		}
-		if (id != -1 && id != FLOOR && id != CEILING)
-		{
-			tex_paths[id] = ft_strdup(tmp[1]);
-			tex_paths[id][ft_strlen(tex_paths[id]) - 1] = 0;
-		}
-		else if (id != -1)
-			init_background(bgrd, tmp[1], id);
-		free_2d_array(tmp);
-		if (id != -1)
-			free(str);
-	}
-	return (str);
-}
-
-int	is_map(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str && str[i])
-	{
-		if (!ft_strchr("01 NSWE", str[i]))
-			return (0);
-		i++;
-	}
-	if (i == 0)
-		return (0);
-	return (1);
-}
-
-char	*get_map(int fd, char *str)
-{
-	char	*map;
-
-	map = NULL;
-	while (str)
-	{
-		remove_endl(str);
-		if (!is_map(str))
-		{
-			free(str);
-			free(map);
-			map = NULL;
-			break ;
-		}
-		if (map)
-			replace_address(&map, ft_strjoin(map, str));
-		else
-			map = ft_strdup(str);
-		replace_address(&map, ft_strjoin(map, ","));
-		free(str);
-		str = get_next_line(fd);
-	}
-	return (map);
-}
-
 char	*get_file_as_line(t_vars *vars, const char *path,
 	t_bgrd *bgrd, char *tex_paths[4])
 {
@@ -191,7 +68,7 @@ char	*get_file_as_line(t_vars *vars, const char *path,
 		tex_paths[i] = NULL;
 	to_split = NULL;
 	fd = open_file(path);
-	tmp = parse_textures(fd, tex_paths, bgrd, &to_split);
+	tmp = get_textures(fd, tex_paths, bgrd, &to_split);
 	remove_endl(tmp);
 	if (!is_map(tmp) || check_id(tmp) >= 0)
 	{

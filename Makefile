@@ -6,11 +6,12 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/11/30 13:48:09 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/03 15:56:16 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 	srcs/dda.c \
+SRC = 	srcs/check_map.c \
+		srcs/dda.c \
 		srcs/draw_utils.c \
 		srcs/draw.c \
 		srcs/get_files_path.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/01 17:28:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 15:25:07 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +152,7 @@ int		multiple_player(char **map);
 int		check_if_map_is_close(char **map);
 int		init_textures_test(t_vars *vars, char *path, int direction);
 int		check_wall(t_vars *vars, double x, double y);
-void	init_background(t_bgrd *bgrd, char *str, int dir);
+int		init_background(t_bgrd *bgrd, char *str, int dir);
 int		find_path_tex(char *tex[4], char *str, t_bgrd *bgrd, char **to_split);
 
 int		parse_file(t_vars *vars, const char *path, t_bgrd *bgrd);

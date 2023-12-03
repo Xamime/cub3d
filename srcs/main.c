@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/01 17:07:03 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 15:01:34 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,16 +41,13 @@ t_ray	update_buffer(t_player *player, char **map,
 
 void	hook_again(t_vars *vars, t_ray ray)
 {
-	if (vars->player.has_moved)
-	{
-		init(vars);
-		ray = update_buffer(&vars->player,
-				vars->map, vars->textures, vars->buffer);
-		draw_buffer(vars, vars->game, vars->buffer);
-		vars->player.movespeed = vars->mlx->delta_time * 5.0;
-		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
-		vars->player.has_moved = 0;
-	}
+	init(vars);
+	ray = update_buffer(&vars->player,
+			vars->map, vars->textures, vars->buffer);
+	draw_buffer(vars, vars->game, vars->buffer);
+	vars->player.movespeed = vars->mlx->delta_time * 5.0;
+	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
+	vars->player.has_moved = 0;
 }
 
 void	ft_hook(void *param)

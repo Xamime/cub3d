@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: maxime <maxime@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/02 15:00:24 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/03 16:01:57 by maxime           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,13 +35,33 @@ int	open_file(const char *path)
 	return (fd);
 }
 
-void	init_background(t_bgrd *bgrd, char *str, int dir)
+int	check_colors(char **colors)
+{
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (ft_atoi((colors[i])) > 255 || ft_atoi((colors[i])) < 0)
+			return (-1);
+		i++;
+	}
+	return (0);
+}
+
+int	init_background(t_bgrd *bgrd, char *str, int dir)
 {
 	char	**colors;
 	int		i;
 
 	i = 0;
 	colors = ft_split(str, ',');
+	if (check_colors(colors) == -1)
+	{
+		free_2d_array(colors);
+		printf("Bad colors for ceiling or floor !\n");
+		return (-1);
+	}
 	if (dir == FLOOR)
 	{
 		bgrd->floor.r = ft_atoi(colors[0]);
@@ -55,6 +75,7 @@ void	init_background(t_bgrd *bgrd, char *str, int dir)
 		bgrd->ceil.b = ft_atoi(colors[2]);
 	}
 	free_2d_array(colors);
+	return (0);
 }
 
 static int	check_id(char *str)
@@ -130,7 +151,12 @@ char	*parse_textures(int fd, char *tex_paths[4], t_bgrd *bgrd, char **to_split)
 			tex_paths[id][ft_strlen(tex_paths[id]) - 1] = 0;
 		}
 		else if (id != -1)
-			init_background(bgrd, tmp[1], id);
+			if (-1 == init_background(bgrd, tmp[1], id))
+			{
+				free(str);
+				free_2d_array(tmp);
+				exit(1);
+			}
 		free_2d_array(tmp);
 		if (id != -1)
 			free(str);

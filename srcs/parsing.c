@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parsing.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/03 21:51:39 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/04 03:51:57 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	open_file(const char *path)
+static int	open_file(const char *path)
 {
 	int	fd;
 
@@ -35,7 +35,7 @@ int	open_file(const char *path)
 	return (fd);
 }
 
-char	*get_file_as_line(const char *path,
+static char	*get_file_as_line(const char *path,
 	t_bg *bg, char *tex_paths[4])
 {
 	int		fd;
@@ -59,7 +59,7 @@ char	*get_file_as_line(const char *path,
 	return (to_split);
 }
 
-void	init_vars(char *tex_paths[4], t_bg *bg)
+static void	init_vars(char *tex_paths[4], t_bg *bg)
 {
 	int	i;
 
@@ -72,7 +72,7 @@ void	init_vars(char *tex_paths[4], t_bg *bg)
 	bg->color_set = 0;
 }
 
-int	check_map(t_vars *vars, char *tex_paths[4])
+static int	check_map(t_vars *vars, char *tex_paths[4])
 {
 	int	i;
 

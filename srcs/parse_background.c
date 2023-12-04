@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parse_background.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:07:46 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 19:43:00 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/04 03:49:09 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int	str_isdigit(char *str)
+static int	str_isdigit(char *str)
 {
 	int	i;
 
@@ -26,7 +26,7 @@ int	str_isdigit(char *str)
 	return (1);
 }
 
-int	check_color(char **color)
+static int	check_color(char **color)
 {
 	int	i;
 
@@ -43,7 +43,7 @@ int	check_color(char **color)
 	return (0);
 }
 
-void	set_rgb(t_color *color, char **rgb)
+static void	set_rgb(t_color *color, char **rgb)
 {
 	color->r = ft_atoi(rgb[0]);
 	color->g = ft_atoi(rgb[1]);
@@ -53,9 +53,7 @@ void	set_rgb(t_color *color, char **rgb)
 int	get_background(t_bg *bg, char *str, int dir)
 {
 	char	**rgb;
-	int		i;
 
-	i = 0;
 	rgb = ft_split(str, ',');
 	if (rgb && rgb[0] && rgb[1] && rgb[2])
 		remove_endl(rgb[2]);

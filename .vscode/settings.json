@@ -1,10 +1,6 @@
 {
     "files.associations": {
-        "stdbool.h": "c",
-        "cub3d.h": "c",
-        "mlx42.h": "c",
-        "libft.h": "c",
-        "string.h": "c"
+        "cub3d.h": "c"
     },
     "cmake.sourceDirectory": "/home/maxime/code/cub3d/MLX42",
     "cmake.configureOnOpen": true

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 22:04:25 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/04 03:58:18 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 #define WEST 3
 #define FLOOR 4
 #define CEILING 5
-#define MAP 6
 
 typedef struct	s_ipoint
 {
@@ -104,82 +103,82 @@ typedef struct t_vars
 	uint32_t	*buffer;
 }				t_vars;
 
+/* -------------------------------- check_map ------------------------------- */
 
-int		multiple_player(char **map);
-int		check_if_map_is_close(char **map);
-int		init_textures_test(t_vars *vars, char *path, int direction);
-int		check_wall(t_vars *vars, double x, double y);
-int		init_background(t_bg *bgrd, char *str, int dir);
-int		find_path_tex(char *tex[4], char *str, t_bg *bgrd, char **to_split);
-
-int		parse_file(t_vars *vars, const char *path, t_bg *bgrd);
-void	alloc_buffer(t_vars *vars);
-void    draw_pixels_around(mlx_image_t *minimap, int x, int y, char **map);
-void	update_buffer(t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
-void 	ft_draw_pixels_grid(void* param);
-void    dda(char **map, t_ray *ray);
-void 	ft_draw_first_player(void* param);
-void	ft_draw_pixels_player(void* param, t_ray ray);
-void	draw_minimap(t_vars *vars);
-
-/*					Initialisation					*/
-void	init(t_vars *vars);
-void	init_orientation(t_vars *vars);
-void    find_pos(t_vars *vars, char **map);
-
-/*					Moving							*/
-void	move(t_player *player, char **map, int up);
-void	rotate(t_player *player, double speed, int left);
-void	side_step(t_player *player, char **map, int left);
-
-/* -------------------------------- textures -------------------------------- */
-
-char	*get_textures(int fd, char *tex_paths[4], t_bg *bgrd);
-int		load_textures(t_vars *vars, char *tex_paths[4]);
-
-int		get_background(t_bg *bgrd, char *str, int dir);
-int		test_tex_paths(char *tex_paths[4]);
-int		is_map(char *str);
-char	*get_map(int fd, char *str);
-int		check_count(char *tex_paths[4], t_bg *bg);
+int				is_in_set(char c, char *charset);
+int				check_if_map_is_close(char **map);
+int				multiple_player(char **map);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-double	get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
-t_dda	init_dda(t_player player, t_fpoint ray_dir);
-
-/* ---------------------------------- draw ---------------------------------- */
-
-void	draw_ceiling(uint32_t *buffer, int x, int y);
-void	draw_floor(uint32_t *buffer, int x, int y);
-void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
-void	draw_buffer(mlx_image_t *game, uint32_t *buffer);
+double			get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
+t_dda			init_dda(t_player player, t_fpoint ray_dir);
 
 /* ------------------------------- draw_utils ------------------------------- */
 
-int		get_pixel_color(int i, int j, mlx_image_t *map_img);
-void	set_ray_draw_pos(t_ray *ray);
+int				get_pixel_color(int i, int j, mlx_image_t *map_img);
+void			set_ray_draw_pos(t_ray *ray);
+
+/* ---------------------------------- draw ---------------------------------- */
+
+void			draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
+void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
+
+/* ---------------------------------- init ---------------------------------- */
+
+void			init_buffer(t_vars *vars);
+void			init_orientation(t_vars *vars);
+void			find_pos(t_vars *vars, char **map);
+
+/* --------------------------------- moving --------------------------------- */
+
+void			move(t_player *player, char **map, int up);
+void			rotate(t_player *player, double speed, int left);
+void			side_step(t_player *player, char **map, int left);
+
+/* ---------------------------- parse_background ---------------------------- */
+
+int				get_background(t_bg *bgrd, char *str, int dir);
+
+/* -------------------------------- parse_map -------------------------------- */
+
+int				is_map(char *str);
+char			*get_map(int fd, char *str);
+
+/* ----------------------------- parse_textures ----------------------------- */
+
+char			*get_textures(int fd, char *tex_paths[4], t_bg *bgrd);
+
+/* --------------------------------- parsing -------------------------------- */
+
+int				parse_file(t_vars *vars, const char *path, t_bg *bgrd);
 
 /* ----------------------------- render_textures ---------------------------- */
 
 t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
 
+/* -------------------------------- textures -------------------------------- */
+
+int				load_textures(t_vars *vars, char *tex_paths[4]);
+void			free_images(t_vars *vars);
+void			alloc_buffer(t_vars *vars);
+
 /* ---------------------------------- utils --------------------------------- */
 
-uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-void		free_2d_array(char **str);
-void		free_map(char **map);
-int			ft_line_len(char *line);
-void		display_background(mlx_t *mlx, t_bg bgrd);
-void		free_2d_array(char **str);
-char		*ft_itoa_no_malloc(int n, char *str);
+void			display_background(mlx_t *mlx, t_bg bgrd);
+void			free_2d_array(char **str);
+uint32_t		create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+void			free_map(char **map);
+int				ft_line_len(char *line);
 
-void		replace_address(char **addr1, char *addr2);
-void		remove_endl(char *str);
+/* --------------------------------- utils2 --------------------------------- */
 
-/* ---------------------------------- debug --------------------------------- */
+void			replace_address(char **addr1, char *addr2);
+void			remove_endl(char *str);
 
-void	ft_display_rays(t_vars *vars, t_player *player, char **map, mlx_image_t *textures[4], uint32_t *buffer);
-void	ft_set_ray_dir(double *dir_x, double *dir_y, int x, t_ray *ray);
+/* --------------------------------- utils3 --------------------------------- */
+
+int				test_tex_paths(char *tex_paths[4]);
+int				check_count(char *tex_paths[4], t_bg *bg);
 
 #endif

@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/03 18:05:05 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/04 03:43:51 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	init(t_vars *vars)
+void	init_buffer(t_vars *vars)
 {
 	int	y;
 	int	x;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/03 22:01:22 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/04 03:42:31 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_hook(void *param)
 		rotate(&vars->player, vars->player.rotspeed, 1);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate(&vars->player, vars->player.rotspeed, 0);
-	init(vars);
+	init_buffer(vars);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	draw_buffer(vars->game, vars->buffer);
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;

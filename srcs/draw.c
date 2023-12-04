@@ -3,35 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/03 21:48:05 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/04 03:47:20 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-void	draw_ceiling(uint32_t *buffer, int x, int y)
-{
-	int	y1;
-
-	y1 = 0;
-	while (y1 < y)
-	{
-		buffer[y1 * WIDTH + x] = create_rgba(150, 150, 70, 255);
-		y1++;
-	}
-}
-
-void	draw_floor(uint32_t *buffer, int x, int y)
-{
-	while (y < HEIGHT)
-	{
-		buffer[y * WIDTH + x] = create_rgba(50, 50, 140, 255);
-		y++;
-	}
-}
 
 void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 {

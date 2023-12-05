@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/26 07:43:51 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:20:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,8 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 
 	double	door_y = 0.5f;
 	double	rayd;
+
+	(void)map;
 
 	if (door_axis == 1)
 		rayd = ray_dir.y;

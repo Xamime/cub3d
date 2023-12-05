@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/04 03:42:31 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:31:32 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int	main(int argc, const char *argv[])
 	mlx_loop_hook(vars.mlx, ft_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
-	free_map(vars.map);
+	free_2d_array(vars.map);
 	free(vars.buffer);
 	return (EXIT_SUCCESS);
 }

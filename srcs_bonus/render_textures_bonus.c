@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/26 22:52:33 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:11:50 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,14 @@ static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], t_ray ray, int side)
 	return (NULL);
 }
 
-t_render_tex	set_render_texture(t_player player, t_ray ray, t_dda *dda, mlx_image_t *textures[4])
+t_render_tex	set_render_texture(t_player player, t_ray ray,
+	t_dda *dda, mlx_image_t *textures[4])
 {
 	t_render_tex	rtex;
 	double			wallX;
+
+	printf("width : %d\n", textures[2]->width);
+
 
 	if (dda->side == 0)
 		wallX = player.y + ray.wall_dist * ray.ray_dir.y;
@@ -41,7 +45,6 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, t_dda *dda, mlx_imag
 		wallX -= 1.0f - player.door_status;
 
 	rtex.texture = find_tex_side(textures, ray, dda->side);
-
 	// printf("(tex) wallx : %f, wall_dist : %f\n", wallX, ray.wall_dist);
 	// printf("(tex) ray_dir.y : %f\n", ray.ray_dir.y);
 	rtex.pos.x = (int)(wallX * (double)rtex.texture->width);

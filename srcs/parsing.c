@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/05 14:11:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:03:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ static int	check_map(t_vars *vars, char *tex_paths[4])
 {
 	if (!vars->map)
 		return (1);
-	if (check_if_map_is_close(vars->map) || multiple_player(vars->map))
+	if (check_if_map_is_close(vars->map) || player_count(vars->map) != 1)
 	{
 		free_2d_array(vars->map);
 		free_tex_paths(tex_paths);
@@ -107,6 +107,10 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", 1);
 	alloc_buffer(vars);
 	if (!vars->buffer || load_textures(vars, tex_paths))
+	{
+		free(vars->buffer);
+		free_2d_array(vars->map);
 		return (1);
+	}
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/11/26 23:21:29 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:21:25 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,6 @@ void	rotate_left(t_player *player, double speed)
     double oldPlaneX = player->plane.x;
     player->plane.x = player->plane.x * cos(-(speed)) - player->plane.y * sin(-(speed));
     player->plane.y = oldPlaneX * sin(-(speed)) + player->plane.y * cos(-(speed));
-	player->has_moved = 1;
-	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
-	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);
-	// printf("x = %f, y = %f, side_dist.x = %f, side_dist.y = %f\n", player->x , player->y, dda->side_dist.x, dda->side_dist.y);
-	// printf("deltax %f  deltay %f\n\n", dda->delta_dist.x, dda->delta_dist.y);
 }
 
 void	rotate_right(t_player *player, double speed)
@@ -37,11 +32,6 @@ void	rotate_right(t_player *player, double speed)
     double oldPlaneX = player->plane.x;
     player->plane.x = player->plane.x * cos(speed) - player->plane.y * sin(speed);
     player->plane.y = oldPlaneX * sin(speed) + player->plane.y * cos(speed);
-	player->has_moved = 1;
-	// printf("dir.x %f, dir.x  %f,  planex  %f, camerax %f\n", player->dir.x, player->dir.x, player->plane.x, ray->camerax);
-	// printf("dir.y %f, dir.y  %f,  planey  %f\n", player->dir.y, player->dir.y, player->plane.y);
-	// printf("x = %f, y = %f, side_dist.x = %f, side_dist.y = %f\n", player->x , player->y, dda->side_dist.x, dda->side_dist.y);
-	// printf("deltax %f  deltay %f\n\n", dda->delta_dist.x, dda->delta_dist.y);
 }
 
 void	ft_up(t_player *player, t_object **map)
@@ -55,7 +45,6 @@ void	ft_up(t_player *player, t_object **map)
 		player->x += player->dir.x * player->movespeed;
 	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y += player->dir.y * player->movespeed;
-	player->has_moved = 1;
 }
 
 void	ft_down(t_player *player, t_object **map)
@@ -69,7 +58,6 @@ void	ft_down(t_player *player, t_object **map)
 		player->x -= player->dir.x * player->movespeed;
 	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y -= player->dir.y * player->movespeed;
-	player->has_moved = 1;
 }
 
 void	right_step(t_player *player, t_object **map)
@@ -83,7 +71,6 @@ void	right_step(t_player *player, t_object **map)
 		player->x -= player->plane.x * player->movespeed;
 	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y -= player->plane.y * player->movespeed;
-	player->has_moved = 1;
 }
 
 void	left_step(t_player *player, t_object **map)
@@ -97,5 +84,4 @@ void	left_step(t_player *player, t_object **map)
 		player->x += player->plane.x * player->movespeed;
 	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
 		player->y += player->plane.y * player->movespeed;
-	player->has_moved = 1;
 }

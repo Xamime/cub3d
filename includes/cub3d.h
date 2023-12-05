@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 13:56:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 17:06:05 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,7 +107,7 @@ typedef struct t_vars
 
 int				is_in_set(char c, char *charset);
 int				check_if_map_is_close(char **map);
-int				multiple_player(char **map);
+int				player_count(char **map);
 
 /* ----------------------------------- dda ---------------------------------- */
 
@@ -138,7 +138,7 @@ void			side_step(t_player *player, char **map, int left);
 
 /* ---------------------------- parse_background ---------------------------- */
 
-int				get_background(t_bg *bgrd, char *str, int dir);
+int				get_background(t_bg *bg, char *str, int dir);
 
 /* -------------------------------- parse_map -------------------------------- */
 
@@ -147,11 +147,11 @@ char			*get_map(int fd, char *str);
 
 /* ----------------------------- parse_textures ----------------------------- */
 
-char			*get_textures(int fd, char *tex_paths[4], t_bg *bgrd);
+char			*get_textures(int fd, char *tex_paths[4], t_bg *bg);
 
 /* --------------------------------- parsing -------------------------------- */
 
-int				parse_file(t_vars *vars, const char *path, t_bg *bgrd);
+int				parse_file(t_vars *vars, const char *path, t_bg *bg);
 
 /* ----------------------------- render_textures ---------------------------- */
 
@@ -164,10 +164,9 @@ void			alloc_buffer(t_vars *vars);
 
 /* ---------------------------------- utils --------------------------------- */
 
-void			display_background(mlx_t *mlx, t_bg bgrd);
+void			display_background(mlx_t *mlx, t_bg bg);
 void			free_2d_array(char **str);
 uint32_t		create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-void			free_map(char **map);
 int				ft_line_len(char *line);
 
 /* --------------------------------- utils2 --------------------------------- */

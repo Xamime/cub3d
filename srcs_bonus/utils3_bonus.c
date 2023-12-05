@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   utils3.c                                           :+:      :+:    :+:   */
+/*   utils3_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:10:30 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:10:10 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 int	test_tex_paths(char *tex_paths[4])
 {
@@ -57,7 +57,7 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 	{
 		if (i < 3)
 			printf("Error\nNot enough textures\n");
-		else if (bg->color_set != 2)
+		else if (bg->color_set < 2)
 			printf("Error\nNot all background colors are set\n");
 		else if (bg->color_set > 2)
 			printf("Error\nBackground colors can't be set multiple times\n");

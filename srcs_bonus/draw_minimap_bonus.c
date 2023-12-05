@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:11:36 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@ void	draw_minimap(t_vars *vars)
 {
 	int	x = 0;
 	int	y = 0;
-	int	i = 0;
-	int	j = 0;
 	double	map_x;
 	double	map_y;
 

@@ -6,23 +6,24 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 13:56:23 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:15:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d_bonus.h"
+#include "../includes/cub3d.h"
 
 void	alloc_buffer(t_vars *vars)
 {
 	vars->buffer = (uint32_t *)malloc(sizeof(int) * HEIGHT * WIDTH);
 	if (vars->buffer == NULL)
 	{
+		mlx_terminate(vars->mlx);
 		perror("Memory allocation failed");
 		return ;
 	}
 }
 
-mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
+static mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 {
 	mlx_texture_t	*tmp;
 	mlx_image_t		*tex;
@@ -30,29 +31,45 @@ mlx_image_t	*load_texture(t_vars *vars, char *path, mlx_t *mlx)
 	tmp = mlx_load_png(path);
 	if (!tmp)
 	{
-		mlx_terminate(mlx);
-		exit(1);
+		printf("Error\n");
+		perror(path);
+		return (NULL);
 	}
 	tex = mlx_texture_to_image(mlx, tmp);
-	if(!tex)
+	if (!tex)
 	{
-		printf("this image doesnt exist\n");
-		mlx_terminate(mlx);
-		exit(1);
+		printf("Error\nCan't convert to image\n");
+		return (NULL);
 	}
 	mlx_delete_texture(tmp);
 	return (tex);
 }
 
-void	init_textures_test(t_vars *vars, char *path, int direction)
+static int	init_textures(t_vars *vars, char *path, int direction)
 {
-	int i = 0;
-	while (path[i])
+	vars->textures[direction] = load_texture(path, vars->mlx);
+	if (!vars->textures[direction])
 	{
-		if (path[i] == '\n')
-			path[i] = '\0';
+		mlx_terminate(vars->mlx);
+		return (1);
+	}
+	return (0);
+}
+
+int	load_textures(t_vars *vars, char *tex_paths[4])
+{
+	int	i;
+	int	error_status;
+
+	i = 0;
+	error_status = 0;
+	while (i < 4)
+	{
+		if (!error_status && init_textures(vars, tex_paths[i], i))
+			error_status = 1;
+		printf("width (load) : %d\n", vars->textures[i]->width);
+		free(tex_paths[i]);
 		i++;
 	}
-	vars->textures[direction] = load_texture(vars, path, vars->mlx);
-	//todo free textures;
+	return (error_status);
 }

@@ -6,23 +6,11 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/11/26 23:49:58 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:09:00 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
-
-void	display_fps(t_vars *vars)
-{
-	char	*str = NULL;
-	char	*tmp;
-	char	fps[15];
-
-	ft_bzero(fps, 15);
-	ft_itoa_no_malloc((int)(1.0 / vars->mlx->delta_time), fps);
-	ft_strlcat(fps, " FPS", 16);
-	mlx_set_window_title(vars->mlx, fps);
-}
 
 void	update_doors(t_object **map, t_player player)
 {
@@ -43,7 +31,7 @@ void	update_doors(t_object **map, t_player player)
 	}
 }
 
-t_ray	 update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer)
+void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer)
 {
 	t_dda			dda;
 	t_ray			ray;
@@ -63,51 +51,9 @@ t_ray	 update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4],
 		rtex = set_render_texture(*player, ray, &dda, textures);
 		draw_wall(ray, rtex, x, buffer);
 	}
-	return (ray);
 }
 
-void	hook_debug(t_vars *vars)
-{
-	int	speed = 5;
-
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_8))
-	{
-		vars->debug.y_offset -= speed;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_2))
-	{
-		vars->debug.y_offset += speed;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_6))
-	{
-		vars->debug.x_offset += speed;
-		if (vars->player.door_status < 1.0f)
-			vars->player.door_status += 0.0125f;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_4))
-	{
-		vars->debug.x_offset -= speed;
-		if (vars->player.door_status > 0.0f)
-			vars->player.door_status -= 0.0125f;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
-	{
-		vars->debug.zoom += 1;
-		vars->player.has_moved = 1;
-	}
-	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
-	{
-		if (vars->debug.zoom > 1)
-			vars->debug.zoom -= 1;
-		vars->player.has_moved = 1;
-	}
-}
-
-void	hook_again(t_vars *vars, t_ray ray)
+void	hook_again(t_vars *vars)
 {
 	vars->time += vars->mlx->delta_time;
 	if (vars->time > 0.0125f)
@@ -139,33 +85,22 @@ void	hook_again(t_vars *vars, t_ray ray)
 	// }
 
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
-	{
 		vars->case_size *= 1.1f;
-		vars->player.has_moved = 1;
-	}
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
 	{
 		if (vars->case_size > 1.0f)
 			vars->case_size *= 0.9f;
-		vars->player.has_moved = 1;
 	}
-	hook_debug(vars);
-	// if (vars->player.has_moved)
-	// {
-		init(vars);
-		ray = update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
-		draw_buffer(vars, vars->game, vars->buffer);
-		draw_minimap(vars);
-		vars->player.movespeed = vars->mlx->delta_time * 5.0;
-		vars->player.rotspeed = vars->mlx->delta_time * 3.0;
-		vars->player.has_moved = 0;
-		// ft_display_rays(vars, &vars->player, vars->map, vars->textures, vars->buffer);
-	// }
+	init_buffer(vars);
+	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
+	draw_buffer(vars->game, vars->buffer);
+	draw_minimap(vars);
+	vars->player.movespeed = vars->mlx->delta_time * 5.0;
+	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 }
 
 void ft_hook(void* param)
 {
-	t_ray	ray;
 	t_vars *vars;
 
 	vars = param;
@@ -183,7 +118,7 @@ void ft_hook(void* param)
 		rotate_left(&vars->player, vars->player.rotspeed);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
 		rotate_right(&vars->player, vars->player.rotspeed);
-	hook_again(vars, ray);
+	hook_again(vars);
 
 }
 
@@ -192,46 +127,36 @@ void	cursor_hook(double x, double y, void *param)
 	t_vars			*vars;
 	static double	last_x = 0;
 
+	(void)y;
 	vars = (t_vars *)param;
 	rotate_right(&vars->player, (x - last_x) / 200);
 	last_x = x;
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
-int	start_loop(t_vars *vars, const char *path)
-{
-	t_bgrd bgrd;
-
-	vars->mlx = mlx_init(WIDTH, HEIGHT, "cub", true);
-	alloc_buffer(vars);
-	if (parse_file(vars, path, &bgrd))
-		return (1);
-	find_pos(vars, vars->map);
-	init_orientation(vars);
-	vars->case_size = 10.0f;
-	vars->debug.x_offset = 0.0f;
-	vars->debug.y_offset = 0.0f;
-	vars->debug.zoom = 1;
-	vars->player.door_status = 1.0f;
-	vars->player.is_door = 1;
-	display_background(vars->mlx, bgrd);
-	vars->game = mlx_new_image(vars->mlx, WIDTH, HEIGHT);
-	vars->instance = mlx_image_to_window(vars->mlx, vars->game, 0, 0);
-	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
-	// mlx_cursor_hook(vars->mlx, cursor_hook, vars);
-	mlx_loop_hook(vars->mlx, ft_hook, vars);
-	mlx_loop(vars->mlx);
-	mlx_terminate(vars->mlx);
-	return (EXIT_SUCCESS);
-}
-
 int	main(int32_t argc, const char* argv[])
 {
 	t_vars	vars;
+	t_bg	bg;
 
 	(void)argc;
-	start_loop(&vars, argv[1]);
-	// free_2d_array(vars.map);
+	if (parse_file(&vars, argv[1], &bg))
+		exit(1);
+
+	find_pos(&vars, vars.map);
+	init_orientation(&vars);
+
+	vars.case_size = 10.0f;
+	vars.player.door_status = 1.0f;
+	vars.player.is_door = 1;
+
+	display_background(vars.mlx, bg);
+	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
+	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
+	mlx_loop_hook(vars.mlx, ft_hook, &vars);
+	mlx_loop(vars.mlx);
+	mlx_terminate(vars.mlx);
 	free_map(vars.map);
 	free(vars.buffer);
 	return (EXIT_SUCCESS);

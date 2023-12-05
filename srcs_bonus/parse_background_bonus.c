@@ -1,16 +1,16 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parse_background.c                                 :+:      :+:    :+:   */
+/*   parse_background_bonus.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:07:46 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 16:18:20 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:44:42 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 static int	str_isdigit(char *str)
 {

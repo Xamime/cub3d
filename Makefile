@@ -6,42 +6,45 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/04 03:47:39 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/05 18:10:39 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-SRC = 	srcs/check_map.c \
-		srcs/dda.c \
-		srcs/draw_utils.c \
-		srcs/draw.c \
-		srcs/init.c \
-		srcs/main.c \
-		srcs/moving.c \
-		srcs/parse_background.c \
-		srcs/parse_map.c \
-		srcs/parse_textures.c \
-		srcs/parsing.c \
-		srcs/render_textures.c \
-		srcs/textures.c \
-		srcs/utils.c \
-		srcs/utils2.c \
-		srcs/utils3.c
+SRC =		srcs/check_map.c \
+			srcs/dda.c \
+			srcs/draw_utils.c \
+			srcs/draw.c \
+			srcs/init.c \
+			srcs/main.c \
+			srcs/moving.c \
+			srcs/parse_background.c \
+			srcs/parse_map.c \
+			srcs/parse_textures.c \
+			srcs/parsing.c \
+			srcs/render_textures.c \
+			srcs/textures.c \
+			srcs/utils.c \
+			srcs/utils2.c \
+			srcs/utils3.c
 
-SRC_BONUS =	srcs_bonus/dda_bonus.c \
+SRC_BONUS =	srcs_bonus/check_map_bonus.c \
+			srcs_bonus/dda_bonus.c \
 			srcs_bonus/doors_bonus.c \
-			srcs_bonus/debug_bonus.c \
-			srcs_bonus/draw_utils_bonus.c \
 			srcs_bonus/draw_bonus.c \
-			srcs_bonus/get_files_path_bonus.c \
+			srcs_bonus/draw_minimap_bonus.c \
+			srcs_bonus/draw_utils_bonus.c \
 			srcs_bonus/init_bonus.c \
 			srcs_bonus/main_bonus.c \
 			srcs_bonus/moving_bonus.c \
+			srcs_bonus/parse_background_bonus.c \
 			srcs_bonus/parse_map_bonus.c \
+			srcs_bonus/parse_textures_bonus.c \
 			srcs_bonus/parsing_bonus.c \
 			srcs_bonus/render_textures_bonus.c \
 			srcs_bonus/textures_bonus.c \
 			srcs_bonus/utils_bonus.c \
-			srcs_bonus/draw_minimap_bonus.c
+			srcs_bonus/utils2_bonus.c \
+			srcs_bonus/utils3_bonus.c
 
 NAME = cub3d
 NAMEB = cub3d_bonus

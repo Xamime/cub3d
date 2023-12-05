@@ -6,13 +6,13 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:38:50 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	display_background(mlx_t *mlx, t_bgrd bgrd)
+void	display_background(mlx_t *mlx, t_bg bg)
 {
 	mlx_image_t	*background;
 	int			x;
@@ -26,11 +26,11 @@ void	display_background(mlx_t *mlx, t_bgrd bgrd)
 		while (y < HEIGHT)
 		{
 			if (y < HEIGHT / 2)
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.ceil.r,
-				bgrd.ceil.g, bgrd.ceil.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bg.ceil.r,
+				bg.ceil.g, bg.ceil.b, 255));
 			else
-				mlx_put_pixel(background, x, y, create_rgba(bgrd.floor.r,
-				bgrd.floor.g, bgrd.floor.b, 255));
+				mlx_put_pixel(background, x, y, create_rgba(bg.floor.r,
+				bg.floor.g, bg.floor.b, 255));
 			y++;
 		}
 		x++;
@@ -43,7 +43,7 @@ void	free_2d_array(char **str)
 	int	i;
 
 	i = 0;
-	while (str[i])
+	while (str && str[i])
 	{
 		free(str[i]);
 		i++;
@@ -74,48 +74,7 @@ int	ft_line_len(t_object *line)
 	return (i);
 }
 
-static int	ft_size(long long nb)
+uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a)
 {
-	long long	len;
-
-	len = 0;
-	if (nb == 0)
-		return (1);
-	if (nb < 0)
-	{
-		nb = -nb;
-		len++;
-	}
-	while (nb > 0)
-	{
-		nb /= 10;
-		len++;
-	}
-	return (len);
-}
-
-char	*ft_itoa_no_malloc(int n, char *str)
-{
-	long long	i;
-	long long	nbr;
-
-	nbr = n;
-	i = ft_size(nbr);
-	if (str == NULL)
-		return (NULL);
-	if (nbr == 0)
-		str[0] = '0';
-	if (nbr < 0)
-	{
-		str[0] = '-';
-		nbr *= -1;
-	}
-	str[i] = '\0';
-	while (nbr > 0)
-	{
-		str[i - 1] = 48 + (nbr % 10);
-		nbr = nbr / 10;
-		i--;
-	}
-	return (str);
+	return (r << 24 | g << 16 | b << 8 | a);
 }

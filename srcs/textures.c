@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 13:57:42 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 18:02:10 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	alloc_buffer(t_vars *vars)
 	vars->buffer = (uint32_t *)malloc(sizeof(int) * HEIGHT * WIDTH);
 	if (vars->buffer == NULL)
 	{
+		mlx_terminate(vars->mlx);
 		perror("Memory allocation failed");
 		return ;
 	}
@@ -58,18 +59,16 @@ static int	init_textures(t_vars *vars, char *path, int direction)
 int	load_textures(t_vars *vars, char *tex_paths[4])
 {
 	int	i;
-	int	error;
+	int	error_status;
 
 	i = 0;
-	error = 0;
+	error_status = 0;
 	while (i < 4)
 	{
-		if (!error && init_textures(vars, tex_paths[i], i))
-			error = 1;
+		if (!error_status && init_textures(vars, tex_paths[i], i))
+			error_status = 1;
 		free(tex_paths[i]);
 		i++;
 	}
-	if (error)
-		return (1);
-	return (0);
+	return (error_status);
 }

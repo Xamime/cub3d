@@ -5,85 +5,51 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Created: 2023/12/03 15:54:36 by jfarkas           #+#    #+#             */
+/*   Updated: 2023/12/05 16:44:42 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-int is_in_set(char c, char *charset)
-{
-    int i;
-
-    i = 0;
-    while (charset[i])
-    {
-        if (c == charset[i])
-            return (1);
-        i++;
-    }
-    return (0);
-}
-
-static int	check_side_char(t_object **map, int i, int j)
-{
-	if (map[i][j].type == '0' && (j == 0 || i == 0 || !map[i + 1] || !map[i][j + 1].type))
-	{
-		return (1);
-	}
-	return (0);
-}
-
-int check_if_map_is_close(t_object **map)
-{
-    int i;
-    int j;
-
-    i = 0;
-    while(map[i])
-    {
-        j = 0;
-        while (map[i][j].type)
-        {
-			if (i == 0 || j == 0 || map[i + 1] == NULL || map[i][j + 1].type == '\0')
-			{
-				if (check_side_char(map, i, j))
-					return (1);
-			}
-			else if (map[i][j].type == '0' && (is_in_set(map[i + 1][j].type, " \0\t")
-            || is_in_set(map[i - 1][j].type, " \0\t")
-			|| is_in_set(map[i][j + 1].type, " \0\t")
-            || is_in_set(map[i][j - 1].type, " \0\t")))
-                return (1);
-            j++;
-        }
-        i++;
-    }
-    return (0);
-}
-
-int	multiple_player(t_object **map)
+int	is_map(char *str)
 {
 	int	i;
-	int	j;
-	int	count;
 
 	i = 0;
-	count = 0;
-	while (map[i])
+	while (str && str[i])
 	{
-		j = 0;
-		while (map[i][j].type)
-		{
-			if (map[i][j].type != ' ' && map[i][j].type != '1' && map[i][j].type != '0'
-				&& map[i][j].type != 'D')
-				count++;
-			j++;
-		}
+		if (!ft_strchr("01 NSWE", str[i]))
+			return (0);
 		i++;
 	}
-	if (count > 1)
-		return (1);
-	return (0);
+	if (i == 0)
+		return (0);
+	return (1);
+}
+
+char	*get_map(int fd, char *str)
+{
+	char	*map;
+
+	map = NULL;
+	while (str)
+	{
+		remove_endl(str);
+		if (!is_map(str))
+		{
+			free(str);
+			free(map);
+			map = NULL;
+			break ;
+		}
+		if (map)
+			replace_address(&map, ft_strjoin(map, str));
+		else
+			map = ft_strdup(str);
+		replace_address(&map, ft_strjoin(map, ","));
+		free(str);
+		str = get_next_line(fd);
+	}
+	return (map);
 }

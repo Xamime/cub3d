@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/20 15:20:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 13:56:23 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,18 +19,6 @@ void	alloc_buffer(t_vars *vars)
 	{
 		perror("Memory allocation failed");
 		return ;
-	}
-}
-
-void	free_images(t_vars *vars)
-{
-	int	i;
-
-	i = 0;
-	while (i < 4 && vars->textures[i])
-	{
-		free(vars->textures[i]);
-		i++;
 	}
 }
 

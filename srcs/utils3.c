@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/04 03:55:04 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 13:44:44 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ int	test_tex_paths(char *tex_paths[4])
 	i = 0;
 	while (i < 4)
 	{
-		if (ft_strlen(tex_paths[i]) < 4
-			|| ft_strcmp(&tex_paths[i][ft_strlen(tex_paths[i]) - 4], ".png"))
-		{
-			printf("Error\nInvalid texture\n");
-			return (1);
-		}
 		fd = open(tex_paths[i], O_RDONLY);
 		if (fd == -1)
 		{
@@ -40,6 +34,18 @@ int	test_tex_paths(char *tex_paths[4])
 	return (0);
 }
 
+void	free_tex_paths(char *tex_paths[4])
+{
+	int	i;
+
+	i = 0;
+	while (i < 4)
+	{
+		free(tex_paths[i]);
+		i++;
+	}
+}
+
 int	check_count(char *tex_paths[4], t_bg *bg)
 {
 	int	i;
@@ -50,9 +56,9 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 	if (i < 3 || bg->color_set != 2)
 	{
 		if (i < 3)
-			printf("Error\nA texture is missing\n");
+			printf("Error\nNot enough textures\n");
 		else if (bg->color_set != 2)
-			printf("Error\nA color is missing\n");
+			printf("Error\nNot all background colors are set\n");
 		return (1);
 	}
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/04 03:58:18 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 13:56:10 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,6 @@ t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_
 /* -------------------------------- textures -------------------------------- */
 
 int				load_textures(t_vars *vars, char *tex_paths[4]);
-void			free_images(t_vars *vars);
 void			alloc_buffer(t_vars *vars);
 
 /* ---------------------------------- utils --------------------------------- */
@@ -179,6 +178,7 @@ void			remove_endl(char *str);
 /* --------------------------------- utils3 --------------------------------- */
 
 int				test_tex_paths(char *tex_paths[4]);
+void			free_tex_paths(char *tex_paths[4]);
 int				check_count(char *tex_paths[4], t_bg *bg);
 
 #endif

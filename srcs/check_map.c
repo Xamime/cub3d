@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/03 16:02:31 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 16:05:51 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,37 @@ int	is_in_set(char c, char *charset)
 	return (0);
 }
 
-static int	check_side_char(char **map, int i, int j)
+// static int	check_side_char(char **map, int i, int j)
+// {
+// 	if (map[i][j] == '0' && (j == 0 || i == 0 || !map[i + 1] || !map[i][j + 1]))
+// 	{
+// 		return (1);
+// 	}
+// 	return (0);
+// }
+
+static int	is_not_closed(char **map, int start_i, int start_j)
 {
-	if (map[i][j] == '0' && (j == 0 || i == 0 || !map[i + 1] || !map[i][j + 1]))
-	{
+	int	i;
+	int	j;
+
+	i = start_i;
+	j = start_j;
+	if ((i + 1 > (int)ft_strlen(map[i])) || (i + 1 > (int)ft_strlen(map[i + 2])))
 		return (1);
+	while (i < start_i + 3)
+	{
+		if (!map[i])
+			return (1);
+		while (j < start_j + 3)
+		{
+			if (is_in_set(map[i][j], " \0"))
+				return (1);
+			j++;
+		}
+		i++;
 	}
+
 	return (0);
 }
 
@@ -46,16 +71,12 @@ int	check_if_map_is_close(char **map)
 		j = 0;
 		while (map[i][j])
 		{
-			if (i == 0 || j == 0 || map[i + 1] == NULL
-				|| map[i][j + 1] == '\0')
+			if (i == 0 || j == 0 || !map[i + 1] || !map[i][j + 1])
 			{
-				if (check_side_char(map, i, j))
+				if (map[i][j] == '0')
 					return (1);
 			}
-			else if (map[i][j] == '0' && (is_in_set(map[i + 1][j], " \0\t")
-			|| is_in_set(map[i - 1][j], " \0\t")
-			|| is_in_set(map[i][j + 1], " \0\t")
-			|| is_in_set(map[i][j - 1], " \0\t")))
+			else if (map[i][j] == '0' && is_not_closed(map, i - 1, j - 1))
 				return (1);
 			j++;
 		}
@@ -63,6 +84,32 @@ int	check_if_map_is_close(char **map)
 	}
 	return (0);
 }
+
+// int	check_if_map_is_close(char **map)
+// {
+// 	int	i;
+// 	int	j;
+
+// 	i = 0;
+// 	while (map[i])
+// 	{
+// 		j = 0;
+// 		while (map[i][j])
+// 		{
+// 			if (map[i][j] == '0'
+// 				&& (i == 0 || j == 0 || !map[i + 1] || !map[i][j + 1]))
+// 					return (1);
+// 			else if (map[i][j] == '0' && (is_in_set(map[i + 1][j], " \0")
+// 			|| is_in_set(map[i - 1][j], " \0")
+// 			|| is_in_set(map[i][j + 1], " \0")
+// 			|| is_in_set(map[i][j - 1], " \0")))
+// 				return (1);
+// 			j++;
+// 		}
+// 		i++;
+// 	}
+// 	return (0);
+// }
 
 int	multiple_player(char **map)
 {

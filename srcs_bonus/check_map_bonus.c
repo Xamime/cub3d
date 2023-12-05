@@ -6,13 +6,13 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/05 18:11:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 20:25:19 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-int	is_in_set(char c, char *charset)
+static int	is_in_set(char c, char *charset)
 {
 	int	i;
 
@@ -68,10 +68,10 @@ int	check_if_map_is_close(t_object **map)
 		{
 			if (i == 0 || j == 0 || !map[i + 1] || !map[i][j + 1].type)
 			{
-				if (map[i][j].type == '0')
+				if (map[i][j].type != '1' && map[i][j].type != ' ')
 					return (1);
 			}
-			else if (map[i][j].type == '0'
+			else if (map[i][j].type != '1' && map[i][j].type != ' '
 				&& is_not_closed(map, i - 1, j - 1))
 				return (1);
 			j++;

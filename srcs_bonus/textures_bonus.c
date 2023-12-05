@@ -6,11 +6,11 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 19:15:48 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:35:41 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../includes/cub3d.h"
+#include "../includes/cub3d_bonus.h"
 
 void	alloc_buffer(t_vars *vars)
 {
@@ -67,7 +67,6 @@ int	load_textures(t_vars *vars, char *tex_paths[4])
 	{
 		if (!error_status && init_textures(vars, tex_paths[i], i))
 			error_status = 1;
-		printf("width (load) : %d\n", vars->textures[i]->width);
 		free(tex_paths[i]);
 		i++;
 	}

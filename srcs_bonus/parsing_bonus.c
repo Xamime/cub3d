@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/05 19:12:23 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:37:16 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,6 @@ t_object	**malloc_map(char **split)
 	map = malloc(sizeof(t_object *) * (lines_nb + 1));
 	if (!map)
 		return (NULL);
-	printf("lines : %d\n", lines_nb);
 	map[lines_nb] = NULL;
 	line = 0;
 	while (split[line])
@@ -163,7 +162,5 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 		free_map(vars->map);
 		return (1);
 	}
-	for (int i = 0; i < 4; i++)
-		printf("width : %d\n", vars->textures[i]->width);
 	return (0);
 }

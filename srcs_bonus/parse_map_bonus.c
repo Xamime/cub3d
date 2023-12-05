@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 15:54:36 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 16:44:42 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 20:20:50 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ char	*get_map(int fd, char *str)
 	char	*map;
 
 	map = NULL;
-	while (str)
+	while (str && !is_empty_line(str))
 	{
 		remove_endl(str);
 		if (!is_map(str))

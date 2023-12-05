@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/04 03:43:51 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 20:34:55 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void	find_pos(t_vars *vars, char **map)
 			if (map[i][j] && (map[i][j] == 'N' || map[i][j] == 'S'
 				|| map[i][j] == 'W' || map[i][j] == 'E'))
 			{
-				vars->player.x = j;
-				vars->player.y = i;
+				vars->player.x = j + 0.5f;
+				vars->player.y = i + 0.5f;
 				vars->player.orientation = map[i][j];
 			}
 			j++;

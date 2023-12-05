@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 17:06:05 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 20:20:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,6 @@ typedef struct t_vars
 
 /* -------------------------------- check_map ------------------------------- */
 
-int				is_in_set(char c, char *charset);
 int				check_if_map_is_close(char **map);
 int				player_count(char **map);
 
@@ -147,6 +146,7 @@ char			*get_map(int fd, char *str);
 
 /* ----------------------------- parse_textures ----------------------------- */
 
+int				is_empty_line(char *str);
 char			*get_textures(int fd, char *tex_paths[4], t_bg *bg);
 
 /* --------------------------------- parsing -------------------------------- */

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:47:41 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:38:04 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 20:19:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ static int	check_id(char *str)
 	return (-1);
 }
 
-static int	is_empty_line(char *str)
+int	is_empty_line(char *str)
 {
 	int	i;
 
@@ -54,7 +54,7 @@ static char	*gnl_non_empty(int fd)
 	return (str);
 }
 
-int	set_texture(int id, char **tmp, char *str, char *tex_paths[4])
+static int	set_texture(int id, char **tmp, char *str, char *tex_paths[4])
 {
 	if (id >= 0 && id < 4 && tex_paths[id])
 	{
@@ -68,7 +68,7 @@ int	set_texture(int id, char **tmp, char *str, char *tex_paths[4])
 	return (0);
 }
 
-int	set_tmp(char ***tmp, char *str)
+static int	set_tmp(char ***tmp, char *str)
 {
 	*tmp = ft_split(str, ' ');
 	if (!(*tmp) || !(*tmp)[0] || ((*tmp)[1] && (*tmp)[2]))

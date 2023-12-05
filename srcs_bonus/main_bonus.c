@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 19:09:00 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/05 19:48:37 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,7 +103,7 @@ void ft_hook(void* param)
 {
 	t_vars *vars;
 
-	vars = param;
+	vars = (t_vars *)param;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
@@ -134,7 +134,7 @@ void	cursor_hook(double x, double y, void *param)
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
 }
 
-int	main(int32_t argc, const char* argv[])
+int	main(int argc, const char* argv[])
 {
 	t_vars	vars;
 	t_bg	bg;
@@ -149,6 +149,7 @@ int	main(int32_t argc, const char* argv[])
 	vars.case_size = 10.0f;
 	vars.player.door_status = 1.0f;
 	vars.player.is_door = 1;
+	vars.time = 0.0f;
 
 	display_background(vars.mlx, bg);
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);

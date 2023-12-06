@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 14:34:39 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:51:39 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,16 +124,22 @@ void ft_hook(void* param)
 
 }
 
-void	cursor_hook(double x, double y, void *param)
+void cursor_change(double x, double y, void *param)
 {
 	t_vars			*vars;
-	static double	last_x = 0;
+	//static double	prevx = 0.0;
+	double			deltax;
+	double			diff;
 
-	(void)y;
 	vars = (t_vars *)param;
-	rotate_right(&vars->player, (x - last_x) / 200);
-	last_x = x;
+	(void)y;
+    deltax = x - WIDTH / 2;
+    diff = 0.1;
+	
+    rotate_right(&vars->player, deltax / 400);
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
+    //prevx = x;
+	
 }
 
 int	main(int argc, const char* argv[])
@@ -160,6 +166,10 @@ int	main(int argc, const char* argv[])
 	vars.minimap = mlx_new_image(vars.mlx, MINIMAP_SIZE, MINIMAP_SIZE);
 	mlx_image_to_window(vars.mlx, vars.minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
 	mlx_loop_hook(vars.mlx, ft_hook, &vars);
+	mlx_set_cursor_mode(vars.mlx, MLX_MOUSE_HIDDEN);
+	mlx_set_mouse_pos(vars.mlx, WIDTH / 2, HEIGHT / 2);
+	mlx_cursor_hook(vars.mlx, cursor_change, &vars);
+	//mlx_mouse_hook(vars.mlx, cursor_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_map(vars.map);

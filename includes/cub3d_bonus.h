@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 14:42:17 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:21:13 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ typedef struct	s_dda
 	t_ipoint	map;
 	t_ipoint	step;
 	int			side;
-	t_object	hit;
+	t_object	*hit;
 }				t_dda;
 
 typedef struct	s_ray
@@ -93,6 +93,9 @@ typedef struct	t_player
 	int			map_length; // aled
 	double		door_status; // aled
 	int			is_door; // aled
+	t_object	*aimed_obj;
+	int			door_opening;
+	int			door_closing;
 }				t_player;
 
 typedef struct	s_render_tex

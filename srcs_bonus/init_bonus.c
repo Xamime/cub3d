@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/06 18:16:11 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/06 18:45:13 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,9 @@ static void	init_doors_dir(t_object **map, int i, int j)
 {
 	if (map[i][j + 1].type == '1' && map[i][j - 1].type == '1'
 			&& map[i + 1][j].type == '0' && map[i - 1][j].type == '0')
-		map[i][j].orientation = WE;
-	else if (map[i + 1][j].type == '1' && map[i - 1][j].type == '1'
-			&& map[i][j + 1].type == '0' && map[i][j - 1].type == '0')
 		map[i][j].orientation = NS;
+	else
+		map[i][j].orientation = WE;
 }
 
 void    find_pos(t_vars *vars, t_object **map)

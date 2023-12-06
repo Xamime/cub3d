@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   doors_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 14:09:34 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:22:05 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,23 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 	double	wallY;
 	double	next_wallY;
 
-	int		door_axis = 1;
-	int		wall_axis = 0;
+	double	door_y = 0.5f;
+	double	rayd;
+	(void)map;
 
-	if (dda->hit.orientation == WE)
+	int		door_axis;
+	int		wall_axis;
+
+	// if (map[(int)player.y][(int)player.x].type == 'D')
+
+
+	door_axis = 1;
+	wall_axis = 0;
+	if (dda->hit->orientation == WE)
 	{
 		door_axis = 0;
 		wall_axis = 1;
 	}
-
-	double	door_y = 0.5f;
-	double	rayd;
-
-	(void)map;
 
 	if (door_axis == 1)
 		rayd = ray_dir.y;
@@ -119,14 +123,14 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 	// printf("wallX : %f, next wallX : %f\n", wallX, next_wallX);
 
 	// printf("door_x : %f\n", door_x);
-	if (door_x > dda->hit.mode)
+	if (door_x > dda->hit->mode)
 		return (0);
 
 	// ray enters in the NS axis and exits in the NS axis
 	if (dda->side == door_axis && next_side == door_axis)
 	{
 		// if (wallX < 0.5f + lol && wallX > 0.5f - lol && next_wallX < 0.5f + lol && next_wallX > 0.5f - lol)
-			// return (0);
+		// 	return (0);
 		return (1);
 	}
 	// ray enters in the EW axis and exits in the EW axis and on the same side

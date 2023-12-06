@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 13:41:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:28:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,8 @@ t_render_tex	set_render_texture(t_player player, t_ray ray,
 		wallX = player.x + ray.wall_dist * ray.ray_dir.x;
 	wallX -= floor(wallX);
 	wallX = 1.0f - wallX;
-	if (dda->hit.type == 'D')
-		wallX -= 1.0f - dda->hit.mode;
+	if (dda->hit->type == 'D')
+		wallX -= 1.0f - dda->hit->mode;
 	if (wallX < 0.0f)
 		wallX = 0.0f;
 	rtex.texture = find_tex_side(textures, ray, dda->side);

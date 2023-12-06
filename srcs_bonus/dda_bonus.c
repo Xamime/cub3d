@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 14:06:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:30:31 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,11 +30,13 @@ static double	init_side_dist(double ray_dir, double player_pos, int map_pos, dou
 
 static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir)
 {
+	dda->side = 0;
 	while (map[dda->map.y][dda->map.x].type != '1')
 	{
 		if (map[dda->map.y][dda->map.x].type == 'D')
 		{
-			dda->hit = map[dda->map.y][dda->map.x];
+			if (!player.door_opening && !player.door_closing)
+				dda->hit = &map[dda->map.y][dda->map.x];
 			if (collide_with_door(dda, map, player, ray_dir))
 				break ;
 		}
@@ -51,13 +53,19 @@ static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_d
 			dda->map.y += dda->step.y;
 		}
 	}
-	dda->hit = map[dda->map.y][dda->map.x];
+	if (!player.door_opening && !player.door_closing)
+		dda->hit = &map[dda->map.y][dda->map.x];
 }
 
 double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map)
 {
 	dda->side_dist.x = init_side_dist(ray_dir.x, (*player).x, dda->map.x, dda->delta_dist.x);
 	dda->side_dist.y = init_side_dist(ray_dir.y, (*player).y, dda->map.y, dda->delta_dist.y);
+
+	if (dda->side_dist.x < dda->side_dist.y)
+		dda->side = 0;
+	else
+		dda->side = 1;
 
 	dda_loop(dda, map, *player, ray_dir);
 
@@ -69,7 +77,6 @@ double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **
 		else
 			return (dda->side_dist.x - (dda->delta_dist.x / 2));
 	}
-
 	if (dda->side == 0)
 		return (dda->side_dist.x - dda->delta_dist.x);
 	return (dda->side_dist.y - dda->delta_dist.y);

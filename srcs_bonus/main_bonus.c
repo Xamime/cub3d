@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 14:34:39 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 20:27:13 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	update_doors(t_object **map, t_player player)
 			if (map[y][x].type == 'D')
 			{
 				map[y][x].mode = player.door_status;
-				return ;
+				// return ;
 			}
 			x++;
 		}
@@ -41,6 +41,7 @@ void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], u
 	t_render_tex	rtex;
 
 	// printf("\n --- draw --- \n\n");
+	// printf("player_pos : %f\n", player->x);
 
 	update_doors(map, *player);
 	for (int x = 0; x < WIDTH; x++)
@@ -50,42 +51,48 @@ void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], u
 		ray.ray_dir.y = (player->dir.y + player->plane.y) - (player->plane.y * ray.camerax);
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(player, ray.ray_dir, &dda, map);
+		if (x == WIDTH / 2)
+			player->aimed_obj = dda.hit;
 		set_ray_draw_pos(&ray);
 		rtex = set_render_texture(*player, ray, &dda, textures);
 		draw_wall(ray, rtex, x, buffer);
 	}
 }
 
+void	open_door(t_vars *vars)
+{
+	if (vars->player.door_opening == 1)
+	{
+		if (vars->player.aimed_obj->mode > 0.0f)
+			vars->player.aimed_obj->mode -= 0.05f;
+		else
+			vars->player.door_opening = 0;
+	}
+	else if (vars->player.door_closing == 1)
+	{
+		if (vars->player.aimed_obj->mode < 1.0f)
+			vars->player.aimed_obj->mode += 0.05f;
+		else
+			vars->player.door_closing = 0;
+	}
+	vars->time = 0.0f;
+}
+
 void	hook_again(t_vars *vars)
 {
 	vars->time += vars->mlx->delta_time;
-	if (vars->time > 0.0125f)
-	{
-		// if (vars->player.is_door)
-		// 	printf("is closing\n");
-		// else
-		// 	printf("is opening\n");
-		if (vars->player.is_door == 1)
-		{
-			if (vars->player.door_status > 0.0f)
-				vars->player.door_status -= 0.05f;
-			else
-				vars->player.is_door = 0;
-		}
-		else if (vars->player.is_door == 0)
-		{
-			if (vars->player.door_status < 1.0f)
-				vars->player.door_status += 0.05f;
-			else
-				vars->player.is_door = 1;
-		}
-		vars->time = 0.0f;
-	}
-	// if (vars->time > 1.0f)
-	// {
-	// 	vars->time = 0.0f;
-	// 	// printf("sec\n");
-	// }
+	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_4)
+		&& vars->player.aimed_obj->type == 'D'
+		&& !vars->player.door_closing)
+		vars->player.door_opening = 1;
+	else if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_6)
+		&& vars->player.aimed_obj->type == 'D'
+		&& !vars->player.door_opening
+		&& vars->map[(int)vars->player.y][(int)vars->player.x].type != 'D')
+		vars->player.door_closing = 1;
+	if (vars->time > 0.0125f && (vars->player.door_opening
+		|| vars->player.door_closing))
+		open_door(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
 		vars->case_size *= 1.1f;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
@@ -138,6 +145,12 @@ void	cursor_hook(double x, double y, void *param)
 
 int	main(int argc, const char* argv[])
 {
+	// mlx_t	*mlx;
+
+	// (void)argc;
+	// (void)argv;
+	// mlx = mlx_init(WIDTH, HEIGHT, "test", 1);
+	// mlx_terminate(mlx);
 	t_vars	vars;
 	t_bg	bg;
 
@@ -152,6 +165,9 @@ int	main(int argc, const char* argv[])
 	vars.player.door_status = 1.0f;
 	vars.player.is_door = 1;
 	vars.time = 0.0f;
+	vars.player.aimed_obj = NULL;
+	vars.player.door_opening = 0;
+	vars.player.door_closing = 0;
 
 	display_background(vars.mlx, bg);
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);

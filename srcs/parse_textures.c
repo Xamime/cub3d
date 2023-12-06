@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_textures.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:47:41 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 20:31:39 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:23:40 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,18 +27,6 @@ static int	check_id(char *str)
 	else if (!ft_strcmp(str, "C"))
 		return (CEILING);
 	return (-1);
-}
-
-int	is_empty_line(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (!str[i] || str[i] == '\n')
-		return (1);
-	return (0);
 }
 
 static char	*gnl_non_empty(int fd)
@@ -93,7 +81,7 @@ char	*get_textures(int fd, char *tex_paths[4], t_bg *bg)
 	{
 		str = gnl_non_empty(fd);
 		if (set_tmp(&tmp, str) == -1)
-			break;
+			break ;
 		id = check_id(tmp[0]);
 		if (id != -1 && id != FLOOR && id != CEILING)
 		{

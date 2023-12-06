@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/06 12:29:01 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:21:55 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_not_closed(char **map, int start_i, int start_j)
 
 	i = start_i;
 	j = start_j;
-	len_below = (int)ft_strlen(map[i+ 2]);
+	len_below = (int)ft_strlen(map[i + 2]);
 	len_above = (int)ft_strlen(map[i]);
 	if (j + 1 > len_above - 1 || j + 1 > len_below - 1)
 		return (1);
@@ -57,7 +57,8 @@ int	check_if_map_is_close(char **map)
 				if (map[i][j] != '1' && map[i][j] != ' ')
 					return (1);
 			}
-			else if (map[i][j] != '1' && map[i][j] != ' ' && is_not_closed(map, i - 1, j - 1))
+			else if (map[i][j] != '1' && map[i][j] != ' '
+					&& is_not_closed(map, i - 1, j - 1))
 				return (1);
 			j++;
 		}

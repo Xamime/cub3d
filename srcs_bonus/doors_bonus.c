@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 20:22:05 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 22:35:57 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,6 @@ int	collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_
 
 	int		door_axis;
 	int		wall_axis;
-
-	// if (map[(int)player.y][(int)player.x].type == 'D')
-
 
 	door_axis = 1;
 	wall_axis = 0;

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 21:58:18 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 22:25:15 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,27 @@ void	open_door(t_vars *vars)
 	vars->time = 0.0f;
 }
 
+void	draw_crosshair(t_vars *vars)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < 18)
+	{
+		x = 0;
+		while (x < 18)
+		{
+			if ((y >= 18 / 2 - 1 && y <= 18 / 2)
+				|| (x >= 18 / 2 - 1 && x <= 18 / 2))
+				mlx_put_pixel(vars->crosshair, x, y,
+					create_rgba(255, 255, 255, 255));
+			x++;
+		}
+		y++;
+	}
+}
+
 void	hook_again(t_vars *vars)
 {
 	vars->time += vars->mlx->delta_time;
@@ -71,16 +92,17 @@ void	hook_again(t_vars *vars)
 		|| vars->player.door_closing))
 		open_door(vars);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
-		vars->minimap.case_size *= 1.1f;
+		vars->case_size *= 1.1f;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
 	{
-		if (vars->minimap.case_size > 1.0f)
-			vars->minimap.case_size *= 0.9f;
+		if (vars->case_size > 1.0f)
+			vars->case_size *= 0.9f;
 	}
 	init_buffer(vars);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	draw_buffer(vars->game, vars->buffer);
-	draw_minimap(&vars->minimap, vars->player, vars->map);
+	draw_minimap(vars);
+	draw_crosshair(vars);
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
 	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 }
@@ -111,19 +133,13 @@ void ft_hook(void* param)
 void cursor_change(double x, double y, void *param)
 {
 	t_vars			*vars;
-	//static double	prevx = 0.0;
 	double			deltax;
-	double			diff;
 
 	vars = (t_vars *)param;
 	(void)y;
     deltax = x - WIDTH / 2;
-    diff = 0.1;
-	
     rotate_right(&vars->player, deltax / 400);
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
-    //prevx = x;
-	
 }
 
 int	main(int argc, const char* argv[])
@@ -144,7 +160,7 @@ int	main(int argc, const char* argv[])
 	find_pos(&vars, vars.map);
 	init_orientation(&vars);
 
-	vars.minimap.case_size = 10.0f;
+	vars.case_size = 10.0f;
 	vars.player.door_status = 1.0f;
 	vars.player.is_door = 1;
 	vars.time = 0.0f;
@@ -156,13 +172,14 @@ int	main(int argc, const char* argv[])
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
 	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
-	vars.minimap.image = mlx_new_image(vars.mlx, MINIMAP_SIZE, MINIMAP_SIZE);
-	mlx_image_to_window(vars.mlx, vars.minimap.image, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
+	vars.crosshair = mlx_new_image(vars.mlx, 18, 18);
+	mlx_image_to_window(vars.mlx, vars.crosshair, WIDTH / 2 - 9, HEIGHT / 2 - 9);
+	vars.minimap = mlx_new_image(vars.mlx, MINIMAP_SIZE, MINIMAP_SIZE);
+	mlx_image_to_window(vars.mlx, vars.minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
 	mlx_loop_hook(vars.mlx, ft_hook, &vars);
 	mlx_set_cursor_mode(vars.mlx, MLX_MOUSE_HIDDEN);
 	mlx_set_mouse_pos(vars.mlx, WIDTH / 2, HEIGHT / 2);
 	mlx_cursor_hook(vars.mlx, cursor_change, &vars);
-	//mlx_mouse_hook(vars.mlx, cursor_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_map(vars.map);

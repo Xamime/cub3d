@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:10:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:48:40 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,4 +64,14 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 		return (1);
 	}
 	return (0);
+}
+
+int	get_mapsize(t_vars *vars)
+{
+	int	i;
+
+	i = 0;
+	while (vars->map[i])
+		i++;
+	return (i);
 }

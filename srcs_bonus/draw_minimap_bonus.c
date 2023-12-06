@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/12/06 22:01:25 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 22:13:22 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,6 @@ uint32_t	get_color(t_object **map, double x, double y)
 {
 	if (map[(int)y][(int)x].type == '1')
 		return (create_rgba(255, 255, 255, 255));
-	else if (map[(int)y][(int)x].type == ' ')
-		return (create_rgba(0, 0, 0, 0));
 	return (create_rgba(0, 0, 0, 0));
 }
 
@@ -57,39 +55,25 @@ void	draw_player(mlx_image_t *minimap)
 	}
 }
 
-void	draw_minimap(t_minimap *minimap, t_player player, t_object **map)
+void	put_pix_minimap(t_vars *vars, double map_x, double map_y, double step)
 {
-	int	x = 0;
-	int	y = 0;
-	double	map_x;
-	double	map_y;
-
-	x = 0;
-	map_x = player.x - (MINIMAP_SIZE / minimap->case_size) / 2;
-	map_y = player.y - (MINIMAP_SIZE / minimap->case_size) / 2;
-	double	step = 1.0f / minimap->case_size;
-
-	int	max_y = 0;
-
-	while (map[max_y])
-		max_y++;
-
-	draw_background(minimap->image);
-
+	int			x;
+	int			y;
 	uint32_t	color;
 
 	x = 0;
 	while (x < MINIMAP_SIZE)
 	{
 		y = 0;
-		map_y = player.y - (MINIMAP_SIZE / minimap->case_size) / 2;
+		map_y = vars->player.y - (MINIMAP_SIZE / vars->case_size) / 2;
 		while (y < MINIMAP_SIZE)
 		{
-			if (map_y > 0.0f && map_y < (double)max_y && map_x > 0.0f && map_x < ft_line_len(map[(int)map_y]))
+			if (map_y > 0.0f && map_y < (double)get_mapsize(vars)
+				&& map_x > 0.0f && map_x < ft_line_len(vars->map[(int)map_y]))
 			{
-				color = get_color(map, map_x, map_y);
+				color = get_color(vars->map, map_x, map_y);
 				if (color)
-					mlx_put_pixel(minimap->image, x, y, get_color(map, map_x, map_y));
+					mlx_put_pixel(vars->minimap, x, y, color);
 			}
 			y++;
 			map_y += step;
@@ -97,5 +81,18 @@ void	draw_minimap(t_minimap *minimap, t_player player, t_object **map)
 		x++;
 		map_x += step;
 	}
-	draw_player(minimap->image);
+}
+
+void	draw_minimap(t_vars *vars)
+{
+	double	map_x;
+	double	map_y;
+	double	step;
+
+	map_x = vars->player.x - (MINIMAP_SIZE / vars->case_size) / 2;
+	map_y = vars->player.y - (MINIMAP_SIZE / vars->case_size) / 2;
+	step = 1.0f / vars->case_size;
+	draw_background(vars->minimap);
+	put_pix_minimap(vars, map_x, map_y, step);
+	draw_player(vars->minimap);
 }

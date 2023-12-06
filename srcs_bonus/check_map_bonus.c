@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   check_map_bonus.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/06 12:35:00 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:24:49 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static int	is_not_closed(t_object **map, int start_i, int start_j)
 
 	i = start_i;
 	j = start_j;
-	len_below = ft_line_len(map[i+ 2]);
+	len_below = ft_line_len(map[i + 2]);
 	len_above = ft_line_len(map[i]);
 	if (j + 1 > len_above - 1 || j + 1 > len_below - 1)
 		return (1);

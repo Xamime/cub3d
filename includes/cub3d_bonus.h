@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 21:57:43 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 22:09:38 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,17 +82,6 @@ typedef struct	s_ray
 	int			drawend;
 }				t_ray;
 
-typedef struct	s_minimap
-{
-	mlx_image_t	*image;
-	double		case_size;
-	double		map_x;
-	double		map_y;
-	double		max_y;
-	double		step;
-}				t_minimap;
-
-
 typedef struct	t_player
 {
 	t_fpoint	plane;
@@ -134,12 +123,14 @@ typedef struct t_vars
 {
 	t_object	**map;
 	mlx_image_t	*game;
-	t_minimap	minimap;
+	mlx_image_t	*minimap;
+	mlx_image_t	*crosshair;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
 	uint32_t	*buffer;
 	double		time;
+	double		case_size;
 }				t_vars;
 
 /* -------------------------------- check_map ------------------------------- */
@@ -155,7 +146,7 @@ t_dda			init_dda(t_player player, t_fpoint ray_dir);
 
 /* ------------------------------ draw_minimap ------------------------------ */
 
-void			draw_minimap(t_minimap *minimap, t_player player, t_object **map);
+void			draw_minimap(t_vars *vars);
 
 /* ------------------------------- draw_utils ------------------------------- */
 
@@ -226,5 +217,6 @@ void			remove_endl(char *str);
 int				test_tex_paths(char *tex_paths[4]);
 void			free_tex_paths(char *tex_paths[4]);
 int				check_count(char *tex_paths[4], t_bg *bg);
+int				get_mapsize(t_vars *vars);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 14:06:10 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:27:10 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ static int	init_step(double ray_dir)
 		return (1);
 }
 
-static double	init_side_dist(double ray_dir, double player_pos, int map_pos, double delta)
+static double	init_side_dist(double ray_dir, double player_pos,
+	int map_pos, double delta)
 {
 	if (ray_dir < 0)
 		return ((player_pos - map_pos) * delta);
@@ -28,7 +29,8 @@ static double	init_side_dist(double ray_dir, double player_pos, int map_pos, dou
 		return ((map_pos + 1.0f - player_pos) * delta);
 }
 
-static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir)
+static void	dda_loop(t_dda *dda, t_object **map,
+		t_player player, t_fpoint ray_dir)
 {
 	while (map[dda->map.y][dda->map.x].type != '1')
 	{
@@ -54,22 +56,21 @@ static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_d
 	dda->hit = map[dda->map.y][dda->map.x];
 }
 
-double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map)
+double	get_wall_dist(t_player *player, t_fpoint ray_dir,
+		t_dda *dda, t_object **map)
 {
-	dda->side_dist.x = init_side_dist(ray_dir.x, (*player).x, dda->map.x, dda->delta_dist.x);
-	dda->side_dist.y = init_side_dist(ray_dir.y, (*player).y, dda->map.y, dda->delta_dist.y);
-
+	dda->side_dist.x = init_side_dist(ray_dir.x, (*player).x,
+			dda->map.x, dda->delta_dist.x);
+	dda->side_dist.y = init_side_dist(ray_dir.y, (*player).y,
+			dda->map.y, dda->delta_dist.y);
 	dda_loop(dda, map, *player, ray_dir);
-
 	if (map[dda->map.y][dda->map.x].type == 'D')
 	{
-		// printf("coucou x\n");
 		if (map[dda->map.y][dda->map.x].orientation == NS)
 			return (dda->side_dist.y - (dda->delta_dist.y / 2));
 		else
 			return (dda->side_dist.x - (dda->delta_dist.x / 2));
 	}
-
 	if (dda->side == 0)
 		return (dda->side_dist.x - dda->delta_dist.x);
 	return (dda->side_dist.y - dda->delta_dist.y);
@@ -81,8 +82,8 @@ t_dda	init_dda(t_player player, t_fpoint ray_dir)
 
 	dda.map.x = (int)(player.x);
 	dda.map.y = (int)(player.y);
-	dda.delta_dist.x = (ray_dir.x == 0) ? 1e30 : fabs(1 / ray_dir.x);
-	dda.delta_dist.y = (ray_dir.y == 0) ? 1e30 : fabs(1 / ray_dir.y);
+	dda.delta_dist.x = fabs(1 / ray_dir.x);
+	dda.delta_dist.y = fabs(1 / ray_dir.y);
 	dda.step.x = init_step(ray_dir.x);
 	dda.step.y = init_step(ray_dir.y);
 	return (dda);

@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 21:00:22 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:53:17 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -213,5 +213,6 @@ void			remove_endl(char *str);
 int				test_tex_paths(char *tex_paths[4]);
 void			free_tex_paths(char *tex_paths[4]);
 int				check_count(char *tex_paths[4], t_bg *bg);
+int				get_mapsize(t_vars *vars);
 
 #endif

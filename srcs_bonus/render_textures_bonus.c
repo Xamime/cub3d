@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures_bonus.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 13:41:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:49:35 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-static mlx_image_t	*find_tex_side(mlx_image_t *textures[4], t_ray ray, int side)
+static mlx_image_t	*find_tex_side(mlx_image_t *textures[4],
+		t_ray ray, int side)
 {
 	if (side == 0 && ray.ray_dir.x < 0)
 		return (textures[EAST]);
@@ -29,20 +30,20 @@ t_render_tex	set_render_texture(t_player player, t_ray ray,
 	t_dda *dda, mlx_image_t *textures[4])
 {
 	t_render_tex	rtex;
-	double			wallX;
+	double			wallx;
 
 	if (dda->side == 0)
-		wallX = player.y + ray.wall_dist * ray.ray_dir.y;
+		wallx = player.y + ray.wall_dist * ray.ray_dir.y;
 	else
-		wallX = player.x + ray.wall_dist * ray.ray_dir.x;
-	wallX -= floor(wallX);
-	wallX = 1.0f - wallX;
+		wallx = player.x + ray.wall_dist * ray.ray_dir.x;
+	wallx -= floor(wallx);
+	wallx = 1.0f - wallx;
 	if (dda->hit.type == 'D')
-		wallX -= 1.0f - dda->hit.mode;
-	if (wallX < 0.0f)
-		wallX = 0.0f;
+		wallx -= 1.0f - dda->hit.mode;
+	if (wallx < 0.0f)
+		wallx = 0.0f;
 	rtex.texture = find_tex_side(textures, ray, dda->side);
-	rtex.pos.x = (int)(wallX * (double)rtex.texture->width);
+	rtex.pos.x = (int)(wallx * (double)rtex.texture->width);
 	if ((dda->side == 0 && ray.ray_dir.x > 0) || (dda->side == 1 && ray.ray_dir.y < 0))
 		rtex.pos.x = rtex.texture->width - rtex.pos.x - 1;
 	return (rtex);

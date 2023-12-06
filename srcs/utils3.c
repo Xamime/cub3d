@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:10:30 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:22:52 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,18 @@ void	free_tex_paths(char *tex_paths[4])
 		free(tex_paths[i]);
 		i++;
 	}
+}
+
+int	is_empty_line(char *str)
+{
+	int	i;
+
+	i = 0;
+	while (str[i] && str[i] == ' ')
+		i++;
+	if (!str[i] || str[i] == '\n')
+		return (1);
+	return (0);
 }
 
 int	check_count(char *tex_paths[4], t_bg *bg)

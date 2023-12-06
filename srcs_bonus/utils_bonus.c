@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 07:07:48 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:38:50 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:48:30 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,10 +27,10 @@ void	display_background(mlx_t *mlx, t_bg bg)
 		{
 			if (y < HEIGHT / 2)
 				mlx_put_pixel(background, x, y, create_rgba(bg.ceil.r,
-				bg.ceil.g, bg.ceil.b, 255));
+						bg.ceil.g, bg.ceil.b, 255));
 			else
 				mlx_put_pixel(background, x, y, create_rgba(bg.floor.r,
-				bg.floor.g, bg.floor.b, 255));
+						bg.floor.g, bg.floor.b, 255));
 			y++;
 		}
 		x++;

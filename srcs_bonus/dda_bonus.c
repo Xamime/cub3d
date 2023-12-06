@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 20:30:31 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:39:47 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,16 @@ static double	init_side_dist(double ray_dir, double player_pos, int map_pos, dou
 		return ((map_pos + 1.0f - player_pos) * delta);
 }
 
-static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir)
+static void	dda_loop(t_dda *dda, t_object **map, t_player *player, t_fpoint ray_dir)
 {
-	dda->side = 0;
 	while (map[dda->map.y][dda->map.x].type != '1')
 	{
 		if (map[dda->map.y][dda->map.x].type == 'D')
 		{
-			if (!player.door_opening && !player.door_closing)
-				dda->hit = &map[dda->map.y][dda->map.x];
-			if (collide_with_door(dda, map, player, ray_dir))
+			if (!dda->first_door)
+				dda->first_door = &map[dda->map.y][dda->map.x];
+			dda->hit = &map[dda->map.y][dda->map.x];
+			if (collide_with_door(dda, map, *player, ray_dir))
 				break ;
 		}
 		if (dda->side_dist.x < dda->side_dist.y)
@@ -53,8 +53,7 @@ static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_d
 			dda->map.y += dda->step.y;
 		}
 	}
-	if (!player.door_opening && !player.door_closing)
-		dda->hit = &map[dda->map.y][dda->map.x];
+	dda->hit = &map[dda->map.y][dda->map.x];
 }
 
 double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map)
@@ -67,7 +66,7 @@ double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **
 	else
 		dda->side = 1;
 
-	dda_loop(dda, map, *player, ray_dir);
+	dda_loop(dda, map, player, ray_dir);
 
 	if (map[dda->map.y][dda->map.x].type == 'D')
 	{

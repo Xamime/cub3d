@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 20:21:13 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:57:43 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,7 @@ typedef struct	s_dda
 	t_ipoint	step;
 	int			side;
 	t_object	*hit;
+	t_object	*first_door;
 }				t_dda;
 
 typedef struct	s_ray
@@ -80,6 +81,17 @@ typedef struct	s_ray
 	int			drawstart;
 	int			drawend;
 }				t_ray;
+
+typedef struct	s_minimap
+{
+	mlx_image_t	*image;
+	double		case_size;
+	double		map_x;
+	double		map_y;
+	double		max_y;
+	double		step;
+}				t_minimap;
+
 
 typedef struct	t_player
 {
@@ -122,12 +134,11 @@ typedef struct t_vars
 {
 	t_object	**map;
 	mlx_image_t	*game;
-	mlx_image_t	*minimap;
+	t_minimap	minimap;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
 	uint32_t	*buffer;
-	double		case_size;
 	double		time;
 }				t_vars;
 
@@ -144,7 +155,7 @@ t_dda			init_dda(t_player player, t_fpoint ray_dir);
 
 /* ------------------------------ draw_minimap ------------------------------ */
 
-void			draw_minimap(t_vars *vars);
+void			draw_minimap(t_minimap *minimap, t_player player, t_object **map);
 
 /* ------------------------------- draw_utils ------------------------------- */
 

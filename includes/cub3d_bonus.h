@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 14:42:17 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 21:00:22 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,6 +120,7 @@ typedef struct t_vars
 	t_object	**map;
 	mlx_image_t	*game;
 	mlx_image_t	*minimap;
+	mlx_image_t	*crosshair;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];

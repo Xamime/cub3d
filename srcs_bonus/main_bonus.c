@@ -6,7 +6,7 @@
 /*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 20:51:39 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/06 21:16:13 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,25 @@ void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], u
 	}
 }
 
+void	draw_crosshair(t_vars *vars)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < 9)
+	{
+		x = 0;
+		while (x < 9)
+		{
+			x++;
+			if ((y >= 3 && y <= 5) || (x >= 3 && x <= 5))
+				mlx_put_pixel(vars->crosshair, x, y, 0xFFFFFF);
+		}
+		y++;
+	}
+}
+
 void	hook_again(t_vars *vars)
 {
 	vars->time += vars->mlx->delta_time;
@@ -97,6 +116,7 @@ void	hook_again(t_vars *vars)
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	draw_buffer(vars->game, vars->buffer);
 	draw_minimap(vars);
+	draw_crosshair(vars);
 	vars->player.movespeed = vars->mlx->delta_time * 5.0;
 	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
 }
@@ -127,19 +147,13 @@ void ft_hook(void* param)
 void cursor_change(double x, double y, void *param)
 {
 	t_vars			*vars;
-	//static double	prevx = 0.0;
 	double			deltax;
-	double			diff;
 
 	vars = (t_vars *)param;
 	(void)y;
     deltax = x - WIDTH / 2;
-    diff = 0.1;
-	
     rotate_right(&vars->player, deltax / 400);
 	mlx_set_mouse_pos(vars->mlx, WIDTH / 2, HEIGHT / 2);
-    //prevx = x;
-	
 }
 
 int	main(int argc, const char* argv[])
@@ -163,13 +177,14 @@ int	main(int argc, const char* argv[])
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
 	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
+	vars.crosshair = mlx_new_image(vars.mlx, 9, 9);
+	mlx_image_to_window(vars.mlx, vars.crosshair, WIDTH / 2 - 4, HEIGHT / 2 - 4);
 	vars.minimap = mlx_new_image(vars.mlx, MINIMAP_SIZE, MINIMAP_SIZE);
 	mlx_image_to_window(vars.mlx, vars.minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
 	mlx_loop_hook(vars.mlx, ft_hook, &vars);
 	mlx_set_cursor_mode(vars.mlx, MLX_MOUSE_HIDDEN);
 	mlx_set_mouse_pos(vars.mlx, WIDTH / 2, HEIGHT / 2);
 	mlx_cursor_hook(vars.mlx, cursor_change, &vars);
-	//mlx_mouse_hook(vars.mlx, cursor_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_map(vars.map);

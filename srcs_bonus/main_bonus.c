@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 19:48:37 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 14:34:39 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ void	update_doors(t_object **map, t_player player)
 		while (map[y][x].type)
 		{
 			if (map[y][x].type == 'D')
+			{
 				map[y][x].mode = player.door_status;
+				return ;
+			}
 			x++;
 		}
 		y++;
@@ -83,7 +86,6 @@ void	hook_again(t_vars *vars)
 	// 	vars->time = 0.0f;
 	// 	// printf("sec\n");
 	// }
-
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_ADD))
 		vars->case_size *= 1.1f;
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_KP_SUBTRACT))
@@ -107,13 +109,13 @@ void ft_hook(void* param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(vars->mlx);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_A))
-		left_step(&vars->player, vars->map);
+		move(&vars->player, vars->map, LEFT);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_D))
-		right_step(&vars->player, vars->map);
+		move(&vars->player, vars->map, RIGHT);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_W))
-		ft_up(&vars->player, vars->map);
+		move(&vars->player, vars->map, UP);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
-		ft_down(&vars->player, vars->map);
+		move(&vars->player, vars->map, DOWN);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
 		rotate_left(&vars->player, vars->player.rotspeed);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
@@ -155,6 +157,8 @@ int	main(int argc, const char* argv[])
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
 	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
+	vars.minimap = mlx_new_image(vars.mlx, MINIMAP_SIZE, MINIMAP_SIZE);
+	mlx_image_to_window(vars.mlx, vars.minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
 	mlx_loop_hook(vars.mlx, ft_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);

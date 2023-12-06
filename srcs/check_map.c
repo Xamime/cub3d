@@ -6,25 +6,11 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/02 18:16:10 by maxime            #+#    #+#             */
-/*   Updated: 2023/12/05 20:25:22 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 12:29:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-static int	is_in_set(char c, char *charset)
-{
-	int	i;
-
-	i = 0;
-	while (charset[i])
-	{
-		if (c == charset[i])
-			return (1);
-		i++;
-	}
-	return (0);
-}
 
 static int	is_not_closed(char **map, int start_i, int start_j)
 {
@@ -46,7 +32,7 @@ static int	is_not_closed(char **map, int start_i, int start_j)
 		j = start_j;
 		while (j < start_j + 3)
 		{
-			if (is_in_set(map[i][j], " \0"))
+			if (!map[i][j] || map[i][j] == ' ')
 				return (1);
 			j++;
 		}

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 19:36:41 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 13:41:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,9 @@ t_render_tex	set_render_texture(t_player player, t_ray ray,
 	wallX -= floor(wallX);
 	wallX = 1.0f - wallX;
 	if (dda->hit.type == 'D')
-		wallX -= 1.0f - player.door_status;
+		wallX -= 1.0f - dda->hit.mode;
+	if (wallX < 0.0f)
+		wallX = 0.0f;
 	rtex.texture = find_tex_side(textures, ray, dda->side);
 	rtex.pos.x = (int)(wallX * (double)rtex.texture->width);
 	if ((dda->side == 0 && ray.ray_dir.x > 0) || (dda->side == 1 && ray.ray_dir.y < 0))

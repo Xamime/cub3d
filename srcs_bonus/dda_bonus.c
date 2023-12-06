@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/11/26 23:40:00 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 14:06:10 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,14 +34,9 @@ static void	dda_loop(t_dda *dda, t_object **map, t_player player, t_fpoint ray_d
 	{
 		if (map[dda->map.y][dda->map.x].type == 'D')
 		{
+			dda->hit = map[dda->map.y][dda->map.x];
 			if (collide_with_door(dda, map, player, ray_dir))
-			{
-				// if (side_dist->x < side_dist->y)
-				// 	printf("x : %d, y : %d\n", x, y - dda->step.y);
-				// else
-				// 	printf("x : %d, y : %d\n", x - dda->step.x, y);
 				break ;
-			}
 		}
 		if (dda->side_dist.x < dda->side_dist.y)
 		{
@@ -69,7 +64,10 @@ double	get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **
 	if (map[dda->map.y][dda->map.x].type == 'D')
 	{
 		// printf("coucou x\n");
-		return (dda->side_dist.y - (dda->delta_dist.y / 2));
+		if (map[dda->map.y][dda->map.x].orientation == NS)
+			return (dda->side_dist.y - (dda->delta_dist.y / 2));
+		else
+			return (dda->side_dist.x - (dda->delta_dist.x / 2));
 	}
 
 	if (dda->side == 0)

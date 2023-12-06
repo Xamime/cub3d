@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 20:19:50 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 14:42:17 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 #define HEIGHT 1000
 #define ROTATE 2.50
 #define SPEED 4
+#define MINIMAP_SIZE 200
+#define MINIMAP_PLAYER_SIZE 5
 
 #define NORTH 0
 #define SOUTH 1
@@ -30,6 +32,14 @@
 #define WEST 3
 #define FLOOR 4
 #define CEILING 5
+
+#define UP 0
+#define DOWN 1
+#define RIGHT 2
+#define LEFT 3
+
+#define NS 0
+#define WE 1
 
 typedef struct	s_ipoint
 {
@@ -109,6 +119,7 @@ typedef struct t_vars
 {
 	t_object	**map;
 	mlx_image_t	*game;
+	mlx_image_t	*minimap;
 	mlx_t		*mlx;
 	t_player	player;
 	mlx_image_t	*textures[4];
@@ -152,14 +163,9 @@ void			find_pos(t_vars *vars, t_object **map);
 
 void			rotate_left(t_player *player, double speed);
 void			rotate_right(t_player *player, double speed);
-void			ft_up(t_player *player, t_object **map);
-void			ft_down(t_player *player, t_object **map);
-void			left_step(t_player *player, t_object **map);
-void			right_step(t_player *player, t_object **map);
 
-void			move(t_player *player, t_object **map, int up);
-void			rotate(t_player *player, double speed, int left);
-void			side_step(t_player *player, t_object **map, int left);
+void			move(t_player *player, t_object **map, int dir);
+// void			rotate(t_player *player, double speed, int left);
 
 /* ---------------------------- parse_background ---------------------------- */
 

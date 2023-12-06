@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/05 21:53:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 12:42:04 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ void    find_pos(t_vars *vars, t_object **map)
                 vars->player.x = j + 0.5f;
                 vars->player.y = i + 0.5f;
 	            vars->player.orientation = map[i][j].type;
+				map[i][j].type = '0';
             }
             j++;
         }

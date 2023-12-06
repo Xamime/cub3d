@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/12/05 18:21:25 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 13:35:42 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,54 +34,37 @@ void	rotate_right(t_player *player, double speed)
     player->plane.y = oldPlaneX * sin(speed) + player->plane.y * cos(speed);
 }
 
-void	ft_up(t_player *player, t_object **map)
+static void	init_next(t_player *player, double *next_x, double *next_y, int dir)
 {
-	t_object	obj_x;
-	t_object	obj_y;
-
-	obj_x = map[(int)((player->y ))][(int)(player->x + player->dir.x * player->movespeed)];
-	obj_y = map[(int)((player->y ) + player->dir.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
-		player->x += player->dir.x * player->movespeed;
-	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
-		player->y += player->dir.y * player->movespeed;
+	if (dir == UP || dir == DOWN)
+	{
+		*next_x = player->dir.x * player->movespeed;
+		*next_y = player->dir.y * player->movespeed;
+	}
+	else
+	{
+		*next_x = player->plane.x * player->movespeed;
+		*next_y = player->plane.y * player->movespeed;
+	}
+	if (dir == DOWN || dir == RIGHT)
+	{
+		*next_x *= -1.0f;
+		*next_y *= -1.0f;
+	}
 }
 
-void	ft_down(t_player *player, t_object **map)
+void	move(t_player *player, t_object **map, int dir)
 {
 	t_object	obj_x;
 	t_object	obj_y;
+	double		next_x;
+	double		next_y;
 
-	obj_x = map[(int)((player->y ))][(int)(player->x - player->dir.x * player->movespeed)];
-	obj_y = map[(int)((player->y ) - player->dir.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
-		player->x -= player->dir.x * player->movespeed;
-	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
-		player->y -= player->dir.y * player->movespeed;
-}
-
-void	right_step(t_player *player, t_object **map)
-{
-	t_object	obj_x;
-	t_object	obj_y;
-
-	obj_x = map[(int)((player->y ))][(int)(player->x - player->plane.x * player->movespeed)];
-	obj_y = map[(int)((player->y ) - player->plane.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
-		player->x -= player->plane.x * player->movespeed;
-	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
-		player->y -= player->plane.y * player->movespeed;
-}
-
-void	left_step(t_player *player, t_object **map)
-{
-	t_object	obj_x;
-	t_object	obj_y;
-
-	obj_x = map[(int)((player->y ))][(int)(player->x + player->plane.x * player->movespeed)];
-	obj_y = map[(int)((player->y ) + player->plane.y * player->movespeed)][(int)(player->x)];
-	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= 0.0f))
-		player->x += player->plane.x * player->movespeed;
-	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= 0.0f))
-		player->y += player->plane.y * player->movespeed;
+	init_next(player, &next_x, &next_y, dir);
+	obj_x = map[(int)(player->y)][(int)(player->x + next_x)];
+	obj_y = map[(int)(player->y + next_y)][(int)(player->x)];
+	if (obj_x.type == '0' || (obj_x.type == 'D' && obj_x.mode <= player->x - (int)player->x))
+		player->x += next_x;
+	if (obj_y.type == '0' || (obj_y.type == 'D' && obj_y.mode <= player->x - (int)player->x))
+		player->y += next_y;
 }

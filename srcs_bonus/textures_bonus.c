@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 19:35:41 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 15:09:11 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ static mlx_image_t	*load_texture(char *path, mlx_t *mlx)
 	tmp = mlx_load_png(path);
 	if (!tmp)
 	{
-		printf("Error\n");
-		perror(path);
+		printf("Error\n%s: can't use as a texture\n", path);
 		return (NULL);
 	}
 	tex = mlx_texture_to_image(mlx, tmp);
 	if (!tex)
 	{
-		printf("Error\nCan't convert to image\n");
+		printf("Error\n%s: can't convert to an image\n", path);
 		return (NULL);
 	}
 	mlx_delete_texture(tmp);

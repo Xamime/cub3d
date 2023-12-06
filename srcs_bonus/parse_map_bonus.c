@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 15:54:36 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 20:20:50 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/06 12:34:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	is_map(char *str)
 	i = 0;
 	while (str && str[i])
 	{
-		if (!ft_strchr("01 NSWE", str[i]))
+		if (!ft_strchr("01 NSWED", str[i]))
 			return (0);
 		i++;
 	}

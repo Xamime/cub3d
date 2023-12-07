@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/07 15:38:32 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 17:11:58 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ static char	*get_file_as_line(const char *path,
 	close(fd);
 	if (!file_as_line)
 		printf("Error\nInvalid map\n");
+	else
+		remove_endl(file_as_line);
 	return (file_as_line);
 }
 
@@ -99,7 +101,6 @@ int	parse_file(t_vars *vars, const char *path, t_bg *bg)
 		free_tex_paths(tex_paths);
 		return (1);
 	}
-	to_split[ft_strlen(to_split) - 1] = '\0';
 	vars->map = ft_split(to_split, ',');
 	free(to_split);
 	if (check_map(vars, tex_paths))

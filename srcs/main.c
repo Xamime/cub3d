@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 21:03:37 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 21:05:08 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	update_buffer(t_player *player, char **map,
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(*player, ray.ray_dir, &dda, map);
 		set_ray_draw_pos(&ray);
-		rtex = set_rtexture(*player, ray, dda.side, textures);
+		rtex = set_render_texture(*player, ray, dda.side, textures);
 		draw_wall(ray, rtex, x, buffer);
 		x++;
 	}

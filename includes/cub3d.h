@@ -6,44 +6,44 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 21:04:23 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef CUB3D_H
 # define CUB3D_H
 
-#include "../MLX42/include/MLX42/MLX42.h"
-#include "../libft/libft.h"
-#include <math.h>
-#include <stdio.h>
-#include <fcntl.h>
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "../libft/libft.h"
+# include <math.h>
+# include <stdio.h>
+# include <fcntl.h>
 
-#define WIDTH 1000
-#define HEIGHT 1000
-#define ROTATE 2.50
-#define SPEED 4
+# define WIDTH 1000
+# define HEIGHT 1000
+# define ROTATE 2.50
+# define SPEED 4
 
-#define NORTH 0
-#define SOUTH 1
-#define EAST 2
-#define WEST 3
-#define FLOOR 4
-#define CEILING 5
+# define NORTH 0
+# define SOUTH 1
+# define EAST 2
+# define WEST 3
+# define FLOOR 4
+# define CEILING 5
 
-typedef struct	s_ipoint
+typedef struct s_ipoint
 {
 	int	x;
 	int	y;
 }				t_ipoint;
 
-typedef struct	s_fpoint
+typedef struct s_fpoint
 {
 	double	x;
 	double	y;
 }				t_fpoint;
 
-typedef struct	s_dda
+typedef struct s_dda
 {
 	t_fpoint	delta_dist;
 	t_fpoint	side_dist;
@@ -52,7 +52,7 @@ typedef struct	s_dda
 	int			side;
 }				t_dda;
 
-typedef struct	s_ray
+typedef struct s_ray
 {
 	double		camerax;
 	t_fpoint	ray_dir;
@@ -62,7 +62,7 @@ typedef struct	s_ray
 	int			drawend;
 }				t_ray;
 
-typedef struct	t_player
+typedef struct t_player
 {
 	t_fpoint	plane;
 	t_fpoint	dir;
@@ -73,20 +73,20 @@ typedef struct	t_player
 	char		orientation;
 }				t_player;
 
-typedef struct	s_render_tex
+typedef struct s_rtex
 {
 	mlx_image_t	*texture;
 	t_ipoint	pos;
 }				t_rtex;
 
-typedef struct	s_color
+typedef struct s_color
 {
 	int32_t	r;
 	int32_t	g;
 	int32_t	b;
 }				t_color;
 
-typedef struct	s_bg
+typedef struct s_bg
 {
 	t_color	ceil;
 	t_color	floor;
@@ -105,80 +105,82 @@ typedef struct t_vars
 
 /* -------------------------------- check_map ------------------------------- */
 
-int				check_if_map_is_close(char **map);
-int				player_count(char **map);
+int			check_if_map_is_close(char **map);
+int			player_count(char **map);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-double			get_wall_dist(t_player player, t_fpoint ray_dir, t_dda *dda, char **map);
-t_dda			init_dda(t_player player, t_fpoint ray_dir);
+double		get_wall_dist(t_player player, t_fpoint ray_dir,
+				t_dda *dda, char **map);
+t_dda		init_dda(t_player player, t_fpoint ray_dir);
 
 /* ------------------------------- draw_utils ------------------------------- */
 
-int				get_pixel_color(int i, int j, mlx_image_t *map_img);
-void			set_ray_draw_pos(t_ray *ray);
+int			get_pixel_color(int i, int j, mlx_image_t *map_img);
+void		set_ray_draw_pos(t_ray *ray);
 
 /* ---------------------------------- draw ---------------------------------- */
 
-void			draw_wall(t_ray ray, t_rtex rtex, int x, uint32_t *buffer);
-void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
+void		draw_wall(t_ray ray, t_rtex rtex, int x, uint32_t *buffer);
+void		draw_buffer(mlx_image_t *game, uint32_t *buffer);
 
 /* ---------------------------------- init ---------------------------------- */
 
-void			init_buffer(uint32_t *buffer);
-void			init_orientation(t_vars *vars);
-void			find_pos(t_vars *vars, char **map);
+void		init_buffer(uint32_t *buffer);
+void		init_orientation(t_vars *vars);
+void		find_pos(t_vars *vars, char **map);
 
 /* --------------------------------- moving --------------------------------- */
 
-void			move(t_player *player, char **map, int up);
-void			rotate(t_player *player, double speed, int left);
-void			side_step(t_player *player, char **map, int left);
+void		move(t_player *player, char **map, int up);
+void		rotate(t_player *player, double speed, int left);
+void		side_step(t_player *player, char **map, int left);
 
 /* ---------------------------- parse_background ---------------------------- */
 
-int				get_background(t_bg *bg, char *str, int dir);
+int			get_background(t_bg *bg, char *str, int dir);
 
-/* -------------------------------- parse_map -------------------------------- */
+/* -------------------------------- parse_map ------------------------------- */
 
-int				is_map(char *str);
-char			*get_map(int fd, char *str);
+int			is_map(char *str);
+char		*get_map(int fd, char *str);
 
 /* ----------------------------- parse_textures ----------------------------- */
 
-char			*get_textures(int fd, char *tex_paths[4], t_bg *bg);
+char		*get_textures(int fd, char *tex_paths[4], t_bg *bg);
 
 /* --------------------------------- parsing -------------------------------- */
 
-int				parse_file(t_vars *vars, const char *path, t_bg *bg);
+int			parse_file(t_vars *vars, const char *path, t_bg *bg);
 
 /* ----------------------------- render_textures ---------------------------- */
 
-t_rtex	set_rtexture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
+t_rtex		set_render_texture(t_player player, t_ray ray,
+				int side, mlx_image_t *textures[4]);
 
 /* -------------------------------- textures -------------------------------- */
 
-int				load_textures(t_vars *vars, char *tex_paths[4]);
-void			alloc_buffer(t_vars *vars);
+int			load_textures(t_vars *vars, char *tex_paths[4]);
+void		alloc_buffer(t_vars *vars);
 
 /* ---------------------------------- utils --------------------------------- */
 
-void			display_background(mlx_t *mlx, t_bg bg);
-void			free_2d_array(char **str);
-uint32_t		create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
-int				ft_line_len(char *line);
+void		display_background(mlx_t *mlx, t_bg bg);
+void		free_2d_array(char **str);
+uint32_t	create_rgba(uint8_t r, uint8_t g, uint8_t b, uint8_t a);
+int			ft_line_len(char *line);
 
 /* --------------------------------- utils2 --------------------------------- */
 
-void			replace_address(char **addr1, char *addr2);
-void			remove_endl(char *str);
-int				set_texture(int id, char **tmp, char *str, char *tex_paths[4]);
-int				is_empty_line(char *str);
+void		replace_address(char **addr1, char *addr2);
+void		remove_endl(char *str);
+int			set_texture(int id, char **tmp, char *str, char *tex_paths[4]);
+int			is_empty_line(char *str);
 
 /* --------------------------------- utils3 --------------------------------- */
 
-int				test_tex_paths(char *tex_paths[4]);
-void			free_tex_paths(char *tex_paths[4]);
-int				check_count(char *tex_paths[4], t_bg *bg);
+int			test_tex_paths(char *tex_paths[4]);
+void		free_tex_paths(char *tex_paths[4]);
+int			check_count(char *tex_paths[4], t_bg *bg);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 21:03:37 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	update_buffer(t_player *player, char **map,
 	mlx_image_t *textures[4], uint32_t *buffer)
 {
-	t_dda			dda;
-	t_ray			ray;
+	t_dda	dda;
+	t_ray	ray;
 	t_rtex	rtex;
-	int				x;
+	int		x;
 
 	x = 0;
 	while (x < WIDTH)

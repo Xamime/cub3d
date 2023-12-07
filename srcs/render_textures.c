@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 21:03:52 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ static mlx_image_t	*find_tex_side(mlx_image_t *tex[4], t_ray ray, int side)
 	return (NULL);
 }
 
-t_rtex	set_rtexture(t_player player, t_ray ray,
+t_rtex	set_render_texture(t_player player, t_ray ray,
 	int side, mlx_image_t *textures[4])
 {
 	t_rtex	rtex;

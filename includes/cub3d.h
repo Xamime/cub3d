@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 15:32:19 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ typedef struct	s_render_tex
 {
 	mlx_image_t	*texture;
 	t_ipoint	pos;
-}				t_render_tex;
+}				t_rtex;
 
 typedef struct	s_color
 {
@@ -120,7 +120,7 @@ void			set_ray_draw_pos(t_ray *ray);
 
 /* ---------------------------------- draw ---------------------------------- */
 
-void			draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
+void			draw_wall(t_ray ray, t_rtex rtex, int x, uint32_t *buffer);
 void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
 
 /* ---------------------------------- init ---------------------------------- */
@@ -154,7 +154,7 @@ int				parse_file(t_vars *vars, const char *path, t_bg *bg);
 
 /* ----------------------------- render_textures ---------------------------- */
 
-t_render_tex	set_render_texture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
+t_rtex	set_rtexture(t_player player, t_ray ray, int side, mlx_image_t *textures[4]);
 
 /* -------------------------------- textures -------------------------------- */
 

@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:04:27 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 18:28:06 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	init_doors_dir(t_object **map, int i, int j)
 		map[i][j].orientation = NS;
 	else
 		map[i][j].orientation = WE;
-	map[i][j].mode = 1.0f;
+	map[i][j].status = 1.0f;
 }
 
 void	init_objects(t_vars *vars, t_object **map)

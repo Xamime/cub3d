@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 18:47:33 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,15 @@ void	open_door(t_player *player, double *time)
 {
 	if (player->door_opening == 1)
 	{
-		if (player->aimed_obj->mode > 0.0f)
-			player->aimed_obj->mode -= 0.05f;
+		if (player->aimed_obj->status > 0.0f)
+			player->aimed_obj->status -= 0.05f;
 		else
 			player->door_opening = 0;
 	}
 	else if (player->door_closing == 1)
 	{
-		if (player->aimed_obj->mode < 1.0f)
-			player->aimed_obj->mode += 0.05f;
+		if (player->aimed_obj->status < 1.0f)
+			player->aimed_obj->status += 0.05f;
 		else
 			player->door_closing = 0;
 	}

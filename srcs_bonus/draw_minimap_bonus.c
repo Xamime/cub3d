@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/12/07 18:32:03 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,9 @@ static uint32_t	get_color(t_object **map, double x, double y)
 	obj = map[(int)y][(int)x];
 	if (obj.type == '1')
 		return (create_rgba(255, 255, 255, 255));
-	else if (obj.type == 'D' && obj.mode > 0.001f)
+	else if (obj.type == 'D' && obj.status > 0.001f)
 		return (create_rgba(255, 0, 0, 255));
-	else if (obj.type == 'D' && obj.mode < 0.001f)
+	else if (obj.type == 'D' && obj.status < 0.001f)
 		return (create_rgba(0, 255, 0, 255));
 	return (create_rgba(0, 0, 0, 0));
 }

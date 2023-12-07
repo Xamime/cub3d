@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 18:33:56 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@ static mlx_image_t	*find_tex_side(mlx_image_t *textures[4],
 	return (NULL);
 }
 
-t_render_tex	set_render_texture(t_player player, t_ray ray,
+t_rtex	set_rtexture(t_player player, t_ray ray,
 	t_dda *dda, mlx_image_t *textures[4])
 {
-	t_render_tex	rtex;
+	t_rtex	rtex;
 	double			wallx;
 
 	if (dda->side == 0)
@@ -39,7 +39,7 @@ t_render_tex	set_render_texture(t_player player, t_ray ray,
 	wallx -= floor(wallx);
 	wallx = 1.0f - wallx;
 	if (dda->hit->type == 'D')
-		wallx -= 1.0f - dda->hit->mode;
+		wallx -= 1.0f - dda->hit->status;
 	if (wallx < 0.0f)
 		wallx = 0.0f;
 	rtex.texture = find_tex_side(textures, ray, dda->side);

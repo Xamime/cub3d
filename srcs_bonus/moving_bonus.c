@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moving_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/12/07 02:07:17 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static int	player_can_go_through_door(t_object obj)
 {
 	if (obj.type == 'D')
 	{
-		if (obj.orientation == NS && obj.mode <= 0.001f)
+		if (obj.orientation == NS && obj.status <= 0.001f)
 			return (1);
-		else if (obj.orientation == WE && obj.mode <= 0.001f)
+		else if (obj.orientation == WE && obj.status <= 0.001f)
 			return (1);
 	}
 	return (0);

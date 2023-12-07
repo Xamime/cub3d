@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   render_textures.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 16:15:12 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,10 @@ static mlx_image_t	*find_tex_side(mlx_image_t *tex[4], t_ray ray, int side)
 	return (NULL);
 }
 
-t_render_tex	set_render_texture(t_player player, t_ray ray,
+t_rtex	set_rtexture(t_player player, t_ray ray,
 	int side, mlx_image_t *textures[4])
 {
-	t_render_tex	rtex;
+	t_rtex	rtex;
 	double			wallx;
 
 	if (side == 0)

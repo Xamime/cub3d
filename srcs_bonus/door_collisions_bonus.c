@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 13:19:37 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 18:31:52 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:46:59 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ static int	ray_different_door_side_wall_axis(t_door_collision *dc, t_dda *dda)
 int	check_all_cases(t_door_collision *dc, t_dda *dda,
 	t_player player, t_fpoint ray_dir)
 {
-	if (dc->door_x > dda->hit->mode)
+	if (dc->door_x > dda->hit->status)
 		return (0);
 	if (dda->side == dc->door_axis && dc->next_side == dc->door_axis)
 		return (1);

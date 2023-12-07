@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 02:14:48 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:51:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	draw_crosshair(mlx_image_t *crosshair)
 	}
 }
 
-void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
+void	draw_wall(t_ray ray, t_rtex rtex, int x, uint32_t *buffer)
 {
 	double		step;
 	double		tex_y;

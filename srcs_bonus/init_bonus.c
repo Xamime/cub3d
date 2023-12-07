@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/07 16:41:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:33:01 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,10 +38,11 @@ static void	init_images(mlx_image_t **game, mlx_image_t **minimap,
 	*crosshair = mlx_new_image(mlx, 18, 18);
 	mlx_image_to_window(mlx, *crosshair, WIDTH / 2 - 9, HEIGHT / 2 - 9);
 	*minimap = mlx_new_image(mlx, MINIMAP_SIZE, MINIMAP_SIZE);
-	mlx_image_to_window(mlx, *minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
+	mlx_image_to_window(mlx, *minimap, WIDTH - MINIMAP_SIZE,
+		HEIGHT - MINIMAP_SIZE);
 }
 
-static void	init_orientation_NS(t_player *player)
+static void	init_orientation_ns(t_player *player)
 {
 	if (player->orientation == 'N')
 	{
@@ -59,7 +60,7 @@ static void	init_orientation_NS(t_player *player)
 	}
 }
 
-static void	init_orientation_WE(t_player *player)
+static void	init_orientation_we(t_player *player)
 {
 	if (player->orientation == 'E')
 	{
@@ -81,9 +82,9 @@ void	init(t_vars *vars, t_bg *bg)
 {
 	init_objects(vars, vars->map);
 	if (vars->player.orientation == 'N' || vars->player.orientation == 'S')
-		init_orientation_NS(&vars->player);
+		init_orientation_ns(&vars->player);
 	else
-		init_orientation_WE(&vars->player);
+		init_orientation_we(&vars->player);
 	init_vars(vars);
 	display_background(vars->mlx, *bg);
 	init_images(&vars->game, &vars->minimap, &vars->crosshair, vars->mlx);

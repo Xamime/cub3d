@@ -3,14 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   doors_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/16 17:42:39 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 13:23:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:47:33 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+
+void	open_door(t_player *player, double *time)
+{
+	if (player->door_opening == 1)
+	{
+		if (player->aimed_obj->mode > 0.0f)
+			player->aimed_obj->mode -= 0.05f;
+		else
+			player->door_opening = 0;
+	}
+	else if (player->door_closing == 1)
+	{
+		if (player->aimed_obj->mode < 1.0f)
+			player->aimed_obj->mode += 0.05f;
+		else
+			player->door_closing = 0;
+	}
+	*time = 0.0f;
+}
 
 double	wall_hitpos(double player_pos, double side_dist, double ray_dir)
 {
@@ -38,7 +57,8 @@ static void	init_next(t_dda *dda, int *next_side, double *next_side_dist)
 	}
 }
 
-static double	init_wall_y(t_dda *dda, t_player player, t_fpoint ray_dir, int door_axis)
+static double	init_wall_y(t_dda *dda, t_player player,
+	t_fpoint ray_dir, int door_axis)
 {
 	double	wall_y;
 	double	side_dist;
@@ -76,10 +96,10 @@ int	collide_with_door(t_dda *dda, t_player player, t_fpoint ray_dir)
 	dc.wall_y = init_wall_y(dda, player, ray_dir, dc.door_axis);
 	if (dc.door_axis == 1)
 		dc.door_x = wall_hitpos(player.x,
-			dda->side_dist.y - dda->delta_dist.y / 2, ray_dir.x);
+				dda->side_dist.y - dda->delta_dist.y / 2, ray_dir.x);
 	else
 		dc.door_x = wall_hitpos(player.y,
-			dda->side_dist.x - dda->delta_dist.x / 2, ray_dir.y);
+				dda->side_dist.x - dda->delta_dist.x / 2, ray_dir.y);
 	dc.door_x = 1.0f - dc.door_x;
 	return (check_all_cases(&dc, dda, player, ray_dir));
 }

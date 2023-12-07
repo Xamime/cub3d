@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
+#    By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/07 16:05:23 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/07 18:52:46 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ SRC_BONUS =	srcs_bonus/check_map_bonus.c \
 			srcs_bonus/init2_bonus.c \
 			srcs_bonus/main_bonus.c \
 			srcs_bonus/moving_bonus.c \
+			srcs_bonus/object_map_bonus.c \
 			srcs_bonus/parse_background_bonus.c \
 			srcs_bonus/parse_map_bonus.c \
 			srcs_bonus/parse_textures_bonus.c \

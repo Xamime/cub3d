@@ -3,16 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   main_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 16:44:38 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:44:46 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer)
+void	update_buffer(t_player *player, t_object **map,
+	mlx_image_t *textures[4], uint32_t *buffer)
 {
 	t_dda			dda;
 	t_ray			ray;
@@ -23,8 +24,10 @@ void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], u
 	while (x < WIDTH)
 	{
 		ray.camerax = (2.0f / (double)(WIDTH - 1)) * x;
-		ray.ray_dir.x = (player->dir.x + player->plane.x) - (player->plane.x * ray.camerax);
-		ray.ray_dir.y = (player->dir.y + player->plane.y) - (player->plane.y * ray.camerax);
+		ray.ray_dir.x = (player->dir.x + player->plane.x)
+			- (player->plane.x * ray.camerax);
+		ray.ray_dir.y = (player->dir.y + player->plane.y)
+			- (player->plane.y * ray.camerax);
 		dda = init_dda(*player, ray.ray_dir);
 		ray.wall_dist = get_wall_dist(player, ray.ray_dir, &dda, map);
 		if (x == WIDTH / 2 && !player->door_opening && !player->door_closing)
@@ -36,7 +39,7 @@ void	update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], u
 	}
 }
 
-int	main(int argc, const char* argv[])
+int	main(int argc, const char *argv[])
 {
 	t_vars	vars;
 	t_bg	bg;
@@ -52,8 +55,8 @@ int	main(int argc, const char* argv[])
 	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
 	mlx_loop_hook(vars.mlx, main_hook, &vars);
 	mlx_set_cursor_mode(vars.mlx, MLX_MOUSE_HIDDEN);
-	// mlx_set_mouse_pos(vars.mlx, WIDTH / 2, HEIGHT / 2);
-	// mlx_cursor_hook(vars.mlx, cursor_hook, &vars);
+	mlx_set_mouse_pos(vars.mlx, WIDTH / 2, HEIGHT / 2);
+	mlx_cursor_hook(vars.mlx, cursor_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_map(vars.map);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 16:40:32 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:52:06 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,6 +160,7 @@ int				check_all_cases(t_door_collision *dc, t_dda *dda, t_player player, t_fpoi
 
 /* ---------------------------------- doors --------------------------------- */
 
+void			open_door(t_player *player, double *time);
 double			wall_hitpos(double player_pos, double side_dist, double ray_dir);
 int				collide_with_door(t_dda *dda, t_player player, t_fpoint ray_dir);
 
@@ -201,6 +202,10 @@ void			update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4],
 
 void			move(t_player *player, t_object **map, int dir);
 void			rotate(t_player *player, double speed);
+
+/* ------------------------------- object_map ------------------------------- */
+
+t_object		**char_to_obj_map(char **split);
 
 /* ---------------------------- parse_background ---------------------------- */
 

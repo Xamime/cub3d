@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/12/07 13:31:11 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:32:03 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,8 @@ static void	draw_player(mlx_image_t *minimap)
 	}
 }
 
-static void	put_pix_minimap(t_vars *vars, double map_x, double map_y, double step)
+static void	put_pix_minimap(t_vars *vars, double map_x,
+	double map_y, double step)
 {
 	int			x;
 	int			y;

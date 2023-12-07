@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   draw_utils_bonus.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:45:26 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 19:37:34 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:34:36 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 int	get_pixel_color(int i, int j, mlx_image_t *map_img)
 {
-	int    width;
-	int    *pixel_color;
-	int    rgb[3];
+	int	width;
+	int	*pixel_color;
+	int	rgb[3];
 
 	width = map_img->width;
 	pixel_color = (int *)map_img->pixels + (j * width + i);

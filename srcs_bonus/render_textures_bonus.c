@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:44:09 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 22:14:52 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:33:56 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,8 @@ t_render_tex	set_render_texture(t_player player, t_ray ray,
 		wallx = 0.0f;
 	rtex.texture = find_tex_side(textures, ray, dda->side);
 	rtex.pos.x = (int)(wallx * (double)rtex.texture->width);
-	if ((dda->side == 0 && ray.ray_dir.x > 0) || (dda->side == 1 && ray.ray_dir.y < 0))
+	if ((dda->side == 0 && ray.ray_dir.x > 0)
+		|| (dda->side == 1 && ray.ray_dir.y < 0))
 		rtex.pos.x = rtex.texture->width - rtex.pos.x - 1;
 	return (rtex);
 }

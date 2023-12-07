@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   init2_bonus.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/07 16:04:27 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 16:06:47 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:28:06 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,8 +33,8 @@ static void	init_doors_dir(t_object **map, int i, int j)
 
 void	init_objects(t_vars *vars, t_object **map)
 {
-	int i;
-	int j;
+	int	i;
+	int	j;
 
 	i = 0;
 	while (map && map[i])
@@ -42,7 +42,8 @@ void	init_objects(t_vars *vars, t_object **map)
 		j = 0;
 		while (map[i][j].type)
 		{
-			if (map[i][j].type && (map[i][j].type == 'N' || map[i][j].type == 'S'
+			if (map[i][j].type && (map[i][j].type == 'N'
+				|| map[i][j].type == 'S'
 				|| map[i][j].type == 'W' || map[i][j].type == 'E'))
 			{
 				vars->player.x = j + 0.5f;

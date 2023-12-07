@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 15:49:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 18:28:22 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ double	get_wall_dist(t_player *player, t_fpoint ray_dir,
 		t_dda *dda, t_object **map)
 {
 	dda->side_dist.x = init_side_dist(ray_dir.x, (*player).x,
-		dda->map.x, dda->delta_dist.x);
+			dda->map.x, dda->delta_dist.x);
 	dda->side_dist.y = init_side_dist(ray_dir.y, (*player).y,
-		dda->map.y, dda->delta_dist.y);
+			dda->map.y, dda->delta_dist.y);
 	if (dda->side_dist.x < dda->side_dist.y)
 		dda->side = 0;
 	else

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_map.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 15:54:36 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/07 17:03:02 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:19:56 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ char	*get_map(int fd, char *str)
 		{
 			free(str);
 			free(map);
+			str = NULL;
 			map = NULL;
 			break ;
 		}

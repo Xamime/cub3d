@@ -6,7 +6,7 @@
 #    By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/07 18:52:46 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/07 19:45:33 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,7 +57,6 @@ MLX_DIR = MLX42
 LIBFT = ${LIBFT_SRC}/libft.a
 LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
-INCLUDES = -I ./includes
 CC = clang
 CFLAGS = -Wall -Wextra -Werror -Iincludes
 OBJ = $(SRC:c=o)

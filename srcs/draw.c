@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   draw.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/04 03:47:20 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:56:48 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
+void	draw_wall(t_ray ray, t_rtex rtex, int x, uint32_t *buffer)
 {
 	double		step;
 	double		tex_y;

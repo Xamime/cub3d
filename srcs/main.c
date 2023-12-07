@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
+/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/07 15:51:13 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 19:59:22 by mdesrose         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,10 @@
 void	update_buffer(t_player *player, char **map,
 	mlx_image_t *textures[4], uint32_t *buffer)
 {
-	t_dda			dda;
-	t_ray			ray;
-	t_render_tex	rtex;
-	int				x;
+	t_dda	dda;
+	t_ray	ray;
+	t_rtex	rtex;
+	int		x;
 
 	x = 0;
 	while (x < WIDTH)

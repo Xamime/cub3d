@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/24 17:40:16 by xamime            #+#    #+#             */
-/*   Updated: 2023/12/06 12:28:45 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:38:32 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,8 +48,6 @@ static char	*get_file_as_line(const char *path,
 	remove_endl(tmp);
 	if (!is_map(tmp) || check_count(tex_paths, bg))
 	{
-		if (!is_map(tmp))
-			printf("Error\nBad identifier\n");
 		free(tmp);
 		close(fd);
 		return (file_as_line);

@@ -6,13 +6,13 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/05 20:34:55 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 01:26:47 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	init_buffer(t_vars *vars)
+void	init_buffer(uint32_t *buffer)
 {
 	int	y;
 	int	x;
@@ -23,7 +23,7 @@ void	init_buffer(t_vars *vars)
 		x = 0;
 		while (x < WIDTH)
 		{
-			vars->buffer[y * WIDTH + x] = 0;
+			buffer[y * WIDTH + x] = 0;
 			x++;
 		}
 		y++;

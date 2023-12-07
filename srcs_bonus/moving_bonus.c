@@ -3,66 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   moving_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/12/06 22:09:27 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 02:07:17 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	rotate_left(t_player *player, double speed)
+void	rotate(t_player *player, double speed)
 {
-	double	olddirx;
-	double	oldplanex;
+	double	old_dir_x;
+	double	old_plane_x;
+	double	cos_s;
+	double	sin_s;
 
-	olddirx = player->dir.x;
-	player->dir.x = player->dir.x * cos(-(speed))
-		- player->dir.y * sin(-(speed));
-	player->dir.y = olddirx * sin(-(speed)) + player->dir.y * cos(-(speed));
-	oldplanex = player->plane.x;
-	player->plane.x = player->plane.x * cos(-(speed))
-		- player->plane.y * sin(-(speed));
-	player->plane.y = oldplanex * sin(-(speed))
-		+ player->plane.y * cos(-(speed));
+	cos_s = cos(speed);
+	sin_s = sin(speed);
+	old_dir_x = player->dir.x;
+	old_plane_x = player->plane.x;
+	player->dir.x = player->dir.x * cos_s - player->dir.y * sin_s;
+	player->dir.y = old_dir_x * sin_s + player->dir.y * cos_s;
+	player->plane.x = player->plane.x * cos_s - player->plane.y * sin_s;
+	player->plane.y = old_plane_x * sin_s + player->plane.y * cos_s;
 }
 
-void	rotate_right(t_player *player, double speed)
-{
-	double	olddirx;
-	double	oldplanex;
-
-	olddirx = player->dir.x;
-	player->dir.x = player->dir.x * cos(speed) - player->dir.y * sin(speed);
-	player->dir.y = olddirx * sin(speed) + player->dir.y * cos(speed);
-	oldplanex = player->plane.x;
-	player->plane.x = player->plane.x * cos(speed)
-		- player->plane.y * sin(speed);
-	player->plane.y = oldplanex * sin(speed) + player->plane.y * cos(speed);
-}
-
-static void	init_next(t_player *player,
-		double *next_x, double *next_y, int dir)
-{
-	if (dir == UP || dir == DOWN)
-	{
-		*next_x = player->dir.x * player->movespeed;
-		*next_y = player->dir.y * player->movespeed;
-	}
-	else
-	{
-		*next_x = player->plane.x * player->movespeed;
-		*next_y = player->plane.y * player->movespeed;
-	}
-	if (dir == DOWN || dir == RIGHT)
-	{
-		*next_x *= -1.0f;
-		*next_y *= -1.0f;
-	}
-}
-
-int	player_can_go_through_door(t_object obj)
+static int	player_can_go_through_door(t_object obj)
 {
 	if (obj.type == 'D')
 	{
@@ -72,7 +39,26 @@ int	player_can_go_through_door(t_object obj)
 			return (1);
 	}
 	return (0);
+}
 
+static void	init_next(t_player *player,
+		double *next_x, double *next_y, int dir)
+{
+	if (dir == UP || dir == DOWN)
+	{
+		*next_x = player->dir.x * player->move_speed;
+		*next_y = player->dir.y * player->move_speed;
+	}
+	else
+	{
+		*next_x = player->plane.x * player->move_speed;
+		*next_y = player->plane.y * player->move_speed;
+	}
+	if (dir == DOWN || dir == RIGHT)
+	{
+		*next_x *= -1.0f;
+		*next_y *= -1.0f;
+	}
 }
 
 void	move(t_player *player, t_object **map, int dir)

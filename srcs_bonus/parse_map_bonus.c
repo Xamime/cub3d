@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 15:54:36 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 12:34:28 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 16:14:18 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,5 +51,7 @@ char	*get_map(int fd, char *str)
 		free(str);
 		str = get_next_line(fd);
 	}
+	if (str)
+		free(str);
 	return (map);
 }

@@ -3,23 +3,30 @@
 /*                                                        :::      ::::::::   */
 /*   draw_minimap_bonus.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:56:26 by max               #+#    #+#             */
-/*   Updated: 2023/12/06 22:13:22 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 13:31:11 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-uint32_t	get_color(t_object **map, double x, double y)
+static uint32_t	get_color(t_object **map, double x, double y)
 {
-	if (map[(int)y][(int)x].type == '1')
+	t_object	obj;
+
+	obj = map[(int)y][(int)x];
+	if (obj.type == '1')
 		return (create_rgba(255, 255, 255, 255));
+	else if (obj.type == 'D' && obj.mode > 0.001f)
+		return (create_rgba(255, 0, 0, 255));
+	else if (obj.type == 'D' && obj.mode < 0.001f)
+		return (create_rgba(0, 255, 0, 255));
 	return (create_rgba(0, 0, 0, 0));
 }
 
-void	draw_background(mlx_image_t *minimap)
+static void	draw_background(mlx_image_t *minimap)
 {
 	int	x;
 	int	y;
@@ -37,7 +44,7 @@ void	draw_background(mlx_image_t *minimap)
 	}
 }
 
-void	draw_player(mlx_image_t *minimap)
+static void	draw_player(mlx_image_t *minimap)
 {
 	int	x;
 	int	y;
@@ -55,7 +62,7 @@ void	draw_player(mlx_image_t *minimap)
 	}
 }
 
-void	put_pix_minimap(t_vars *vars, double map_x, double map_y, double step)
+static void	put_pix_minimap(t_vars *vars, double map_x, double map_y, double step)
 {
 	int			x;
 	int			y;

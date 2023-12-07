@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   moving.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 02:00:39 by max               #+#    #+#             */
-/*   Updated: 2023/12/03 21:31:24 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/07 02:06:54 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,20 @@ void	move(t_player *player, char **map, int up)
 	if (up == 1)
 	{
 		if (map[(int)((player->y) + player->dir.y
-				* player->movespeed)][(int)(player->x)] != '1')
-			player->y += player->dir.y * player->movespeed;
+				* player->move_speed)][(int)(player->x)] != '1')
+			player->y += player->dir.y * player->move_speed;
 		if (map[(int)((player->y))][(int)(player->x + player->dir.x
-				* player->movespeed)] != '1')
-			player->x += player->dir.x * player->movespeed;
+				* player->move_speed)] != '1')
+			player->x += player->dir.x * player->move_speed;
 	}
 	else
 	{
 		if (map[(int)((player->y) - player->dir.y
-				* player->movespeed)][(int)(player->x)] != '1')
-			player->y -= player->dir.y * player->movespeed;
+				* player->move_speed)][(int)(player->x)] != '1')
+			player->y -= player->dir.y * player->move_speed;
 		if (map[(int)((player->y))][(int)(player->x - player->dir.x
-				* player->movespeed)] != '1')
-			player->x -= player->dir.x * player->movespeed;
+				* player->move_speed)] != '1')
+			player->x -= player->dir.x * player->move_speed;
 	}
 }
 
@@ -55,19 +55,19 @@ void	side_step(t_player *player, char **map, int left)
 	if (left == 1)
 	{
 		if (map[(int)((player->y) + player->plane.y
-				* player->movespeed)][(int)(player->x)] != '1')
-			player->y += player->plane.y * player->movespeed;
+				* player->move_speed)][(int)(player->x)] != '1')
+			player->y += player->plane.y * player->move_speed;
 		if (map[(int)(player->y)][(int)(player->x + player->plane.x *
-				player->movespeed)] != '1')
-			player->x += player->plane.x * player->movespeed;
+				player->move_speed)] != '1')
+			player->x += player->plane.x * player->move_speed;
 	}
 	else
 	{
 		if (map[(int)((player->y) - player->plane.y
-				* player->movespeed)][(int)(player->x)] != '1')
-			player->y -= player->plane.y * player->movespeed;
+				* player->move_speed)][(int)(player->x)] != '1')
+			player->y -= player->plane.y * player->move_speed;
 		if (map[(int)((player->y))][(int)(player->x - player->plane.x
-				* player->movespeed)] != '1')
-			player->x -= player->plane.x * player->movespeed;
+				* player->move_speed)] != '1')
+			player->x -= player->plane.x * player->move_speed;
 	}
 }

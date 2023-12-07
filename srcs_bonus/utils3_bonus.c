@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils3_bonus.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:27:01 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 21:48:40 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/07 16:18:29 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,12 +53,12 @@ int	check_count(char *tex_paths[4], t_bg *bg)
 	i = 0;
 	while (tex_paths[i] && i < 4)
 		i++;
-	if (i < 3 || bg->color_set != 2)
+	if (i < 4 || bg->color_set != 2)
 	{
-		if (i < 3)
+		if (i < 4)
 			printf("Error\nNot enough textures\n");
 		else if (bg->color_set < 2)
-			printf("Error\nNot all background colors are set\n");
+			printf("Error\nBackground colors are not all set\n");
 		else if (bg->color_set > 2)
 			printf("Error\nBackground colors can't be set multiple times\n");
 		return (1);

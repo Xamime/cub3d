@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   init_bonus.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/03 01:45:25 by max               #+#    #+#             */
-/*   Updated: 2023/12/06 21:03:09 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 16:41:28 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
 
-void	init_buffer(t_vars *vars)
+void	init_buffer(uint32_t *buffer)
 {
 	int	y;
 	int	x;
@@ -23,78 +23,69 @@ void	init_buffer(t_vars *vars)
 		x = 0;
 		while (x < WIDTH)
 		{
-			vars->buffer[y * WIDTH + x] = 0;
+			buffer[y * WIDTH + x] = 0;
 			x++;
 		}
 		y++;
 	}
 }
 
-void	init_orientation(t_vars *vars)
+static void	init_images(mlx_image_t **game, mlx_image_t **minimap,
+	mlx_image_t **crosshair, mlx_t *mlx)
 {
-	if (vars->player.orientation == 'N')
+	*game = mlx_new_image(mlx, WIDTH, HEIGHT);
+	mlx_image_to_window(mlx, *game, 0, 0);
+	*crosshair = mlx_new_image(mlx, 18, 18);
+	mlx_image_to_window(mlx, *crosshair, WIDTH / 2 - 9, HEIGHT / 2 - 9);
+	*minimap = mlx_new_image(mlx, MINIMAP_SIZE, MINIMAP_SIZE);
+	mlx_image_to_window(mlx, *minimap, WIDTH - MINIMAP_SIZE, HEIGHT - MINIMAP_SIZE);
+}
+
+static void	init_orientation_NS(t_player *player)
+{
+	if (player->orientation == 'N')
 	{
-		vars->player.dir.x = 0;
-		vars->player.dir.y = -1;
-		vars->player.plane.x = -0.5;
-		vars->player.plane.y = 0;
+		player->dir.x = 0;
+		player->dir.y = -1;
+		player->plane.x = -0.5;
+		player->plane.y = 0;
 	}
-	else if (vars->player.orientation == 'E')
+	else if (player->orientation == 'S')
 	{
-		vars->player.dir.x = 1;
-		vars->player.dir.y = 0;
-		vars->player.plane.x = 0;
-		vars->player.plane.y = -0.5;
-	}
-	else if (vars->player.orientation == 'W')
-	{
-		vars->player.dir.x = -1;
-		vars->player.dir.y = 0;
-		vars->player.plane.x = 0;
-		vars->player.plane.y = 0.5;
-	}
-	else if (vars->player.orientation == 'S')
-	{
-		vars->player.dir.x = 0;
-		vars->player.dir.y = 1;
-		vars->player.plane.x = 0.5;
-		vars->player.plane.y = 0;
+		player->dir.x = 0;
+		player->dir.y = 1;
+		player->plane.x = 0.5;
+		player->plane.y = 0;
 	}
 }
 
-static void	init_doors_dir(t_object **map, int i, int j)
+static void	init_orientation_WE(t_player *player)
 {
-	if (map[i][j + 1].type == '1' && map[i][j - 1].type == '1'
-			&& map[i + 1][j].type == '0' && map[i - 1][j].type == '0')
-		map[i][j].orientation = NS;
+	if (player->orientation == 'E')
+	{
+		player->dir.x = 1;
+		player->dir.y = 0;
+		player->plane.x = 0;
+		player->plane.y = -0.5;
+	}
+	else if (player->orientation == 'W')
+	{
+		player->dir.x = -1;
+		player->dir.y = 0;
+		player->plane.x = 0;
+		player->plane.y = 0.5;
+	}
+}
+
+void	init(t_vars *vars, t_bg *bg)
+{
+	init_objects(vars, vars->map);
+	if (vars->player.orientation == 'N' || vars->player.orientation == 'S')
+		init_orientation_NS(&vars->player);
 	else
-		map[i][j].orientation = WE;
-	map[i][j].mode = 1.0f;
-}
-
-void    find_pos(t_vars *vars, t_object **map)
-{
-    int i;
-    int j;
-
-    i = 0;
-    while (map && map[i])
-    {
-        j = 0;
-        while (map[i][j].type)
-        {
-            if (map[i][j].type && (map[i][j].type == 'N' || map[i][j].type == 'S'
-				|| map[i][j].type == 'W' || map[i][j].type == 'E'))
-            {
-                vars->player.x = j + 0.5f;
-                vars->player.y = i + 0.5f;
-	            vars->player.orientation = map[i][j].type;
-				map[i][j].type = '0';
-            }
-			if (map[i][j].type && map[i][j].type == 'D')
-				init_doors_dir(map, i, j);
-            j++;
-        }
-        i++;
-    }
+		init_orientation_WE(&vars->player);
+	init_vars(vars);
+	display_background(vars->mlx, *bg);
+	init_images(&vars->game, &vars->minimap, &vars->crosshair, vars->mlx);
+	init_buffer(vars->buffer);
 }

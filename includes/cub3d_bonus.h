@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d_bonus.h                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 22:09:38 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 16:40:32 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,19 @@ typedef struct	s_object
 	double	timer;
 }				t_object;
 
+typedef struct s_door_collision
+{
+	double	wall_y;
+	double	next_wall_y;
+	double	door_x;
+	double	door_y;
+	double	ray_dir;
+	double	next_side_dist;
+	int		next_side;
+	int		door_axis;
+}				t_door_collision;
+
+
 typedef struct	s_dda
 {
 	t_fpoint	delta_dist;
@@ -88,12 +101,9 @@ typedef struct	t_player
 	t_fpoint	dir;
 	double		x;
 	double		y;
-	double		movespeed;
-	double		rotspeed;
+	double		move_speed;
+	double		rot_speed;
 	char		orientation;
-	int			map_length; // aled
-	double		door_status; // aled
-	int			is_door; // aled
 	t_object	*aimed_obj;
 	int			door_opening;
 	int			door_closing;
@@ -140,9 +150,24 @@ int				player_count(t_object **map);
 
 /* ----------------------------------- dda ---------------------------------- */
 
-int				collide_with_door(t_dda *dda, t_object **map, t_player player, t_fpoint ray_dir);
+int				collide_with_door(t_dda *dda, t_player player, t_fpoint ray_dir);
 double			get_wall_dist(t_player *player, t_fpoint ray_dir, t_dda *dda, t_object **map);
 t_dda			init_dda(t_player player, t_fpoint ray_dir);
+
+/* ----------------------------- door_collisions ---------------------------- */
+
+int				check_all_cases(t_door_collision *dc, t_dda *dda, t_player player, t_fpoint ray_dir);
+
+/* ---------------------------------- doors --------------------------------- */
+
+double			wall_hitpos(double player_pos, double side_dist, double ray_dir);
+int				collide_with_door(t_dda *dda, t_player player, t_fpoint ray_dir);
+
+/* ---------------------------------- draw ---------------------------------- */
+
+void			draw_crosshair(mlx_image_t *crosshair);
+void			draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
+void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
 
 /* ------------------------------ draw_minimap ------------------------------ */
 
@@ -153,24 +178,29 @@ void			draw_minimap(t_vars *vars);
 int				get_pixel_color(int i, int j, mlx_image_t *map_img);
 void			set_ray_draw_pos(t_ray *ray);
 
-/* ---------------------------------- draw ---------------------------------- */
+/* ---------------------------------- hooks --------------------------------- */
 
-void			draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer);
-void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
+void			main_hook(void* param);
+void			cursor_hook(double x, double y, void *param);
 
 /* ---------------------------------- init ---------------------------------- */
 
-void			init_buffer(t_vars *vars);
-void			init_orientation(t_vars *vars);
-void			find_pos(t_vars *vars, t_object **map);
+void			init(t_vars *vars, t_bg *bg);
+void			init_buffer(uint32_t *buffer);
+
+/* ---------------------------------- init2 --------------------------------- */
+
+void			init_vars(t_vars *vars);
+void			init_objects(t_vars *vars, t_object **map);
+
+/* ---------------------------------- main ---------------------------------- */
+
+void			update_buffer(t_player *player, t_object **map, mlx_image_t *textures[4], uint32_t *buffer);
 
 /* --------------------------------- moving --------------------------------- */
 
-void			rotate_left(t_player *player, double speed);
-void			rotate_right(t_player *player, double speed);
-
 void			move(t_player *player, t_object **map, int dir);
-// void			rotate(t_player *player, double speed, int left);
+void			rotate(t_player *player, double speed);
 
 /* ---------------------------- parse_background ---------------------------- */
 
@@ -183,7 +213,6 @@ char			*get_map(int fd, char *str);
 
 /* ----------------------------- parse_textures ----------------------------- */
 
-int				is_empty_line(char *str);
 char			*get_textures(int fd, char *tex_paths[4], t_bg *bg);
 
 /* --------------------------------- parsing -------------------------------- */
@@ -211,6 +240,8 @@ int				ft_line_len(t_object *line);
 
 void			replace_address(char **addr1, char *addr2);
 void			remove_endl(char *str);
+int				set_texture(int id, char **tmp, char *str, char *tex_paths[4]);
+int				is_empty_line(char *str);
 
 /* --------------------------------- utils3 --------------------------------- */
 

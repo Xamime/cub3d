@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/30 13:47:41 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 20:19:01 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:24:26 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,18 +29,6 @@ static int	check_id(char *str)
 	return (-1);
 }
 
-int	is_empty_line(char *str)
-{
-	int	i;
-
-	i = 0;
-	while (str[i] && str[i] == ' ')
-		i++;
-	if (!str[i] || str[i] == '\n')
-		return (1);
-	return (0);
-}
-
 static char	*gnl_non_empty(int fd)
 {
 	char	*str;
@@ -54,20 +42,6 @@ static char	*gnl_non_empty(int fd)
 	return (str);
 }
 
-static int	set_texture(int id, char **tmp, char *str, char *tex_paths[4])
-{
-	if (id >= 0 && id < 4 && tex_paths[id])
-	{
-		printf("Error\n%s: texture already set\n", tmp[0]);
-		free_2d_array(tmp);
-		free(str);
-		return (-1);
-	}
-	tex_paths[id] = ft_strdup(tmp[1]);
-	tex_paths[id][ft_strlen(tex_paths[id]) - 1] = 0;
-	return (0);
-}
-
 static int	set_tmp(char ***tmp, char *str)
 {
 	*tmp = ft_split(str, ' ');
@@ -75,10 +49,22 @@ static int	set_tmp(char ***tmp, char *str)
 	{
 		if (!(*tmp))
 			printf("Error\nMap is empty\n");
+		else if ((*tmp)[0])
+			printf("Error\nBad identifier\n");
 		free_2d_array(*tmp);
 		return (-1);
 	}
 	return (0);
+}
+
+static void	print_if_error(int id, char *str)
+{
+	if (id == -1)
+	{
+		remove_endl(str);
+		if (!is_map(str))
+			printf("Error\nBad identifier\n");
+	}
 }
 
 char	*get_textures(int fd, char *tex_paths[4], t_bg *bg)
@@ -89,7 +75,7 @@ char	*get_textures(int fd, char *tex_paths[4], t_bg *bg)
 
 	id = 0;
 	str = "";
-	while (str && id != -1)
+	while (str && id >= 0)
 	{
 		str = gnl_non_empty(fd);
 		if (set_tmp(&tmp, str) == -1)
@@ -102,8 +88,9 @@ char	*get_textures(int fd, char *tex_paths[4], t_bg *bg)
 		}
 		else if (id != -1)
 			id = get_background(bg, tmp[1], id);
+		print_if_error(id, str);
 		free_2d_array(tmp);
-		if (id != -1)
+		if (id >= 0)
 			free(str);
 	}
 	return (str);

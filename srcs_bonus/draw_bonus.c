@@ -6,11 +6,32 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:34:19 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 18:58:17 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 02:14:48 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d_bonus.h"
+
+void	draw_crosshair(mlx_image_t *crosshair)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < 18)
+	{
+		x = 0;
+		while (x < 18)
+		{
+			if ((y >= (18 - 1) / 2 && y <= (18 - 1) / 2 + 1)
+				|| (x >= (18 - 1) / 2 && x <= (18 - 1) / 2 + 1))
+				mlx_put_pixel(crosshair, x, y,
+					create_rgba(255, 255, 255, 255));
+			x++;
+		}
+		y++;
+	}
+}
 
 void	draw_wall(t_ray ray, t_render_tex rtex, int x, uint32_t *buffer)
 {

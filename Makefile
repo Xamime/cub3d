@@ -6,7 +6,7 @@
 #    By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/06 14:40:23 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/07 16:05:23 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -29,11 +29,14 @@ SRC =		srcs/check_map.c \
 
 SRC_BONUS =	srcs_bonus/check_map_bonus.c \
 			srcs_bonus/dda_bonus.c \
+			srcs_bonus/door_collisions_bonus.c \
 			srcs_bonus/doors_bonus.c \
 			srcs_bonus/draw_bonus.c \
 			srcs_bonus/draw_minimap_bonus.c \
 			srcs_bonus/draw_utils_bonus.c \
+			srcs_bonus/hooks_bonus.c \
 			srcs_bonus/init_bonus.c \
+			srcs_bonus/init2_bonus.c \
 			srcs_bonus/main_bonus.c \
 			srcs_bonus/moving_bonus.c \
 			srcs_bonus/parse_background_bonus.c \
@@ -55,7 +58,7 @@ LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 INCLUDES = -I ./includes
 CC = clang
-CFLAGS = -Wall -Wextra -Werror -Iincludes -g
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 OBJ = $(SRC:c=o)
 OBJB = $(SRC_BONUS:c=o)
 

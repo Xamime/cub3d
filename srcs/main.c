@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:04 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/05 19:28:32 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:51:13 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	update_buffer(t_player *player, char **map,
 	}
 }
 
-void	ft_hook(void *param)
+void	main_hook(void *param)
 {
 	t_vars	*vars;
 
@@ -53,14 +53,14 @@ void	ft_hook(void *param)
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_S))
 		move(&vars->player, vars->map, 0);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_LEFT))
-		rotate(&vars->player, vars->player.rotspeed, 1);
+		rotate(&vars->player, vars->player.rot_speed, 1);
 	if (mlx_is_key_down(vars->mlx, MLX_KEY_RIGHT))
-		rotate(&vars->player, vars->player.rotspeed, 0);
-	init_buffer(vars);
+		rotate(&vars->player, vars->player.rot_speed, 0);
+	init_buffer(vars->buffer);
 	update_buffer(&vars->player, vars->map, vars->textures, vars->buffer);
 	draw_buffer(vars->game, vars->buffer);
-	vars->player.movespeed = vars->mlx->delta_time * 5.0;
-	vars->player.rotspeed = vars->mlx->delta_time * 3.0;
+	vars->player.move_speed = vars->mlx->delta_time * 5.0;
+	vars->player.rot_speed = vars->mlx->delta_time * 3.0;
 }
 
 int	main(int argc, const char *argv[])
@@ -68,7 +68,11 @@ int	main(int argc, const char *argv[])
 	t_vars	vars;
 	t_bg	bg;
 
-	(void)argc;
+	if (argc > 2)
+	{
+		printf("Error\nToo many arguments\n");
+		exit(1);
+	}
 	if (parse_file(&vars, argv[1], &bg))
 		exit(1);
 	find_pos(&vars, vars.map);
@@ -77,7 +81,7 @@ int	main(int argc, const char *argv[])
 	vars.game = mlx_new_image(vars.mlx, WIDTH, HEIGHT);
 	mlx_image_to_window(vars.mlx, vars.game, 0, 0);
 	update_buffer(&vars.player, vars.map, vars.textures, vars.buffer);
-	mlx_loop_hook(vars.mlx, ft_hook, &vars);
+	mlx_loop_hook(vars.mlx, main_hook, &vars);
 	mlx_loop(vars.mlx);
 	mlx_terminate(vars.mlx);
 	free_2d_array(vars.map);

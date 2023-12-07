@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   dda_bonus.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 09:40:51 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 22:10:33 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:49:02 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static void	dda_loop(t_dda *dda, t_object **map,
 			if (!dda->first_door)
 				dda->first_door = &map[dda->map.y][dda->map.x];
 			dda->hit = &map[dda->map.y][dda->map.x];
-			if (collide_with_door(dda, map, player, ray_dir))
+			if (collide_with_door(dda, player, ray_dir))
 				break ;
 		}
 		if (dda->side_dist.x < dda->side_dist.y)
@@ -92,5 +92,6 @@ t_dda	init_dda(t_player player, t_fpoint ray_dir)
 	dda.delta_dist.y = fabs(1 / ray_dir.y);
 	dda.step.x = init_step(ray_dir.x);
 	dda.step.y = init_step(ray_dir.y);
+	dda.first_door = NULL;
 	return (dda);
 }

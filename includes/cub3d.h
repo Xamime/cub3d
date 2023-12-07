@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cub3d.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: mdesrose <mdesrose@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/14 15:20:32 by mdesrose          #+#    #+#             */
-/*   Updated: 2023/12/06 21:53:07 by mdesrose         ###   ########.fr       */
+/*   Updated: 2023/12/07 15:32:19 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,8 @@ typedef struct	t_player
 	t_fpoint	dir;
 	double		x;
 	double		y;
-	double		movespeed;
-	double		rotspeed;
+	double		move_speed;
+	double		rot_speed;
 	char		orientation;
 }				t_player;
 
@@ -125,7 +125,7 @@ void			draw_buffer(mlx_image_t *game, uint32_t *buffer);
 
 /* ---------------------------------- init ---------------------------------- */
 
-void			init_buffer(t_vars *vars);
+void			init_buffer(uint32_t *buffer);
 void			init_orientation(t_vars *vars);
 void			find_pos(t_vars *vars, char **map);
 
@@ -146,7 +146,6 @@ char			*get_map(int fd, char *str);
 
 /* ----------------------------- parse_textures ----------------------------- */
 
-int				is_empty_line(char *str);
 char			*get_textures(int fd, char *tex_paths[4], t_bg *bg);
 
 /* --------------------------------- parsing -------------------------------- */
@@ -173,6 +172,8 @@ int				ft_line_len(char *line);
 
 void			replace_address(char **addr1, char *addr2);
 void			remove_endl(char *str);
+int				set_texture(int id, char **tmp, char *str, char *tex_paths[4]);
+int				is_empty_line(char *str);
 
 /* --------------------------------- utils3 --------------------------------- */
 

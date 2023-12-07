@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/22 05:56:50 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/06 15:09:11 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:25:36 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	alloc_buffer(t_vars *vars)
 	if (vars->buffer == NULL)
 	{
 		mlx_terminate(vars->mlx);
+		printf("Error\n");
 		perror("Memory allocation failed");
 		return ;
 	}

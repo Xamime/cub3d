@@ -6,7 +6,7 @@
 /*   By: jfarkas <jfarkas@student.42angouleme.fr    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/03 16:07:46 by jfarkas           #+#    #+#             */
-/*   Updated: 2023/12/05 16:44:42 by jfarkas          ###   ########.fr       */
+/*   Updated: 2023/12/07 15:08:55 by jfarkas          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int	get_background(t_bg *bg, char *str, int dir)
 	{
 		printf("Error\nInvalid color\n");
 		free_2d_array(rgb);
-		return (1);
+		return (-2);
 	}
 	if (dir == FLOOR)
 		set_rgb(&bg->floor, rgb);

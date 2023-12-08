@@ -227,7 +227,7 @@ int			parse_file(t_vars *vars, const char *path, t_bg *bg);
 
 /* ----------------------------- render_textures ---------------------------- */
 
-t_rtex		set_rtexture(t_player player, t_ray ray,
+t_rtex		set_render_texture(t_player player, t_ray ray,
 				t_dda *dda, mlx_image_t *textures[4]);
 
 /* -------------------------------- textures -------------------------------- */

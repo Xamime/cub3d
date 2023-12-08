@@ -17,7 +17,7 @@ void	update_buffer(t_player *player, t_object **map,
 {
 	t_dda			dda;
 	t_ray			ray;
-	t_rtex	rtex;
+	t_rtex			rtex;
 	int				x;
 
 	x = 0;
@@ -33,7 +33,7 @@ void	update_buffer(t_player *player, t_object **map,
 		if (x == WIDTH / 2 && !player->door_opening && !player->door_closing)
 			player->aimed_obj = dda.first_door;
 		set_ray_draw_pos(&ray);
-		rtex = set_rtexture(*player, ray, &dda, textures);
+		rtex = set_render_texture(*player, ray, &dda, textures);
 		draw_wall(ray, rtex, x, buffer);
 		x++;
 	}

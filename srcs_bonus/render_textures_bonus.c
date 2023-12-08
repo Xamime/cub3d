@@ -26,11 +26,11 @@ static mlx_image_t	*find_tex_side(mlx_image_t *textures[4],
 	return (NULL);
 }
 
-t_rtex	set_rtexture(t_player player, t_ray ray,
+t_rtex	set_render_texture(t_player player, t_ray ray,
 	t_dda *dda, mlx_image_t *textures[4])
 {
 	t_rtex	rtex;
-	double			wallx;
+	double	wallx;
 
 	if (dda->side == 0)
 		wallx = player.y + ray.wall_dist * ray.ray_dir.y;

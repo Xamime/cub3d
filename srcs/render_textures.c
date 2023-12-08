@@ -29,7 +29,7 @@ t_rtex	set_render_texture(t_player player, t_ray ray,
 	int side, mlx_image_t *textures[4])
 {
 	t_rtex	rtex;
-	double			wallx;
+	double	wallx;
 
 	if (side == 0)
 		wallx = player.y + ray.wall_dist * ray.ray_dir.y;

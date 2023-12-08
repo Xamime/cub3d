@@ -6,7 +6,7 @@
 #    By: jfarkas <jfarkas@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/08/14 15:33:31 by mdesrose          #+#    #+#              #
-#    Updated: 2023/12/07 19:45:57 by jfarkas          ###   ########.fr        #
+#    Updated: 2023/12/07 21:11:02 by jfarkas          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -58,7 +58,7 @@ LIBFT = ${LIBFT_SRC}/libft.a
 LIBMLX = ${MLX_DIR}/build/libmlx42.a
 LIBS = $(LIBFT) $(LIBMLX) -ldl -lglfw -pthread -lm
 CC = clang
-CFLAGS = -g -Wall -Wextra -Werror -Iincludes
+CFLAGS = -Wall -Wextra -Werror -Iincludes
 OBJ = $(SRC:c=o)
 OBJB = $(SRC_BONUS:c=o)
 
@@ -75,13 +75,13 @@ bonus: $(NAMEB)
 %.o: %.c
 	${CC} ${CFLAGS} -I/usr/include -c $< -o $@ -O3
 
-$(NAME): $(OBJ) $(LIBFT) libmlx
+$(NAME): $(OBJ) $(LIBFT) $(LIBMLX)
 	$(CC) ${CFLAGS} $(OBJ) $(LIBS) -o $(NAME) -O3
 
-$(NAMEB): $(OBJB) $(LIBFT) libmlx
+$(NAMEB): $(OBJB) $(LIBFT) $(LIBMLX)
 	$(CC) ${CFLAGS} $(OBJB) $(LIBS) -o $(NAMEB) -O3
 
-libmlx:
+$(LIBMLX):
 	cmake $(MLX_DIR) -B $(MLX_DIR)/build && cmake --build $(MLX_DIR)/build -j8
 
 ${LIBFT}:
